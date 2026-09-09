@@ -1,81 +1,88 @@
-import { useEffect, useState } from 'react'
-import { ArrowRight, BookOpen, Brain, HeartHandshake, Leaf, Menu, ShieldCheck, Users, X } from 'lucide-react'
+import { useState } from 'react'
+import { Menu, X, ArrowRight, BookOpen, ShieldCheck, HeartPulse, Leaf, Megaphone, Users, HandHeart, Newspaper, CalendarDays, FileText, Mail, MapPin } from 'lucide-react'
 
 const causes = [
-  { icon: BookOpen, title: 'Éducation & réinsertion', text: 'Parrainage scolaire, fournitures, transport, suivi individualisé et soutien scolaire pour les enfants et jeunes vulnérables.', target: '400', label: 'enfants et jeunes' },
-  { icon: Leaf, title: 'Résilience climatique', text: 'Jardins scolaires, reboisement, recyclage, énergies propres et formation pratique pour les communautés.', target: '100–150', label: 'jeunes formés' },
-  { icon: ShieldCheck, title: 'Protection de l’enfance', text: 'Prévention des violences, mariages précoces et cyberharcèlement, orientation et soutien psychosocial.', target: '1 500', label: 'familles sensibilisées' },
-  { icon: HeartHandshake, title: 'ESS & autonomisation', text: 'Épargne solidaire, coopération, activités génératrices de revenus et renforcement des associations relais.', target: '150', label: 'ménages appuyés' },
-  { icon: Brain, title: 'Innovation & leadership', text: 'Recherche-action, mentorat, laboratoire d’innovation, publications et plaidoyer porté par les jeunes.', target: '60', label: 'jeunes chercheurs' },
+  { icon: BookOpen, title: 'Éducation', text: 'Favoriser l’accès, le maintien et la réinsertion scolaire des enfants et des jeunes vulnérables.', target: 'Éducation inclusive' },
+  { icon: ShieldCheck, title: 'Protection & autonomisation', text: 'Prévenir les violences, renforcer la protection et créer des parcours d’autonomie pour les jeunes.', target: 'Protection intégrée' },
+  { icon: HeartPulse, title: 'Santé', text: 'Promouvoir le bien-être, l’orientation et l’accès aux ressources sanitaires pour les communautés vulnérables.', target: 'Bien-être & santé' },
+  { icon: Leaf, title: 'Résilience climatique', text: 'Soutenir les pratiques communautaires durables, la sensibilisation environnementale et l’adaptation climatique.', target: 'Communautés résilientes' },
+  { icon: Megaphone, title: 'Mobilisation & plaidoyer', text: 'Fédérer les acteurs, documenter les expériences et porter les voix des communautés auprès des décideurs.', target: 'Influence collective' },
 ]
 
-const stats = [
-  ['400+', 'enfants & jeunes', 'maintenus ou réinsérés dans l’éducation'],
-  ['25%', 'réduction visée', 'des mariages précoces ciblés'],
-  ['+30%', 'revenus moyens', 'des ménages appuyés à 36 mois'],
-  ['15', 'associations relais', 'formées et engagées'],
+const projects = [
+  ['01', 'Programme éducation & réinsertion', 'Accompagnement des enfants et jeunes vulnérables à travers les associations et réseaux locaux.'],
+  ['02', 'Protection de l’enfance et jeunesse', 'Prévention, orientation, accompagnement psychosocial et renforcement des mécanismes communautaires.'],
+  ['03', 'Initiatives santé communautaire', 'Mobilisation des acteurs sociaux et solidaires autour de la santé et du bien-être.'],
+  ['04', 'Résilience & économie sociale et solidaire', 'Appui aux OESS comme leviers de développement durable et d’autonomisation.'],
+  ['05', 'Laboratoire, recherche & plaidoyer', 'Recherche-action, mentorat, capitalisation et mobilisation pour des politiques plus inclusives.'],
 ]
 
-function Logo() {
-  return <div className="eves-logo"><span>EV</span><strong>ES</strong><small>ÉDUQUER • PROTÉGER • ÉMANCIPER</small></div>
+const stats = [['400+', 'enfants & jeunes', 'maintenus ou réinsérés dans l’éducation'], ['1 500', 'familles', 'ciblées par les actions de sensibilisation'], ['15', 'associations relais', 'à renforcer et mobiliser'], ['7', 'zones prioritaires', 'avec une ouverture au territoire national']]
+
+const news = [
+  ['Actualité', 'EVES officiellement reconnue', '27 août 2026', 'EVES est officiellement reconnue par récépissé de déclaration préfectorale n°001444/RDA/JO6/SAAJP/BAPP du 27 août 2026, Préfecture du Mfoundi.'],
+  ['Réseau', 'Construire une communauté d’action', '2026', 'Membres, référents régionaux, partenaires et associations relais sont appelés à coordonner les actions et opportunités de collaboration.'],
+  ['Vision', 'L’ESS au cœur du développement territorial', '2026', 'EVES place les organisations de l’économie sociale et solidaire au centre d’une approche communautaire, inclusive et durable.'],
+]
+
+const events = [
+  ['2026', 'Lancement institutionnel', 'Présentation du réseau EVES, de ses axes et de ses zones d’intervention.'],
+  ['2027', 'Déploiement pilote', 'Mise en œuvre progressive des programmes et mobilisation des associations relais.'],
+  ['2028–2029', 'Capitalisation & expansion', 'Documentation des résultats, partenariats et extension selon les besoins et financements.'],
+]
+
+function Logo({ compact = false }) {
+  return <div className={`logo ${compact ? 'logo-compact' : ''}`}>
+    <img src="/logo.svg" alt="EVES" />
+    {!compact && <span>Éducation • Protection • Émancipation</span>}
+  </div>
+}
+
+function SectionTitle({ kicker, title, text }) {
+  return <div className="section-heading"><div className="kicker">{kicker}</div><h2 dangerouslySetInnerHTML={{ __html: title }} />{text && <p>{text}</p>}</div>
 }
 
 function App() {
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-  const close = () => setOpen(false)
+  const [menu, setMenu] = useState(false)
+  const close = () => setMenu(false)
+  const nav = [['home','Accueil'],['about','À propos'],['causes','Causes'],['projects','Projets'],['impact','Impact'],['team','Équipe'],['partners','Partenaires'],['resources','Ressources'],['news','Actualités'],['events','Événements'],['volunteer','Bénévolat'],['donate','Soutenir'],['contact','Contact']]
 
-  return <div className="eves-site">
-    <div className="topbar d-none d-lg-block">
-      <div className="container d-flex justify-content-between align-items-center">
-        <div><i className="bi bi-telephone me-2"/>Support: +237 694 641 402 <span className="mx-3">|</span><i className="bi bi-envelope me-2"/>mandou.ayiwouo@gmail.com</div>
-        <div><span>Association camerounaise</span><span className="mx-3">•</span><a href="#contact">Nous contacter</a><span className="socials ms-4"><i className="bi bi-facebook"/><i className="bi bi-linkedin"/><i className="bi bi-instagram"/></span></div>
-      </div>
-    </div>
+  return <div className="site">
+    <div className="topbar"><div className="container topbar-inner"><span><b>EVES</b> — Association camerounaise</span><span><a href="tel:+237656987759">MTECHsolutions : +237 656 987 759</a><span className="dot">•</span><a href="mailto:contact@eves.cm">contact@eves.cm</a></span></div></div>
 
-    <header className={`main-header ${scrolled ? 'is-scrolled' : ''}`}>
-      <div className="container d-flex align-items-center justify-content-between">
-        <a href="#home" className="brand" onClick={close}><Logo /></a>
-        <button className="mobile-toggle d-lg-none" onClick={() => setOpen(!open)} aria-label="Ouvrir le menu">{open ? <X/> : <Menu/>}</button>
-        <nav className={`main-nav ${open ? 'open' : ''}`}>
-          <a href="#home" onClick={close}>ACCUEIL</a><a href="#about" onClick={close}>À PROPOS</a><a href="#causes" onClick={close}>CAUSES</a><a href="#approach" onClick={close}>NOTRE APPROCHE</a><a href="#impact" onClick={close}>IMPACT</a><a href="#contact" onClick={close}>CONTACT</a>
-          <a className="donate-btn" href="mailto:mandou.ayiwouo@gmail.com?subject=Soutenir%20EVES">SOUTENIR EVES</a>
-        </nav>
-      </div>
-    </header>
+    <header className="header"><div className="container header-inner"><a href="#home" onClick={close}><Logo /></a><button className="menu-button" onClick={() => setMenu(!menu)} aria-label="Menu">{menu ? <X/> : <Menu/>}</button><nav className={menu ? 'open' : ''}>{nav.map(([id,label]) => <a key={id} href={`#${id}`} onClick={close}>{label}</a>)}<a className="donate-btn" href="#donate" onClick={close}>SOUTENIR EVES</a></nav></div></header>
 
     <main>
-      <section id="home" className="hero-section">
-        <div className="hero-overlay"/>
-        <div className="container position-relative h-100 d-flex align-items-center">
-          <div className="hero-copy"><div className="hero-kicker">SOUTENIR LES CAUSES QUI COMPTENT</div><h1>Ensemble, faisons du monde <span>un meilleur endroit.</span></h1><p>EVES œuvre au Cameroun pour réduire les vulnérabilités éducatives, sociales et environnementales des enfants et des jeunes, avec une attention particulière aux jeunes filles et aux femmes musulmanes.</p><div className="hero-buttons"><a className="btn-eves btn-red" href="#causes">DÉCOUVRIR NOS ACTIONS <ArrowRight size={17}/></a><a className="btn-eves btn-outline-white" href="#about">EN SAVOIR PLUS</a></div></div>
-          <div className="hero-caption d-none d-md-flex"><span>01</span><div><b>NOUN • OUEST CAMEROUN</b><small>Territoire pilote · 2027–2029</small></div></div>
-        </div><div className="hero-arrows"><button aria-label="Précédent"><i className="bi bi-arrow-left"/></button><button aria-label="Suivant"><i className="bi bi-arrow-right"/></button></div>
-      </section>
+      <section id="home" className="hero"><div className="hero-shade"/><div className="container hero-content"><div className="hero-copy"><div className="kicker light">ÉDUCATION • PROTECTION • ÉMANCIPATION</div><h1>Ensemble, construisons un avenir <em>plus inclusif.</em></h1><p>EVES accompagne les enfants, les jeunes et leurs familles les plus vulnérables sur les plans éducatif, social, sanitaire et environnemental, en s’appuyant sur les organisations de l’économie sociale et solidaire.</p><div className="hero-actions"><a className="btn btn-primary" href="#causes">Découvrir nos actions <ArrowRight size={17}/></a><a className="btn btn-outline" href="#about">Qui sommes-nous ?</a></div></div><div className="hero-badge"><b>RECONNUE OFFICIELLEMENT</b><span>Récépissé préfectoral n°001444/RDA/JO6/SAAJP/BAPP</span><small>27 août 2026 · Préfecture du Mfoundi</small></div></div></section>
 
-      <section className="intro-strip"><div className="container"><div className="row align-items-stretch g-0"><div className="col-lg-5 intro-message"><div className="mini-kicker"><span>✦</span> NOUS CROYONS EN CE QUE NOUS FAISONS</div><h2>Un soutien chaleureux & véritable <span>pour les personnes qui en ont besoin.</span></h2><p>Notre action part des communautés et renforce les solidarités qui existent déjà.</p></div><div className="col-lg-7 intro-panels"><a href="#contact" className="intro-panel panel-gold"><i className="bi bi-heart-fill"/><b>Soutenir<br/>EVES</b><small>Contribuer à nos actions</small></a><a href="#contact" className="intro-panel panel-teal"><i className="bi bi-people-fill"/><b>Devenir<br/>partenaire</b><small>Construire avec nous</small></a><a href="#contact" className="intro-panel panel-blue"><i className="bi bi-person-raised-hand"/><b>Devenir<br/>bénévole</b><small>Donner de son temps</small></a></div></div></div></section>
+      <section className="intro"><div className="container intro-grid"><div><div className="kicker">NOTRE ENGAGEMENT</div><h2>Un soutien chaleureux et véritable <span>pour les personnes qui en ont besoin.</span></h2><p>Notre action part des communautés, valorise leurs forces et renforce les solidarités existantes.</p></div><div className="intro-cards"><a href="#donate"><HandHeart/><b>Soutenir EVES</b><small>Contribuer à nos actions</small></a><a href="#partners"><Users/><b>Devenir partenaire</b><small>Construire avec nous</small></a><a href="#volunteer"><HeartPulse/><b>Devenir bénévole</b><small>Donner de son temps</small></a></div></div></section>
 
-      <section id="about" className="section-padding about-section"><div className="container"><div className="row align-items-center g-5"><div className="col-lg-6"><div className="section-kicker">QUI SOMMES-NOUS</div><h2 className="section-title">Une société où chaque enfant peut <span>réaliser son potentiel.</span></h2><p>EVES — Éducation, Vulnérabilités de l’Enfance et de la Jeunesse, Économie Sociale et Solidaire — est une initiative camerounaise qui agit à l’intersection de l’éducation, de la protection, de l’autonomisation et de l’innovation.</p><p>Nous croyons que le changement durable naît lorsque les familles, associations locales, coopératives, jeunes et partenaires avancent ensemble.</p><a href="#approach" className="text-link">Découvrir notre approche <ArrowRight size={16}/></a></div><div className="col-lg-6"><div className="about-photo"><div className="photo-badge"><strong>2027</strong><span>Début du pilote</span></div></div></div></div></div></section>
+      <section id="about" className="section about"><div className="container two-col"><div><SectionTitle kicker="À PROPOS D’EVES" title="Une société où chaque enfant peut <span>réaliser son potentiel.</span>" /><p>EVES — <strong>Éducation aux Vulnérabilités de l’Enfance et de la Jeunesse, par l’Économie Sociale et Solidaire</strong> — est une organisation camerounaise engagée auprès des enfants, des jeunes et de leurs familles les plus vulnérables.</p><p>Nous intervenons sans distinction de religion, d’origine ou de statut et développons une approche fondée sur la solidarité, l’inclusion, l’autonomisation et la coopération.</p><div className="recognition"><ShieldCheck/><div><b>Reconnaissance officielle</b><span>Récépissé n°001444/RDA/JO6/SAAJP/BAPP du 27 août 2026 — Préfecture du Mfoundi.</span></div></div></div><div className="about-card"><div className="about-emblem"><Logo compact/><strong>EVES</strong><span>Économie Sociale<br/>et Solidaire</span></div></div></div></section>
 
-      <section id="causes" className="causes-section section-padding"><div className="container"><div className="row align-items-end mb-5"><div className="col-lg-7"><div className="section-kicker">NOS CAUSES</div><h2 className="section-title">Les causes qui <span>nous mobilisent.</span></h2></div><div className="col-lg-5"><p className="section-intro">Cinq axes complémentaires forment une chaîne de transformation, du terrain jusqu’au plaidoyer et à l’influence.</p></div></div><div className="row g-4">{causes.map(({icon: Icon, ...cause}, index) => <div className="col-md-6 col-xl" key={cause.title}><article className="cause-card"><div className="cause-icon"><Icon size={24}/></div><span className="cause-number">0{index + 1}</span><h3>{cause.title}</h3><p>{cause.text}</p><div className="cause-target"><strong>{cause.target}</strong><small>{cause.label}</small></div></article></div>)}</div></div></section>
+      <section id="causes" className="section causes"><div className="container"><SectionTitle kicker="NOS 5 AXES" title="Les causes qui <span>nous mobilisent.</span>" text="Cinq axes structurent l’action d’EVES et relient les besoins du terrain à la mobilisation, au partenariat et au plaidoyer."/><div className="cards five">{causes.map(({icon:Icon,title,text,target},i)=><article className="cause-card" key={title}><div className="card-top"><div className="icon"><Icon size={23}/></div><span>0{i+1}</span></div><h3>{title}</h3><p>{text}</p><b>{target}</b></article>)}</div></div></section>
 
-      <section id="impact" className="impact-section section-padding"><div className="container"><div className="section-kicker light">NOTRE IMPACT ATTENDU</div><h2 className="section-title light-title">Des objectifs mesurables.<br/><span>Une responsabilité partagée.</span></h2><div className="row stats-row">{stats.map(([n,t,d]) => <div className="col-6 col-lg-3 stat" key={t}><strong>{n}</strong><b>{t}</b><p>{d}</p></div>)}</div></div></section>
+      <section id="projects" className="section projects"><div className="container"><SectionTitle kicker="NOS PROJETS" title="Des programmes conçus pour <span>agir concrètement.</span>"/><div className="project-list">{projects.map(([n,t,d])=><article key={n}><span>{n}</span><div><h3>{t}</h3><p>{d}</p></div><ArrowRight size={20}/></article>)}</div></div></section>
 
-      <section id="approach" className="section-padding approach-section"><div className="container"><div className="row g-5"><div className="col-lg-6"><div className="section-kicker">NOTRE APPROCHE</div><h2 className="section-title">Nous ne créons pas à partir de zéro.<br/><span>Nous amplifions.</span></h2><p className="lead-copy">EVES s’appuie sur les réseaux locaux d’économie sociale et solidaire comme piliers territoriaux. Ils connaissent les familles, les réalités et les mécanismes de solidarité qui rendent le changement durable.</p></div><div className="col-lg-6"><div className="approach-list"><div><span>01</span><b>Ancrage communautaire</b><p>Identifier, accompagner et relier les acteurs locaux.</p></div><div><span>02</span><b>Protection & éducation</b><p>Suivi individualisé, orientation et soutien psychosocial.</p></div><div><span>03</span><b>Autonomisation</b><p>ESS, épargne solidaire, AGR et compétences numériques.</p></div><div><span>04</span><b>Innovation & influence</b><p>Recherche-action, mentorat et plaidoyer pour les politiques publiques.</p></div></div></div></div></div></section>
+      <section id="impact" className="impact section"><div className="container"><SectionTitle kicker="IMPACT & RESPONSABILITÉ" title="Des objectifs mesurables.<br/><span>Une responsabilité partagée.</span>"/><div className="stats">{stats.map(([n,t,d])=><div key={t}><strong>{n}</strong><b>{t}</b><p>{d}</p></div>)}</div><p className="note">Les indicateurs présentés correspondent aux ambitions et cibles de développement d’EVES et évolueront avec les projets effectivement financés et déployés.</p></div></section>
 
-      <section className="quote-section"><div className="container text-center"><div className="quote-mark">“</div><blockquote>Les jeunes filles et garçons qui bénéficient du projet deviendront à leur tour les chercheuses, les mentors et les plaidoyeurs de demain.</blockquote><p>CHAÎNE DE TRANSFORMATION EVES</p></div></section>
+      <section id="team" className="section team"><div className="container"><SectionTitle kicker="NOTRE ÉQUIPE" title="Des femmes et des hommes engagés <span>au service des communautés.</span>" text="Une gouvernance et des équipes appelées à travailler avec les référents régionaux, associations relais, partenaires et communautés."/><div className="team-grid"><article><div className="avatar">EV</div><h3>Direction & coordination</h3><p>Pilotage stratégique, coordination des programmes et relations institutionnelles.</p></article><article><div className="avatar">CO</div><h3>Coordination régionale</h3><p>Référents et relais territoriaux pour la mise en œuvre des actions sur le terrain.</p></article><article><div className="avatar">ES</div><h3>Réseau des OESS</h3><p>Associations et organisations de l’économie sociale et solidaire partenaires d’EVES.</p></article></div></div></section>
 
-      <section className="roadmap-section section-padding"><div className="container"><div className="section-kicker">FEUILLE DE ROUTE · 2027 → 2029</div><h2 className="section-title">Un pilote. Des preuves. <span>Une expansion responsable.</span></h2><div className="row roadmap g-0"><div className="col-md-4"><span>PHASE 1</span><strong>2027</strong><p>Baseline, associations pilotes, premiers parrainages et lancement du Laboratoire.</p></div><div className="col-md-4"><span>PHASE 2</span><strong>2028</strong><p>Consolidation des programmes, renforcement du réseau et extension guidée par les apprentissages.</p></div><div className="col-md-4"><span>PHASE 3</span><strong>2029</strong><p>Capitalisation, influence des politiques publiques et changement d’échelle selon les financements.</p></div></div></div></section>
+      <section id="partners" className="section partners"><div className="container partner-panel"><div><div className="kicker">PARTENARIATS</div><h2>Construisons ensemble des <span>solutions durables.</span></h2><p>EVES est ouverte aux collaborations avec associations, institutions, collectivités, universités, entreprises, bailleurs, fondations et acteurs de l’ESS.</p></div><a className="btn btn-primary" href="mailto:contact@eves.cm?subject=Partenariat%20EVES">Proposer un partenariat <ArrowRight size={17}/></a></div></section>
 
-      <section id="contact" className="cta-section"><div className="container"><div className="row align-items-center"><div className="col-lg-8"><div className="section-kicker">CONSTRUISONS LA SUITE ENSEMBLE</div><h2>Un partenariat peut devenir <span>une trajectoire de vie.</span></h2><p>EVES recherche des partenaires communautaires, institutionnels, académiques et financiers.</p></div><div className="col-lg-4 text-lg-end"><a className="btn-eves btn-white" href="mailto:mandou.ayiwouo@gmail.com?subject=Partenariat%20EVES">PROPOSER UN PARTENARIAT <ArrowRight size={17}/></a><div className="contact-details"><a href="tel:+237694641402">+237 694 641 402</a><a href="mailto:mandou.ayiwouo@gmail.com">mandou.ayiwouo@gmail.com</a></div></div></div></div></section>
+      <section id="resources" className="section resources"><div className="container"><SectionTitle kicker="RESSOURCES & RAPPORTS" title="Comprendre, documenter et <span>partager l’impact.</span>"/><div className="resource-grid"><article><FileText/><b>Rapports & publications</b><p>Rapports d’activités, notes, études et documents de capitalisation.</p><a href="#contact">Bientôt disponibles <ArrowRight size={15}/></a></article><article><Newspaper/><b>Bibliothèque EVES</b><p>Ressources sur l’éducation, la protection, la santé, le climat et l’ESS.</p><a href="#contact">Explorer les ressources <ArrowRight size={15}/></a></article><article><MapPin/><b>Zones d’intervention</b><p>Nord-Ouest, Extrême-Nord, Nord, Adamaoua, Est, Ouest et Noun.</p><a href="#contact">Voir notre couverture <ArrowRight size={15}/></a></article></div></div></section>
+
+      <section id="news" className="section news"><div className="container"><SectionTitle kicker="ACTUALITÉS & BLOG" title="Les nouvelles de <span>notre réseau.</span>"/><div className="news-grid">{news.map(([tag,title,date,text])=><article key={title}><span className="tag">{tag}</span><small>{date}</small><h3>{title}</h3><p>{text}</p><a href="#contact">Lire l’article <ArrowRight size={15}/></a></article>)}</div></div></section>
+
+      <section id="events" className="section events"><div className="container"><SectionTitle kicker="ÉVÉNEMENTS" title="Agir ensemble, <span>sur le terrain.</span>"/><div className="event-list">{events.map(([date,title,text])=><article key={date}><CalendarDays/><strong>{date}</strong><div><h3>{title}</h3><p>{text}</p></div></article>)}</div></div></section>
+
+      <section id="volunteer" className="volunteer section"><div className="container volunteer-inner"><div><div className="kicker light">DEVENIR BÉNÉVOLE</div><h2>Votre temps peut devenir <span>une force.</span></h2><p>Rejoignez le réseau EVES pour soutenir les actions communautaires, la communication, la recherche, l’animation, le mentorat ou la mobilisation.</p></div><a className="btn btn-white" href="mailto:contact@eves.cm?subject=Volontariat%20EVES">Je veux m’engager <ArrowRight size={17}/></a></div></section>
+
+      <section id="donate" className="section donate"><div className="container donate-box"><div><div className="kicker">SOUTENIR EVES</div><h2>Chaque contribution peut ouvrir <span>une nouvelle possibilité.</span></h2><p>Votre soutien aide à renforcer les capacités locales et à développer des actions au bénéfice des enfants, des jeunes et des familles vulnérables.</p></div><a className="btn btn-primary" href="mailto:contact@eves.cm?subject=Soutenir%20EVES">Faire une demande de soutien <ArrowRight size={17}/></a></div></section>
+
+      <section id="contact" className="section contact"><div className="container"><SectionTitle kicker="CONTACT" title="Parlons de la <span>prochaine action.</span>"/><div className="contact-grid"><div><a href="mailto:contact@eves.cm"><Mail/>contact@eves.cm</a><a href="tel:+237656987759"><MapPin/>+237 656 987 759 — MTECHsolutions, développement web</a><div><b>Zones prioritaires</b><p>Nord-Ouest · Extrême-Nord · Nord · Adamaoua · Est · Ouest · Noun · et, selon les besoins, l’ensemble du territoire et l’international.</p></div></div><div className="contact-card"><Logo/><p>Éducation aux Vulnérabilités de l’Enfance et de la Jeunesse, par l’Économie Sociale et Solidaire.</p><b>Développé par MTECHsolutions</b><span>Tel. +237 656 987 759</span></div></div></div></section>
     </main>
 
-    <footer><div className="container"><div className="row g-4 align-items-end"><div className="col-lg-5"><Logo/><p className="footer-desc">Éducation • Vulnérabilités de l’Enfance et de la Jeunesse • Économie Sociale et Solidaire</p></div><div className="col-lg-4 footer-links"><a href="#about">À propos</a><a href="#causes">Causes</a><a href="#impact">Impact</a><a href="#contact">Contact</a></div><div className="col-lg-3 text-lg-end copyright">© 2026 EVES · Cameroun</div></div></div></footer>
+    <footer><div className="container footer-grid"><div><Logo/><p>Une organisation camerounaise au service de l’éducation, de la protection, de la santé, de la résilience climatique et de la mobilisation.</p></div><div><b>Navigation</b><a href="#about">À propos</a><a href="#projects">Projets</a><a href="#impact">Impact</a><a href="#news">Blog & actualités</a></div><div><b>Engagement</b><a href="#volunteer">Bénévolat</a><a href="#partners">Partenaires</a><a href="#donate">Soutenir</a><a href="#contact">Contact</a></div></div><div className="container footer-bottom"><span>© 2026 EVES — Tous droits réservés.</span><span>Développé par <b>MTECHsolutions</b> · +237 656 987 759</span></div></footer>
   </div>
 }
 
