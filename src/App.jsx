@@ -43,12 +43,7 @@ function App() {
         <a href="#home" className="brand" onClick={close}><Logo /></a>
         <button className="mobile-toggle d-lg-none" onClick={() => setOpen(!open)} aria-label="Ouvrir le menu">{open ? <X/> : <Menu/>}</button>
         <nav className={`main-nav ${open ? 'open' : ''}`}>
-          <a href="#home" onClick={close}>ACCUEIL</a>
-          <a href="#about" onClick={close}>À PROPOS</a>
-          <a href="#causes" onClick={close}>CAUSES</a>
-          <a href="#approach" onClick={close}>NOTRE APPROCHE</a>
-          <a href="#impact" onClick={close}>IMPACT</a>
-          <a href="#contact" onClick={close}>CONTACT</a>
+          <a href="#home" onClick={close}>ACCUEIL</a><a href="#about" onClick={close}>À PROPOS</a><a href="#causes" onClick={close}>CAUSES</a><a href="#approach" onClick={close}>NOTRE APPROCHE</a><a href="#impact" onClick={close}>IMPACT</a><a href="#contact" onClick={close}>CONTACT</a>
           <a className="donate-btn" href="mailto:mandou.ayiwouo@gmail.com?subject=Soutenir%20EVES">SOUTENIR EVES</a>
         </nav>
       </div>
@@ -58,36 +53,16 @@ function App() {
       <section id="home" className="hero-section">
         <div className="hero-overlay"/>
         <div className="container position-relative h-100 d-flex align-items-center">
-          <div className="hero-copy">
-            <div className="hero-kicker">SOUTENIR LES CAUSES QUI COMPTENT</div>
-            <h1>Ensemble, faisons du monde <span>un meilleur endroit.</span></h1>
-            <p>EVES œuvre au Cameroun pour réduire les vulnérabilités éducatives, sociales et environnementales des enfants et des jeunes, avec une attention particulière aux jeunes filles et aux femmes musulmanes.</p>
-            <div className="hero-buttons"><a className="btn-eves btn-red" href="#causes">DÉCOUVRIR NOS ACTIONS <ArrowRight size={17}/></a><a className="btn-eves btn-outline-white" href="#about">EN SAVOIR PLUS</a></div>
-          </div>
+          <div className="hero-copy"><div className="hero-kicker">SOUTENIR LES CAUSES QUI COMPTENT</div><h1>Ensemble, faisons du monde <span>un meilleur endroit.</span></h1><p>EVES œuvre au Cameroun pour réduire les vulnérabilités éducatives, sociales et environnementales des enfants et des jeunes, avec une attention particulière aux jeunes filles et aux femmes musulmanes.</p><div className="hero-buttons"><a className="btn-eves btn-red" href="#causes">DÉCOUVRIR NOS ACTIONS <ArrowRight size={17}/></a><a className="btn-eves btn-outline-white" href="#about">EN SAVOIR PLUS</a></div></div>
           <div className="hero-caption d-none d-md-flex"><span>01</span><div><b>NOUN • OUEST CAMEROUN</b><small>Territoire pilote · 2027–2029</small></div></div>
-        </div>
-        <div className="hero-arrows"><button aria-label="Précédent"><i className="bi bi-arrow-left"/></button><button aria-label="Suivant"><i className="bi bi-arrow-right"/></button></div>
+        </div><div className="hero-arrows"><button aria-label="Précédent"><i className="bi bi-arrow-left"/></button><button aria-label="Suivant"><i className="bi bi-arrow-right"/></button></div>
       </section>
 
-      <section className="intro-strip">
-        <div className="container"><div className="row align-items-stretch g-0">
-          <div className="col-lg-5 intro-message"><div className="mini-kicker"><span>✦</span> NOUS CROYONS EN CE QUE NOUS FAISONS</div><h2>Un soutien chaleureux & véritable <span>pour les personnes qui en ont besoin.</span></h2><p>Notre action part des communautés et renforce les solidarités qui existent déjà.</p></div>
-          <div className="col-lg-7 intro-panels"><a href="#contact" className="intro-panel panel-gold"><i className="bi bi-heart-fill"/><b>Soutenir<br/>EVES</b><small>Contribuer à nos actions</small></a><a href="#contact" className="intro-panel panel-teal"><i className="bi bi-people-fill"/><b>Devenir<br/>partenaire</b><small>Construire avec nous</small></a><a href="#contact" className="intro-panel panel-blue"><i className="bi bi-person-raised-hand"/><b>Devenir<br/>bénévole</b><small>Donner de son temps</small></a></div>
-        </div></div>
-      </section>
+      <section className="intro-strip"><div className="container"><div className="row align-items-stretch g-0"><div className="col-lg-5 intro-message"><div className="mini-kicker"><span>✦</span> NOUS CROYONS EN CE QUE NOUS FAISONS</div><h2>Un soutien chaleureux & véritable <span>pour les personnes qui en ont besoin.</span></h2><p>Notre action part des communautés et renforce les solidarités qui existent déjà.</p></div><div className="col-lg-7 intro-panels"><a href="#contact" className="intro-panel panel-gold"><i className="bi bi-heart-fill"/><b>Soutenir<br/>EVES</b><small>Contribuer à nos actions</small></a><a href="#contact" className="intro-panel panel-teal"><i className="bi bi-people-fill"/><b>Devenir<br/>partenaire</b><small>Construire avec nous</small></a><a href="#contact" className="intro-panel panel-blue"><i className="bi bi-person-raised-hand"/><b>Devenir<br/>bénévole</b><small>Donner de son temps</small></a></div></div></div></section>
 
-      <section id="about" className="section-padding about-section">
-        <div className="container"><div className="row align-items-center g-5">
-          <div className="col-lg-6"><div className="section-kicker">QUI SOMMES-NOUS</div><h2 className="section-title">Une société où chaque enfant peut <span>réaliser son potentiel.</span></h2><p>EVES — Éducation, Vulnérabilités de l’Enfance et de la Jeunesse, Économie Sociale et Solidaire — est une initiative camerounaise qui agit à l’intersection de l’éducation, de la protection, de l’autonomisation et de l’innovation.</p><p>Nous croyons que le changement durable naît lorsque les familles, associations locales, coopératives, jeunes et partenaires avancent ensemble.</p><a href="#approach" className="text-link">Découvrir notre approche <ArrowRight size={16}/></a></div>
-          <div className="col-lg-6"><div className="about-photo"><div className="photo-badge"><strong>2027</strong><span>Début du pilote</span></div></div></div>
-        </div></div>
-      </section>
+      <section id="about" className="section-padding about-section"><div className="container"><div className="row align-items-center g-5"><div className="col-lg-6"><div className="section-kicker">QUI SOMMES-NOUS</div><h2 className="section-title">Une société où chaque enfant peut <span>réaliser son potentiel.</span></h2><p>EVES — Éducation, Vulnérabilités de l’Enfance et de la Jeunesse, Économie Sociale et Solidaire — est une initiative camerounaise qui agit à l’intersection de l’éducation, de la protection, de l’autonomisation et de l’innovation.</p><p>Nous croyons que le changement durable naît lorsque les familles, associations locales, coopératives, jeunes et partenaires avancent ensemble.</p><a href="#approach" className="text-link">Découvrir notre approche <ArrowRight size={16}/></a></div><div className="col-lg-6"><div className="about-photo"><div className="photo-badge"><strong>2027</strong><span>Début du pilote</span></div></div></div></div></div></section>
 
-      <section id="causes" className="causes-section section-padding">
-        <div className="container"><div className="row align-items-end mb-5"><div className="col-lg-7"><div className="section-kicker">NOS CAUSES</div><h2 className="section-title">Les causes qui <span>nous mobilisent.</span></h2></div><div className="col-lg-5"><p className="section-intro">Cinq axes complémentaires forment une chaîne de transformation, du terrain jusqu’au plaidoyer et à l’influence.</p></div></div>
-          <div className="row g-4">{causes.map(({icon: Icon, ...cause}) => <div className="col-md-6 col-xl" key={cause.title}><article className="cause-card"><div className="cause-icon"><Icon size={24}/></div><span className="cause-number">0{causes.indexOf(cause)+1}</span><h3>{cause.title}</h3><p>{cause.text}</p><div className="cause-target"><strong>{cause.target}</strong><small>{cause.label}</small></div></article></div>)}</div>
-        </div>
-      </section>
+      <section id="causes" className="causes-section section-padding"><div className="container"><div className="row align-items-end mb-5"><div className="col-lg-7"><div className="section-kicker">NOS CAUSES</div><h2 className="section-title">Les causes qui <span>nous mobilisent.</span></h2></div><div className="col-lg-5"><p className="section-intro">Cinq axes complémentaires forment une chaîne de transformation, du terrain jusqu’au plaidoyer et à l’influence.</p></div></div><div className="row g-4">{causes.map(({icon: Icon, ...cause}, index) => <div className="col-md-6 col-xl" key={cause.title}><article className="cause-card"><div className="cause-icon"><Icon size={24}/></div><span className="cause-number">0{index + 1}</span><h3>{cause.title}</h3><p>{cause.text}</p><div className="cause-target"><strong>{cause.target}</strong><small>{cause.label}</small></div></article></div>)}</div></div></section>
 
       <section id="impact" className="impact-section section-padding"><div className="container"><div className="section-kicker light">NOTRE IMPACT ATTENDU</div><h2 className="section-title light-title">Des objectifs mesurables.<br/><span>Une responsabilité partagée.</span></h2><div className="row stats-row">{stats.map(([n,t,d]) => <div className="col-6 col-lg-3 stat" key={t}><strong>{n}</strong><b>{t}</b><p>{d}</p></div>)}</div></div></section>
 
