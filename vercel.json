@@ -1,9 +1,24 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/:path((?!api/).*)",
-      "destination": "/index.html"
+      "src": "/api/auth/login",
+      "dest": "/api/auth/login.js"
+    },
+    {
+      "src": "/api/auth/session",
+      "dest": "/api/auth/session.js"
+    },
+    {
+      "src": "/api/auth/logout",
+      "dest": "/api/auth/logout.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
