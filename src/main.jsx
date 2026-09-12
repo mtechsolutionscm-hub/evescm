@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import App from './App'
 import SocialShare from './SocialShare'
 import './index.css'
+import './logo-fix.css'
 import './social.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
