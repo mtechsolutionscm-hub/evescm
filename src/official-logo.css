@@ -1,0 +1,9 @@
+/* EVES official logo: use the supplied public JPEG directly in all existing logo slots. */
+:root{--eves-logo:url('/WhatsApp%20Image%202026-09-12%20at%203.24.08%20PM.jpeg')}
+.brand img,.sidebar-head img,.footer-logo,.admin-brand img{content:var(--eves-logo)!important;background-image:none!important;object-fit:contain!important;object-position:center!important;color:transparent!important}
+.brand img{width:190px!important;height:118px!important}
+.sidebar-head img{width:150px!important;height:112px!important}
+.footer-logo{width:170px!important;height:150px!important}
+.admin-brand img{width:72px!important;height:72px!important}
+@media(max-width:900px){.brand img{width:145px!important;height:92px!important}.admin-brand img{width:64px!important;height:64px!important}}
+@media(max-width:600px){.brand img{width:126px!important;height:82px!important}.sidebar-head img{width:145px!important;height:108px!important}}
