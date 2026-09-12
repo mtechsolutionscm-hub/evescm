@@ -1,24 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "routes": [
-    {
-      "src": "/api/auth/login",
-      "dest": "/api/auth/login.js"
-    },
-    {
-      "src": "/api/auth/session",
-      "dest": "/api/auth/session.js"
-    },
-    {
-      "src": "/api/auth/logout",
-      "dest": "/api/auth/logout.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    {"src": "/api/auth/login", "dest": "/api/auth/login.js"},
+    {"src": "/api/auth/session", "dest": "/api/auth/session.js"},
+    {"src": "/api/auth/logout", "dest": "/api/auth/logout.js"},
+    {"src": "/api/cms", "dest": "/api/cms/index.js"},
+    {"handle": "filesystem"},
+    {"src": "/(.*)", "dest": "/index.html"}
   ]
 }
