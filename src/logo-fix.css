@@ -1,0 +1,46 @@
+/* EVES logo rendering safeguards — keeps the supplied official artwork crisp and proportional. */
+.brand{width:178px;height:112px;flex:0 0 178px;padding:0;display:flex;align-items:center;justify-content:flex-start;overflow:hidden}
+.brand img{display:block;width:178px;height:112px;object-fit:contain;object-position:center;image-rendering:auto}
+.sidebar-head>a{width:174px;height:104px;display:flex;align-items:center;overflow:hidden}
+.sidebar-head>a img{display:block;width:174px;height:104px;object-fit:contain;object-position:center}
+.footer-logo{display:block;width:205px;height:128px;object-fit:contain;object-position:center;margin:-8px 0 10px -8px}
+
+/* Desktop navigation: prevent logo/nav collision at common laptop widths. */
+@media (max-width:1200px) and (min-width:901px){
+  .container{width:min(1180px,calc(100% - 48px))}
+  .header-inner{gap:22px}
+  .brand{width:156px;flex-basis:156px}
+  .brand img{width:156px}
+  .desktop-nav>a,.nav-dropdown>button{padding:0 9px;font-size:9px}
+  .nav-donate{padding:0 17px!important;margin-left:5px}
+}
+
+/* Mobile/tablet: compact header, but never squash or stretch the logo. */
+@media (max-width:900px){
+  .header{height:82px}
+  .header-inner{gap:16px}
+  .brand{width:132px;height:70px;flex:0 0 132px}
+  .brand img{width:132px;height:70px}
+  .menu-button{margin-left:auto;display:grid;place-items:center;width:46px;height:46px;border-radius:2px}
+  .topbar-inner{min-height:38px}
+  .topbar{font-size:10px}
+  .topbar-inner>span:first-child{display:none}
+  .toplinks{width:100%;justify-content:flex-end;gap:14px}
+  .sidebar-head{min-height:96px;padding:10px 18px 8px 22px;display:flex;align-items:center;justify-content:space-between}
+  .sidebar-head>a{width:145px;height:78px}
+  .sidebar-head>a img{width:145px;height:78px}
+  .mobile-sidebar{width:min(380px,92vw)}
+}
+
+@media (max-width:480px){
+  .header{height:76px}
+  .brand{width:116px;height:62px;flex-basis:116px}
+  .brand img{width:116px;height:62px}
+  .menu-button{width:44px;height:44px}
+  .sidebar-head>a{width:132px;height:72px}
+  .sidebar-head>a img{width:132px;height:72px}
+  .footer-logo{width:180px;height:112px}
+}
+
+/* Avoid accidental transparent/white space around the photographic logo asset. */
+.brand img,.sidebar-head img,.footer-logo{background:transparent}
