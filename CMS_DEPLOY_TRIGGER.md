@@ -1,0 +1,1 @@
+EVES CMS deployment marker. The public site now reads published content from Supabase and listens for Realtime updates; the MSC admin writes content through the protected CMS API.
