@@ -1,1 +1,1 @@
-EVES CMS deployment marker. The public site now reads published content from Supabase and listens for Realtime updates; the MSC admin writes content through the protected CMS API.
+EVES CMS v3. Persistent Supabase content, bilingual page/news editing, newsroom workflow, SEO fields, scheduling, media references and Supabase Realtime synchronization are enabled.
