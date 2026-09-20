@@ -4,13 +4,10 @@ import './cms-site.css'
 
 const logo='/logo.svg'
 const galleryImages=[
- {src:'/gallery/WhatsApp Image 2026-09-12 at 6.30.50 PM (1).jpeg',alt:'Équipe et participants réunis autour d’une activité communautaire',caption:'Mobilisation communautaire et écoute de terrain.'},
- {src:'/gallery/WhatsApp Image 2026-09-12 at 6.30.50 PM.jpeg',alt:'Équipe EVES réunie lors d’une activité de terrain',caption:'Équipes et partenaires en action.'},
- {src:'/gallery/WhatsApp Image 2026-09-12 at 6.30.51 PM.jpeg',alt:'Équipe et partenaires réunis lors d’une activité EVES',caption:'Solidarité, participation et action collective.'},
- {src:'/gallery/images.jpeg',alt:'Enfants réunis dans une activité communautaire',caption:'Les enfants et les communautés au centre de l’action.'},
- {src:'/gallery/images (1).jpeg',alt:'Enfants et familles réunis dans un moment de partage',caption:'Participation, inclusion et lien communautaire.'},
- {src:'/gallery/images (2).jpeg',alt:'Communauté et enfants participant à une activité',caption:'Des communautés mobilisées autour de solutions durables.'},
- {src:'/gallery/images (5).jpeg',alt:'Moment de proximité avec les enfants et les familles',caption:'Une action de terrain centrée sur les personnes.'}
+ {src:'/gallery/eves-01.webp',alt:'Activité de terrain EVES',caption:'Éducation, protection et mobilisation au plus près des communautés.'},
+ {src:'/gallery/eves-02.webp',alt:'Action communautaire EVES',caption:'Des enfants, des jeunes et des familles au cœur de l’action.'},
+ {src:'/gallery/eves-03.webp',alt:'Équipe et participants EVES',caption:'Participation communautaire et solidarité.'},
+ {src:'/gallery/eves-04.webp',alt:'Mobilisation communautaire EVES',caption:'Des solutions durables construites avec les communautés.'}
 ]
 const links=[['/about','À propos'],['/causes','Objectifs'],['/projects','Programmes'],['/governance','Gouvernance'],['/advisory','Comité consultatif'],['/partners','Partenaires'],['/resources','Ressources'],['/events','Événements'],['/gallery','Galerie'],['/news','Actualités & Blog']]
 const objectives=[['OS1','Scolarisation','Accès, maintien et réinsertion scolaire.','fa-book-open'],['OS2','Résilience climatique','Adaptation, prévention et pratiques durables.','fa-seedling'],['OS3','Protection & VBG','Prévention, protection et autonomisation.','fa-shield-heart'],['OS4','Économie sociale et solidaire','OESS, AGR et développement durable.','fa-handshake-angle'],['OS5','Innovation & plaidoyer','Recherche, innovation et mobilisation.','fa-lightbulb']]
