@@ -4,10 +4,11 @@ import './cms-site.css'
 
 const logo='/logo.svg'
 const galleryImages=[
- {src:'/gallery/eves-01.webp',alt:'Activité de terrain EVES',caption:'Éducation, protection et mobilisation au plus près des communautés.'},
- {src:'/gallery/eves-02.webp',alt:'Action communautaire EVES',caption:'Des enfants, des jeunes et des familles au cœur de l’action.'},
- {src:'/gallery/eves-03.webp',alt:'Équipe et participants EVES',caption:'Participation communautaire et solidarité.'},
- {src:'/gallery/eves-04.webp',alt:'Mobilisation communautaire EVES',caption:'Des solutions durables construites avec les communautés.'}
+ {src:'/gallery/eves-01.jpg',alt:'Enfants au cœur d’une communauté',caption:'Enfance, dignité et solidarité au cœur de l’action EVES.'},
+ {src:'/gallery/eves-02.jpg',alt:'Mobilisation communautaire des enfants',caption:'Des communautés mobilisées autour de l’éducation et de la protection.'},
+ {src:'/gallery/eves-03.jpg',alt:'Apprentissage en classe',caption:'L’éducation et le maintien à l’école comme leviers de résilience.'},
+ {src:'/gallery/eves-04.jpg',alt:'Activité éducative communautaire',caption:'Des espaces d’apprentissage adaptés aux enfants et aux jeunes.'},
+ {src:'/gallery/eves-05.jpg',alt:'Enfants et jeunes en communauté',caption:'Une action construite avec les enfants, les jeunes et leurs familles.'}
 ]
 const links=[['/about','À propos'],['/causes','Objectifs'],['/projects','Programmes'],['/governance','Gouvernance'],['/advisory','Comité consultatif'],['/partners','Partenaires'],['/resources','Ressources'],['/events','Événements'],['/gallery','Galerie'],['/news','Actualités & Blog']]
 const objectives=[['OS1','Scolarisation','Accès, maintien et réinsertion scolaire.','fa-book-open'],['OS2','Résilience climatique','Adaptation, prévention et pratiques durables.','fa-seedling'],['OS3','Protection & VBG','Prévention, protection et autonomisation.','fa-shield-heart'],['OS4','Économie sociale et solidaire','OESS, AGR et développement durable.','fa-handshake-angle'],['OS5','Innovation & plaidoyer','Recherche, innovation et mobilisation.','fa-lightbulb']]
