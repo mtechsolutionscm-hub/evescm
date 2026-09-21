@@ -10,7 +10,7 @@ import './index.css'
 import './logo-fix.css'
 import './official-logo.css'
 
-const SITE_VERSION='2026.09.21.02'
+const SITE_VERSION='2026.09.21.03'
 const VERSION_KEY='eves-site-version'
 async function ensureFreshSite(){
  const current=localStorage.getItem(VERSION_KEY)
