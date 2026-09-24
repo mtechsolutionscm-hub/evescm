@@ -34,10 +34,12 @@ function Newsletter({lang,compact=false}){
  return <section className={compact?'cms-newsletter cms-newsletter-compact':'cms-newsletter'}><div><span><i className="fa-solid fa-envelope-open-text"/> NEWSLETTER EVES</span><h2><Txt lang={lang} fr="Recevez les nouvelles d’EVES" en="Stay connected with EVES"/></h2><p><Txt lang={lang} fr="Actualités, programmes, ressources, opportunités et temps forts directement dans votre boîte mail." en="News, programmes, resources, opportunities and highlights delivered to your inbox."/></p></div><form onSubmit={submit}><label className="sr-only" htmlFor="newsletter-email">Email</label><input id="newsletter-email" type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder={lang==='fr'?'Votre adresse email':'Your email address'}/><button disabled={state==='loading'}>{state==='loading'?'...':<><Txt lang={lang} fr="S’inscrire" en="Subscribe"/> <i className="fa-solid fa-arrow-right"/></>}</button>{state==='success'&&<small className="form-ok"><Txt lang={lang} fr="Merci. Votre inscription est confirmée." en="Thank you. Your subscription is confirmed."/></small>}{state==='exists'&&<small className="form-ok"><Txt lang={lang} fr="Cette adresse est déjà inscrite." en="This email is already subscribed."/></small>}{state==='error'&&<small className="form-error"><Txt lang={lang} fr="Inscription impossible pour le moment. Réessayez." en="Subscription failed. Please try again."/></small>}</form></section>
 }
 
-function Shell({children,lang,setLang,config,showNewsletter=true}){
+function Shell({children,lang,setLang,config,navigation=[],showNewsletter=true}){
  const [open,setOpen]=useState(false)
  const [expanded,setExpanded]=useState(null)
- const address=config?.extra?.address||'Yaoundé, Cameroun'
+ const address=config?.address||'Yaoundé, Cameroun'
+ const navItems=navigation.length?navigation:links.map(([href,label],i)=>({id:String(i),href,label_fr:label,label_en:label,parent_key:i<4?'organisation':i<6?'action':'ressources',visible:true}))
+ const grouped=[['Organisation','organisation'],['Action','action'],['Ressources','ressources']].map(([label,key])=>({label,items:navItems.filter(x=>x.parent_key===key)}))
  const menuLinks=links.concat([['/donate','Soutenir']])
  const toggleGroup=(label)=>setExpanded(x=>x===label?null:label)
  return <div className="cms-shell">
@@ -45,10 +47,8 @@ function Shell({children,lang,setLang,config,showNewsletter=true}){
   <header className="cms-header">
    <a href="/" className="cms-logo"><img src={config?.logo_url||logo} alt="Logo officiel EVES"/></a>
    <nav className="cms-desktop-nav" aria-label="Navigation principale">
-    <a href="/"><i className="fa-solid fa-house"/> Accueil</a>
-    <div className="cms-nav-dropdown"><button type="button" aria-haspopup="true">Organisation <i className="fa-solid fa-chevron-down"/></button><div className="cms-nav-menu">{navGroups[0].items.map(([u,t])=><a href={u} key={u}>{t}</a>)}</div></div>
-    <div className="cms-nav-dropdown"><button type="button" aria-haspopup="true">Action <i className="fa-solid fa-chevron-down"/></button><div className="cms-nav-menu">{navGroups[1].items.map(([u,t])=><a href={u} key={u}>{t}</a>)}</div></div>
-    <div className="cms-nav-dropdown"><button type="button" aria-haspopup="true">Ressources <i className="fa-solid fa-chevron-down"/></button><div className="cms-nav-menu">{navGroups[2].items.map(([u,t])=><a href={u} key={u}>{t}</a>)}</div></div>
+    <a href="/"><i className="fa-solid fa-house"/> {lang==='fr'?'Accueil':'Home'}</a>
+    {grouped.map(group=><div className="cms-nav-dropdown" key={group.label}><button type="button">{group.label} <i className="fa-solid fa-chevron-down"/></button><div className="cms-nav-menu">{group.items.map(item=><a href={item.href} key={item.id}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div></div>)}
     <a className="cms-support" href="/donate"><i className="fa-solid fa-heart"/> <Txt lang={lang} fr="Soutenir" en="Support"/></a>
     <button className="cms-lang" onClick={()=>setLang(lang==='fr'?'en':'fr')} aria-label="Changer de langue">{lang.toUpperCase()}</button>
    </nav>
@@ -57,9 +57,9 @@ function Shell({children,lang,setLang,config,showNewsletter=true}){
   {open&&<><div className="cms-backdrop" onClick={()=>setOpen(false)}/><aside className="cms-drawer" aria-label="Menu mobile">
    <div className="cms-drawer-head"><img src={config?.logo_url||logo} alt="Logo officiel EVES"/><button onClick={()=>setOpen(false)} aria-label="Fermer"><i className="fa-solid fa-xmark"/></button></div>
    <a href="/" onClick={()=>setOpen(false)} className="cms-mobile-home"><i className="fa-solid fa-house"/> Accueil</a>
-   {navGroups.map(group=><div className="cms-mobile-group" key={group.label}>
+   {grouped.map(group=><div className="cms-mobile-group" key={group.label}>
     <button type="button" className={expanded===group.label?'open':''} onClick={()=>toggleGroup(group.label)}>{group.label}<i className="fa-solid fa-chevron-down"/></button>
-    {expanded===group.label&&<div className="cms-mobile-submenu">{group.items.map(([u,t])=><a href={u} key={u} onClick={()=>setOpen(false)}>{t}</a>)}</div>}
+    {expanded===group.label&&<div className="cms-mobile-submenu">{group.items.map(item=><a href={item.href} key={item.id} onClick={()=>setOpen(false)}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div>}
    </div>)}
    <a href="/donate" onClick={()=>setOpen(false)} className="mobile-support"><i className="fa-solid fa-heart"/> <Txt lang={lang} fr="Soutenir EVES" en="Support EVES"/></a>
    <button className="cms-mobile-lang" onClick={()=>{setLang(lang==='fr'?'en':'fr');setOpen(false)}}>{lang==='fr'?'English':'Français'}</button>
@@ -70,7 +70,7 @@ function Shell({children,lang,setLang,config,showNewsletter=true}){
   <div className="cms-credit">EVES · <strong>MTECHsolutions</strong></div>
  </div>
 }
-function Home({pages,news,media,sections,config,lang,setLang}){
+function Home({pages,news,media,sections,navigation,config,lang,setLang}){
  const [slide,setSlide]=useState(0)
  const home=pages.find(x=>x.slug==='/')
  const posts=news.slice(0,3)
@@ -80,7 +80,7 @@ function Home({pages,news,media,sections,config,lang,setLang}){
  useEffect(()=>{const t=setInterval(()=>setSlide(x=>(x+1)%galleryImages.length),5000);return()=>clearInterval(t)},[])
  const title=hero?.[lang==='fr'?'title_fr':'title_en']||'Ensemble, construisons un avenir plus inclusif et durable.'
  const body=hero?.[lang==='fr'?'intro_fr':'intro_en']||'EVES accompagne les enfants, les jeunes et leurs familles les plus vulnérables à travers les Objectifs de développement durable et la solidarité internationale.'
- return <Shell {...{lang,setLang,config}}>
+ return <Shell {...{lang,setLang,config,navigation}}>
   <section className="cms-hero"><div className="cms-hero-collage">{galleryImages.map((image,i)=><figure key={image.src} className={i===slide?'active':''}><img src={image.src} alt={image.alt}/><figcaption>{image.caption}</figcaption></figure>)}</div><div className="cms-hero-shade"/><div className="cms-hero-copy"><img className="cms-hero-logo" src={config?.logo_url||logo} alt="Logo officiel EVES"/><span><i className="fa-solid fa-earth-africa"/> {hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'ODD · OBJECTIFS DE DÉVELOPPEMENT DURABLE & SOLIDARITÉ INTERNATIONALE'}</span><h1>{home?.metadata?.[lang==='fr'?'hero_title_fr':'hero_title_en']||title}</h1><p>{home?.[`body_${lang}`]||body}</p><a href={hero?.data?.cta1_href||"/about"} className="cms-btn">{hero?.data?.[lang==="fr"?"cta1_fr":"cta1_en"]||"Découvrir EVES"} <i className="fa-solid fa-arrow-right"/></a><a href={hero?.data?.cta2_href||"/donate"} className="cms-btn outline">{hero?.data?.[lang==="fr"?"cta2_fr":"cta2_en"]||"Soutenir notre action"}</a></div><div className="cms-dots">{galleryImages.map((_,i)=><button key={i} className={i===slide?'active':''} onClick={()=>setSlide(i)} aria-label={`Image ${i+1}`}/>)}</div></section>
   <section className="cms-section"><div className="cms-heading"><span>ODD · 5 OBJECTIFS SPÉCIFIQUES</span><h2>{objectivesSection?.[lang==="fr"?"title_fr":"title_en"]||"Une stratégie au service de l’inclusion, de la résilience et de la solidarité."}</h2><p>{objectivesSection?.[lang==="fr"?"intro_fr":"intro_en"]}</p></div><div className="obj-grid">{(objectivesSection?.data?.items||objectives).map((o,i)=>{const code=o.code||"OS"+(i+1),title=o[lang==="fr"?"title_fr":"title_en"],desc=o[lang==="fr"?"desc_fr":"desc_en"],icon=o.icon||"fa-circle";return <article key={code}><i className={`fa-solid ${icon}`}/><small>{code}</small><h3>{title}</h3><p>{desc}</p><a href="/causes" aria-label={`Découvrir ${code}`}><i className="fa-solid fa-arrow-right"/></a></article>})}</div></section>
   <section className="cms-section"><div className="cms-heading"><span>NEWSROOM</span><h2><Txt lang={lang} fr="Actualités & perspectives" en="News & perspectives"/></h2></div><div className="news-grid">{posts.map(p=><a href={`/news/${p.slug}`} className="news-card" key={p.id}><small>{p.category}</small><h3>{p[`title_${lang}`]||p.title_fr}</h3><p>{p[`excerpt_${lang}`]||p.excerpt_fr}</p><span>{p.published_at?new Date(p.published_at).toLocaleDateString(lang==='fr'?'fr-FR':'en-GB'):''} · <Txt lang={lang} fr="Lire" en="Read"/></span></a>)}</div></section>
@@ -88,22 +88,22 @@ function Home({pages,news,media,sections,config,lang,setLang}){
  </Shell>
 }
 
-function Gallery({media,config,lang,setLang}){
+function Gallery({media,navigation,config,lang,setLang}){
  return <Shell {...{config,lang,setLang}}><main className="cms-page"><div className="cms-page-hero"><span>EVES · GALERIE</span><h1><Txt lang={lang} fr="Le terrain, les équipes et les communautés." en="Field work, teams and communities."/></h1><p><Txt lang={lang} fr="Des images authentiques pour raconter l’engagement d’EVES et les personnes au cœur de nos programmes." en="Authentic images telling the EVES story and highlighting the people at the heart of our programmes."/></p></div><section className="cms-section"><div className="gallery-grid">{(media.length?media:galleryImages.map((x,i)=>({id:i,public_url:x.src,alt_fr:x.alt,caption_fr:x.caption}))).map((image,i)=><figure key={image.id}><img src={image.public_url} alt={image[lang==='fr'?'alt_fr':'alt_en']||image.alt_fr}/><figcaption><strong>0{i+1}</strong><span>{image[lang==='fr'?'caption_fr':'caption_en']||image.caption_fr}</span></figcaption></figure>)}</div></section></main></Shell>
 }
 
-function Page({item,config,lang,setLang}){return <Shell {...{config,lang,setLang}}><main className="cms-page"><div className="cms-page-hero"><span>{item.category||'EVES'}</span><h1>{item[`title_${lang}`]||item.title_fr}</h1><p>{item[`excerpt_${lang}`]||item.excerpt_fr}</p></div><article>{(item[`body_${lang}`]||item.body_fr||'').split('\n').filter(Boolean).map((p,i)=><p key={i}>{p}</p>)}</article></main></Shell>}
+function Page({item,navigation,config,lang,setLang}){return <Shell {...{config,lang,setLang,navigation}}><main className="cms-page"><div className="cms-page-hero"><span>{item.category||'EVES'}</span><h1>{item[`title_${lang}`]||item.title_fr}</h1><p>{item[`excerpt_${lang}`]||item.excerpt_fr}</p></div><article>{(item[`body_${lang}`]||item.body_fr||'').split('\n').filter(Boolean).map((p,i)=><p key={i}>{p}</p>)}</article></main></Shell>}
 
-function News({news,config,lang,setLang}){const posts=news;return <Shell {...{config,lang,setLang,showNewsletter:false}}><main className="cms-page"><div className="cms-page-hero"><span>EVES NEWSROOM</span><h1><Txt lang={lang} fr="Actualités, analyses et terrain." en="News, analysis and field stories."/></h1><p><Txt lang={lang} fr="Avancées institutionnelles, programmes, partenariats et résultats." en="Institutional progress, programmes, partnerships and results."/></p></div><div className="news-grid large">{posts.map(p=><a href={`/news/${p.slug}`} className="news-card" key={p.id}><small>{p.category}</small><h2>{p[`title_${lang}`]||p.title_fr}</h2><p>{p[`excerpt_${lang}`]||p.excerpt_fr}</p><span>{p.published_at?new Date(p.published_at).toLocaleDateString(lang==='fr'?'fr-FR':'en-GB'):''}</span></a>)}</div><Newsletter lang={lang}/></main></Shell>}
+function News({news,navigation,config,lang,setLang}){const posts=news;return <Shell {...{config,lang,setLang,navigation,showNewsletter:false}}><main className="cms-page"><div className="cms-page-hero"><span>EVES NEWSROOM</span><h1><Txt lang={lang} fr="Actualités, analyses et terrain." en="News, analysis and field stories."/></h1><p><Txt lang={lang} fr="Avancées institutionnelles, programmes, partenariats et résultats." en="Institutional progress, programmes, partnerships and results."/></p></div><div className="news-grid large">{posts.map(p=><a href={`/news/${p.slug}`} className="news-card" key={p.id}><small>{p.category}</small><h2>{p[`title_${lang}`]||p.title_fr}</h2><p>{p[`excerpt_${lang}`]||p.excerpt_fr}</p><span>{p.published_at?new Date(p.published_at).toLocaleDateString(lang==='fr'?'fr-FR':'en-GB'):''}</span></a>)}</div><Newsletter lang={lang}/></main></Shell>}
 
 export default function CmsSite(){
  const [state,setState]=useState({pages:[],news:[],media:[],sections:[],navigation:[],config:null})
  const [lang,setLang]=useState(()=>navigator.language?.toLowerCase().startsWith('fr')?'fr':'en')
  const path=window.location.pathname
  useEffect(()=>{let alive=true;const load=()=>fetchPublicContent().then(x=>alive&&setState(x)).catch(console.error);load();const stop=subscribeToCms(load);return()=>{alive=false;stop()}},[])
- if(path==='/gallery')return <Gallery media={state.media} config={state.config} lang={lang} setLang={setLang}/>
- if(path==='/news')return <News news={state.news} config={state.config} lang={lang} setLang={setLang}/>
+ if(path==='/gallery')return <Gallery media={state.media} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>
+ if(path==='/news')return <News news={state.news} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>
  const item=state.pages.find(x=>x.slug===path)
- if(path.startsWith('/news/')){const n=state.news.find(x=>x.slug===path.slice(6));return n?<Page item={n} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:'Article introuvable',title_en:'Article not found',body_fr:'Cette publication n’existe pas ou n’est plus publiée.',body_en:'This publication does not exist or is no longer published.'}} config={state.config} lang={lang} setLang={setLang}/>}
- return path==='/'||path==='/index.html'?<Home pages={state.pages} news={state.news} media={state.media} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>:item?<Page item={item} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:'Page introuvable',title_en:'Page not found',body_fr:'La page demandée n’est pas disponible.',body_en:'The requested page is not available.'}} config={state.config} lang={lang} setLang={setLang}/>
+ if(path.startsWith('/news/')){const n=state.news.find(x=>x.slug===path.slice(6));return n?<Page item={n} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:'Article introuvable',title_en:'Article not found',body_fr:'Cette publication n’existe pas ou n’est plus publiée.',body_en:'This publication does not exist or is no longer published.'}} config={state.config} lang={lang} setLang={setLang}/>}
+ return path==='/'||path==='/index.html'?<Home pages={state.pages} news={state.news} media={state.media} sections={state.sections} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>:item?<Page item={item} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:'Page introuvable',title_en:'Page not found',body_fr:'La page demandée n’est pas disponible.',body_en:'The requested page is not available.'}} config={state.config} lang={lang} setLang={setLang}/>
 }
