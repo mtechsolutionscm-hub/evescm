@@ -26,8 +26,7 @@ function Newsletter({lang,compact=false}){
   e.preventDefault()
   if(!email.trim()) return
   setState('loading')
-  let error=null;try{const result=await subscribeNewsletter(email.trim().toLowerCase(),lang);if(result?.exists)setState('exists')}catch(e){error=e}
-  if(error?.code==='23505'){setState('exists');return}
+  let error=null;try{const result=await subscribeNewsletter(email.trim().toLowerCase(),lang);if(result?.exists){setState('exists');return}}catch(e){error=e}
   if(error){setState('error');return}
   setEmail('');setState('success')
  }
