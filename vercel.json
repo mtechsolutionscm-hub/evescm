@@ -1,27 +1,17 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "headers": [
-    {
-      "source": "/",
-      "headers": [
-        {"key":"Cache-Control","value":"no-store, max-age=0, must-revalidate"},
-        {"key":"CDN-Cache-Control","value":"no-store, max-age=0, must-revalidate"}
-      ]
-    },
-    {
-      "source": "/index.html",
-      "headers": [
-        {"key":"Cache-Control","value":"no-store, max-age=0, must-revalidate"},
-        {"key":"CDN-Cache-Control","value":"no-store, max-age=0, must-revalidate"}
-      ]
-    }
+  "$schema":"https://openapi.vercel.sh/vercel.json",
+  "headers":[
+    {"source":"/","headers":[{"key":"Cache-Control","value":"no-store, max-age=0, must-revalidate"},{"key":"CDN-Cache-Control","value":"no-store, max-age=0, must-revalidate"}]},
+    {"source":"/index.html","headers":[{"key":"Cache-Control","value":"no-store, max-age=0, must-revalidate"},{"key":"CDN-Cache-Control","value":"no-store, max-age=0, must-revalidate"}]}
   ],
-  "routes": [
-    {"src": "/api/auth/login", "dest": "/api/auth/login.js"},
-    {"src": "/api/auth/session", "dest": "/api/auth/session.js"},
-    {"src": "/api/auth/logout", "dest": "/api/auth/logout.js"},
-    {"src": "/api/cms", "dest": "/api/cms/index.js"},
-    {"handle": "filesystem"},
-    {"src": "/(.*)", "dest": "/index.html"}
+  "routes":[
+    {"src":"/api/auth/login","dest":"/api/auth/login.js"},
+    {"src":"/api/auth/session","dest":"/api/auth/session.js"},
+    {"src":"/api/auth/logout","dest":"/api/auth/logout.js"},
+    {"src":"/api/cms","dest":"/api/cms/index.js"},
+    {"src":"/api/newsletter","dest":"/api/newsletter/index.js"},
+    {"src":"/api/media","dest":"/api/media/index.js"},
+    {"handle":"filesystem"},
+    {"src":"/(.*)","dest":"/index.html"}
   ]
 }
