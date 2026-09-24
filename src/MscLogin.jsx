@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Admin from './Admin'
 import './msc-login.css'
 
-const LOGO = '/WhatsApp%20Image%202026-09-12%20at%203.24.08%20PM.jpeg'
+const LOGO = '/logo.svg'
 
 export default function MscLogin(){
   const [status,setStatus]=useState('checking')
