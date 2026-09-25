@@ -28,3 +28,7 @@ Le projet est configuré pour Vercel avec `vercel.json` et produit le dossier `d
 ## Contenu
 
 Le contenu de la vitrine reprend le document de projet EVES — Version 16, juillet 2026 : vision, mission, cinq objectifs spécifiques, indicateurs d’impact, approche ESS, pilote dans le Noun et horizon 2027–2029.
+
+## Déploiement
+
+Les changements poussés sur `main` sont destinés à être propagés automatiquement par l’intégration Git Vercel. Les variables serveur du CMS restent des secrets Vercel et doivent être configurées dans l’environnement Production avant le déploiement.
