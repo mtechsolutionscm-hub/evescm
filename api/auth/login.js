@@ -2,7 +2,7 @@ import {sb,json,signSession,verifyPassword,SERVER_KEY,audit} from '../_eves.js'
 const attempts=new Map()
 export default async function handler(req,res){
  if(req.method!=='POST')return json(res,405,{error:'Method not allowed'})
- if(!process.env.EVES_ADMIN_SESSION_SECRET||!SERVER_KEY)return json(res,503,{error:'CMS authentication is not configured on this deployment.'})
+ const missing=[];if(!process.env.EVES_ADMIN_SESSION_SECRET)missing.push('EVES_ADMIN_SESSION_SECRET');if(!SERVER_KEY)missing.push('SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_SECRET_KEY)');if(missing.length)return json(res,503,{error:'CMS authentication is not configured on this deployment.',missing})
  try{
   const {email,password}=typeof req.body==='string'?JSON.parse(req.body):req.body||{}
   const normalized=String(email||'').trim().toLowerCase(),now=Date.now(),a=attempts.get(normalized)||{count:0,until:0}
