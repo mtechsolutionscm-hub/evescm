@@ -36,17 +36,17 @@ function Newsletter({lang,compact=false,section,config}){
  return <section className={compact?'cms-newsletter cms-newsletter-compact':'cms-newsletter'}><div><span><i className="fa-solid fa-envelope-open-text"/> {text.newsletter_label}</span><h2>{section?.[lang==="fr"?"title_fr":"title_en"]||<Txt lang={lang} fr={text.newsletter_title} en={text.newsletter_title}/>}</h2><p>{section?.[lang==="fr"?"intro_fr":"intro_en"]||<Txt lang={lang} fr={text.newsletter_intro} en={text.newsletter_intro}/>}</p></div><form onSubmit={submit}><label className="sr-only" htmlFor="newsletter-email">Email</label><input id="newsletter-email" type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder={text.newsletter_placeholder}/><button disabled={state==='loading'}>{state==='loading'?'...':<><Txt lang={lang} fr={text.newsletter_button} en={text.newsletter_button}/> <i className="fa-solid fa-arrow-right"/></>}</button>{state==='success'&&<small className="form-ok"><Txt lang={lang} fr={text.newsletter_success} en={text.newsletter_success}/></small>}{state==='exists'&&<small className="form-ok"><Txt lang={lang} fr={text.newsletter_exists} en={text.newsletter_exists}/></small>}{state==='error'&&<small className="form-error"><Txt lang={lang} fr={text.newsletter_error} en={text.newsletter_error}/></small>}</form></section>
 }
 
-function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsletter=true}){
+function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsletter=true}){\n const text=siteText(config,lang)
  const [open,setOpen]=useState(false)
  const [expanded,setExpanded]=useState(null)
  const address=config?.address||'Yaoundé, Cameroun'
  const navItems=navigation.length?navigation:links.map(([href,label],i)=>({id:String(i),href,label_fr:label,label_en:label,parent_key:i<4?'organisation':i<6?'action':'ressources',visible:true}))
- const grouped=[['Organisation','organisation'],['Action','action'],['Ressources','ressources']].map(([label,key])=>({label,items:navItems.filter(x=>x.parent_key===key)}))
+ const grouped=[[text.organisation,'organisation'],[text.action,'action'],[text.resources,'ressources']].map(([label,key])=>({label,items:navItems.filter(x=>x.parent_key===key)}))
  const menuLinks=links.concat([['/donate','Soutenir']])
  const toggleGroup=(label)=>setExpanded(x=>x===label?null:label)
  const newsletterSection=sections.find(x=>x.section_key==='newsletter')
  return <div className="cms-shell">
-  <div className="cms-top"><span><i className="fa-solid fa-location-dot"/> {address} · Action ouverte à toutes et tous</span><span><a href={`mailto:${config?.contact_email||'contact@eves.cm'}`}><i className="fa-solid fa-envelope"/> {config?.contact_email||'contact@eves.cm'}</a><a href={`tel:${config?.phone||'+237 656 987 759'}`}><i className="fa-solid fa-phone"/> {config?.phone||'+237 656 987 759'}</a></span></div>
+  <div className="cms-top"><span><i className="fa-solid fa-location-dot"/> {address} · {text.topline}</span><span><a href={`mailto:${config?.contact_email||'contact@eves.cm'}`}><i className="fa-solid fa-envelope"/> {config?.contact_email||'contact@eves.cm'}</a><a href={`tel:${config?.phone||'+237 656 987 759'}`}><i className="fa-solid fa-phone"/> {config?.phone||'+237 656 987 759'}</a></span></div>
   <header className="cms-header">
    <a href="/" className="cms-logo"><img src={config?.logo_url||logo} alt="Logo officiel EVES"/></a>
    <nav className="cms-desktop-nav" aria-label="Navigation principale">
@@ -59,18 +59,18 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
   </header>
   {open&&<><div className="cms-backdrop" onClick={()=>setOpen(false)}/><aside className="cms-drawer" aria-label="Menu mobile">
    <div className="cms-drawer-head"><img src={config?.logo_url||logo} alt="Logo officiel EVES"/><button onClick={()=>setOpen(false)} aria-label="Fermer"><i className="fa-solid fa-xmark"/></button></div>
-   <a href="/" onClick={()=>setOpen(false)} className="cms-mobile-home"><i className="fa-solid fa-house"/> Accueil</a>
+   <a href="/" onClick={()=>setOpen(false)} className="cms-mobile-home"><i className="fa-solid fa-house"/> {text.mobile_home}</a>
    {grouped.map(group=><div className="cms-mobile-group" key={group.label}>
     <button type="button" className={expanded===group.label?'open':''} onClick={()=>toggleGroup(group.label)}>{group.label}<i className="fa-solid fa-chevron-down"/></button>
     {expanded===group.label&&<div className="cms-mobile-submenu">{group.items.map(item=><a href={item.href} key={item.id} onClick={()=>setOpen(false)}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div>}
    </div>)}
-   <a href="/donate" onClick={()=>setOpen(false)} className="mobile-support"><i className="fa-solid fa-heart"/> <Txt lang={lang} fr="Soutenir EVES" en="Support EVES"/></a>
+   <a href="/donate" onClick={()=>setOpen(false)} className="mobile-support"><i className="fa-solid fa-heart"/> <Txt lang={lang} fr={text.footer_support} en={text.footer_support}/></a>
    <button className="cms-mobile-lang" onClick={()=>{setLang(lang==='fr'?'en':'fr');setOpen(false)}}>{lang==='fr'?'English':'Français'}</button>
   </aside></>}
   {children}
   {showNewsletter&&newsletterSection?.visible!==false&&<Newsletter lang={lang} compact section={newsletterSection} config={config}/>} 
-  <footer className="cms-footer"><div><img src={config?.logo_url||logo} alt="Logo officiel EVES"/><p>{config?.[lang==='fr'?'footer_description_fr':'footer_description_en']||<Txt lang={lang} fr="Objectifs de développement durable & solidarité internationale. EVES agit pour des communautés plus inclusives, résilientes et solidaires." en="Sustainable Development Goals & international solidarity. EVES works for more inclusive, resilient and caring communities."/>}</p></div><div><h4>EVES</h4>{links.slice(0,7).map(([u,t])=><a href={u} key={u}>{t}</a>)}</div><div><h4><Txt lang={lang} fr="Contact professionnel" en="Professional contact"/></h4><a href={`mailto:${config?.contact_email||'contact@eves.cm'}`}>{config?.contact_email||'contact@eves.cm'}</a><a href={`tel:${config?.phone||'+237 656 987 759'}`}>{config?.phone||'+237 656 987 759'}</a><p><i className="fa-solid fa-location-dot"/> {address}</p><a className="cms-footer-donate" href="/donate"><i className="fa-solid fa-heart"/> <Txt lang={lang} fr="Soutenir EVES" en="Support EVES"/></a></div></footer>
-  <div className="cms-credit">EVES · <strong>MTECHsolutions</strong></div>
+  <footer className="cms-footer"><div><img src={config?.logo_url||logo} alt="Logo officiel EVES"/><p>{config?.[lang==='fr'?'footer_description_fr':'footer_description_en']||<Txt lang={lang} fr="Objectifs de développement durable & solidarité internationale. EVES agit pour des communautés plus inclusives, résilientes et solidaires." en="Sustainable Development Goals & international solidarity. EVES works for more inclusive, resilient and caring communities."/>}</p></div><div><h4>EVES</h4>{links.slice(0,7).map(([u,t])=><a href={u} key={u}>{t}</a>)}</div><div><h4><Txt lang={lang} fr={text.footer_contact} en={text.footer_contact}/></h4><a href={`mailto:${config?.contact_email||'contact@eves.cm'}`}>{config?.contact_email||'contact@eves.cm'}</a><a href={`tel:${config?.phone||'+237 656 987 759'}`}>{config?.phone||'+237 656 987 759'}</a><p><i className="fa-solid fa-location-dot"/> {address}</p><a className="cms-footer-donate" href="/donate"><i className="fa-solid fa-heart"/> <Txt lang={lang} fr="Soutenir EVES" en="Support EVES"/></a></div></footer>
+  <div className="cms-credit">{text.credit}</div>
  </div>
 }
 function Home({pages,news,media,sections,navigation,config,lang,setLang}){
