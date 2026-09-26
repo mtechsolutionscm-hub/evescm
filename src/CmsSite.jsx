@@ -39,7 +39,8 @@ function Newsletter({lang,compact=false,section,config}){
 function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsletter=true}){
  const [open,setOpen]=useState(false)
  const [expanded,setExpanded]=useState(null)
- const text=siteText(config,lang)\n const address=config?.address||'Yaoundé, Cameroun'
+ const text=siteText(config,lang)
+ const address=config?.address||'Yaoundé, Cameroun'
  const navItems=navigation.length?navigation:links.map(([href,label],i)=>({id:String(i),href,label_fr:label,label_en:label,parent_key:i<4?'organisation':i<6?'action':'ressources',visible:true}))
  const grouped=[[text.organisation,'organisation'],[text.action,'action'],[text.resources,'ressources']].map(([label,key])=>({label,items:navItems.filter(x=>x.parent_key===key)}))
  const menuLinks=links.concat([['/donate','Soutenir']])
