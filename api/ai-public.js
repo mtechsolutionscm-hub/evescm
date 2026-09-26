@@ -7,9 +7,10 @@ const hits=new Map()
 
 function clean(v,max=9000){return String(v||'').slice(0,max)}
 async function snapshot(){
+ const now=encodeURIComponent(new Date().toISOString())
  const [config,pages,news,sections]=await Promise.all([
   sb('eves_cms_config?select=site_name,tagline_fr,tagline_en,contact_email,phone,address,footer_description_fr,footer_description_en&id=eq.true'),
-  sb('eves_cms_pages?select=slug,title_fr,title_en,excerpt_fr,excerpt_en,body_fr,body_en,category&or=(status.eq.published,and(status.eq.scheduled,published_at.lte.now()))&order=sort_order.asc'),
+  sb('eves_cms_pages?select=slug,title_fr,title_en,excerpt_fr,excerpt_en,body_fr,body_en,category&or=(status.eq.published,and(status.eq.scheduled,published_at.lte.${now}))&order=sort_order.asc'),
   sb('eves_cms_news?select=slug,title_fr,title_en,excerpt_fr,excerpt_en,body_fr,body_en,category,published_at&or=(status.eq.published,and(status.eq.scheduled,published_at.lte.now()))&order=published_at.desc.nullslast&limit=12'),
   sb('eves_cms_sections?select=section_key,title_fr,title_en,intro_fr,intro_en,visible&visible.eq.true&order=sort_order.asc')
  ])
