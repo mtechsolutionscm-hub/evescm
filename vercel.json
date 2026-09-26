@@ -11,6 +11,7 @@
     {"src":"/api/cms","dest":"/api/cms/index.js"},
     {"src":"/api/newsletter","dest":"/api/newsletter/index.js"},
     {"src":"/api/media","dest":"/api/media/index.js"},
+    {"src":"/api/ai","dest":"/api/ai/index.js"},
     {"handle":"filesystem"},
     {"src":"/(.*)","dest":"/index.html"}
   ]
