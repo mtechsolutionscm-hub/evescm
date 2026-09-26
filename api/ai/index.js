@@ -15,7 +15,7 @@ function extractJson(raw){
   return null
 }
 function explicitCommand(message){
-  return /\\b(chang(?:e|er)|modif(?:y|ie)|update|updat(?:e|er)|set|replace|remplac(?:e|er)|mettre|mets|ajout(?:e|er)|supprim(?:e|er)|corrig(?:e|er)|changeons)\\b/i.test(message)
+  return /\b(chang(?:e|er)|modif(?:y|ie)|update|updat(?:e|er)|set|replace|remplac(?:e|er)|mettre|mets|ajout(?:e|er)|supprim(?:e|er)|corrig(?:e|er)|changeons)\b/i.test(message)
 }
 async function siteSnapshot(){
   const [config,pages,news,sections,navigation]=await Promise.all([
