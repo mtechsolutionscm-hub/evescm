@@ -12,3 +12,162 @@ img{max-width:100%}
 .eves-ai-fab{position:fixed;right:24px;bottom:24px;z-index:80;display:flex;align-items:center;gap:9px;border:0;border-radius:999px;padding:13px 18px;background:#16302F;color:#fff;box-shadow:0 14px 34px rgba(0,0,0,.22);font:600 13px "Work Sans",sans-serif;cursor:pointer}.eves-ai-fab i{color:#E9C9A9}
 .eves-ai-panel{position:fixed;right:24px;bottom:82px;z-index:81;width:min(390px,calc(100vw - 28px));height:min(590px,calc(100vh - 110px));display:flex;flex-direction:column;background:#FBFAF6;border:1px solid rgba(23,40,42,.14);border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.28);overflow:hidden}.eves-ai-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;background:#16302F;color:#fff}.eves-ai-head b{display:block;font:700 18px "Fraunces",serif}.eves-ai-head small{opacity:.78;font-size:11px}.eves-ai-head button{border:0;background:transparent;color:#fff;font-size:18px;cursor:pointer}.eves-ai-messages{flex:1;overflow:auto;padding:18px}.eves-ai-welcome{text-align:center;padding:50px 20px;color:#2C5F63}.eves-ai-welcome i{display:block;font-size:28px;margin-bottom:12px;color:#B8551E}.eves-ai-welcome b{display:block;font-size:16px;color:#16302F}.eves-ai-welcome p{font-size:13px;line-height:1.55}.eves-ai-msg{margin:0 0 13px;max-width:88%}.eves-ai-msg.user{margin-left:auto;text-align:right}.eves-ai-msg span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#B8551E}.eves-ai-msg p{margin:4px 0 0;padding:10px 12px;border-radius:12px;background:#fff;color:#16302F;font-size:13px;line-height:1.5}.eves-ai-msg.user p{background:#E9C9A9}.eves-ai-compose{display:flex;gap:8px;padding:12px;border-top:1px solid rgba(23,40,42,.12);background:#fff}.eves-ai-compose input{min-width:0;flex:1;border:1px solid rgba(23,40,42,.18);border-radius:10px;padding:11px 12px;font-size:13px}.eves-ai-compose button{width:44px;border:0;border-radius:10px;background:#B8551E;color:#fff}.eves-ai-compose button:disabled{opacity:.45}
 @media(max-width:760px){.eves-ai-fab{right:15px;bottom:15px;padding:12px 15px}.eves-ai-panel{right:14px;bottom:70px;width:calc(100vw - 28px);height:min(600px,calc(100vh - 90px))}}
+
+
+/* EVES editorial landing system — inspired by the clean institutional rhythm of The Okwelians, without copying its visual identity */
+.cms-shell{background:#fff;color:#173f42}
+.cms-top{min-height:38px;padding:0 5.5%;background:#f7f8f5;border-bottom:1px solid #e4e8e4;color:#496466;font-size:11px;letter-spacing:.01em}
+.cms-top span:last-child{gap:20px}
+.cms-header{min-height:96px;padding:10px 5.5%;border-bottom:1px solid #e5e9e6;box-shadow:0 3px 14px rgba(12,49,51,.035)}
+.cms-logo img{width:138px;height:76px}
+.cms-header nav{gap:18px}
+.cms-header nav>a,.cms-nav-dropdown>button{font-size:11px;letter-spacing:.02em;color:#102f31}
+.cms-nav-dropdown>button{padding:10px 6px}
+.cms-header nav>a:hover,.cms-nav-dropdown>button:hover{color:#b8551e}
+.cms-header nav .cms-support{padding:12px 16px;background:#b8551e}
+.cms-header nav .cms-lang{background:#fff;padding:9px 10px;border-color:#dce4df}
+
+.cms-hero{
+ min-height:680px;
+ height:min(760px,calc(100vh - 134px));
+ background:#f7f5ee;
+ color:#102f31;
+}
+.cms-hero-collage{
+ left:0;right:auto;top:0;bottom:0;width:44%;
+ background:#dfe8e4;
+}
+.cms-hero-collage figure{transition:opacity .45s ease,visibility .45s ease}
+.cms-hero-collage figure img{object-position:center;transform:scale(1.01)}
+.cms-hero-collage figure.active img{transform:scale(1.015)}
+.cms-hero-collage figcaption{
+ left:28px;right:auto;bottom:28px;width:min(360px,calc(100% - 56px));
+ background:rgba(9,47,53,.9);border-left:3px solid #e2ae3d;padding:12px 14px;
+ font-size:11px;line-height:1.5
+}
+.cms-hero-shade{
+ left:44%;right:0;
+ background:linear-gradient(90deg,rgba(247,245,238,.08),rgba(247,245,238,0) 16%);
+}
+.cms-hero-copy{
+ position:absolute;right:0;left:44%;top:0;bottom:0;
+ max-width:none;padding:92px 7% 95px 7.5%;
+ color:#102f31;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+}
+.cms-hero-logo{
+ width:150px;height:72px;margin:0 0 25px;object-position:left center;
+ filter:none;mix-blend-mode:multiply;opacity:.96
+}
+.cms-hero-copy>span,.cms-heading>span,.cms-page-hero>span,.cms-newsletter>div>span{
+ color:#b8551e;font-size:10px;letter-spacing:.14em;line-height:1.5
+}
+.cms-hero-copy>span i{margin-right:6px}
+.cms-hero h1{
+ max-width:690px;margin:16px 0 19px;
+ font-family:"Fraunces",Georgia,serif;font-size:clamp(44px,4.4vw,68px);line-height:1.02;
+ letter-spacing:-.045em;color:#0d2e31
+}
+.cms-hero p{
+ max-width:660px;margin:0 0 8px;color:#50686a;font-size:15px;line-height:1.85
+}
+.cms-btn{
+ padding:14px 19px;margin:17px 9px 0 0;background:#102f31;
+ color:#fff;border:1px solid #102f31;font-size:11px;letter-spacing:.03em;
+ text-transform:uppercase
+}
+.cms-btn:hover{background:#b8551e;border-color:#b8551e}
+.cms-btn.outline{background:transparent;color:#102f31;border-color:#9baaa7}
+.cms-btn.outline:hover{color:#fff;border-color:#b8551e}
+.cms-dots{left:44%;right:7%;bottom:28px;justify-content:flex-end}
+.cms-dots button{background:#c4cfcb;width:34px;height:3px}
+.cms-dots button.active{background:#b8551e}
+
+.cms-section{max-width:none;padding:105px 7%}
+.cms-heading{max-width:820px;margin-bottom:44px}
+.cms-heading h2{font-size:42px;letter-spacing:-.035em;color:#102f31}
+.cms-heading p{max-width:680px;color:#607273;font-size:14px}
+.obj-grid{grid-template-columns:repeat(5,1fr);gap:16px}
+.obj-grid article{
+ min-height:325px;padding:30px 27px;background:#f4f6f3;border:0;border-top:3px solid transparent;
+ transition:transform .2s,box-shadow .2s,border-color .2s
+}
+.obj-grid article:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(14,55,57,.09);border-top-color:#e2ae3d}
+.obj-grid article>i{color:#2e666b;background:#dcebe6;width:48px;height:48px;display:grid;place-items:center;font-size:20px;margin-bottom:23px}
+.obj-grid small{color:#aab5b3;font-size:9px}
+.obj-grid h3{font-size:20px;color:#163638;line-height:1.3}
+.obj-grid p{font-size:12px;line-height:1.8;color:#607273}
+.obj-grid article>a{color:#2e666b}
+
+.news-grid{grid-template-columns:repeat(3,1fr);gap:22px}
+.news-card{padding:30px;border:1px solid #e1e7e3;border-top:3px solid #e2ae3d}
+.news-card h2,.news-card h3{font-size:22px;color:#163638;line-height:1.3}
+.news-card p{font-size:12px;line-height:1.8;color:#607273}
+
+.cms-home-gallery{background:#f5f6f2}
+.gallery-strip{grid-template-columns:1.3fr .9fr .9fr 1.1fr;gap:14px}
+.gallery-strip a{height:280px}
+.gallery-strip a:first-child{height:280px}
+.gallery-strip img{filter:saturate(.94)}
+.cms-text-link{color:#2e666b;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+
+.cms-newsletter{max-width:none;padding:70px 7%;background:#e6f0eb}
+.cms-newsletter h2{color:#163638;font-size:36px}
+.cms-newsletter p{color:#607273;font-size:12px}
+.cms-newsletter button{background:#102f31}
+.cms-newsletter button:hover{background:#b8551e}
+
+.cms-footer{background:#092f35;padding:68px 7%;grid-template-columns:1.7fr .8fr 1fr}
+.cms-footer h4{color:#e2ae3d;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.cms-footer a{font-size:11px}
+.cms-credit{background:#061f22}
+
+@media(max-width:1200px){
+ .cms-hero{height:690px}
+ .cms-hero-copy{padding-left:6%;padding-right:5%}
+ .obj-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:900px){
+ .cms-hero{height:720px;min-height:720px}
+ .cms-hero-collage{width:48%}
+ .cms-hero-shade{left:48%}
+ .cms-hero-copy{left:48%;padding:60px 5%}
+ .cms-dots{left:48%;right:5%}
+ .cms-hero h1{font-size:46px}
+ .cms-section{padding-left:5%;padding-right:5%}
+ .gallery-strip{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+ .cms-top{padding:9px 18px}
+ .cms-header{min-height:84px;padding:7px 18px}
+ .cms-logo img{width:112px;height:68px}
+ .cms-hero{height:780px;min-height:780px;background:#f7f5ee}
+ .cms-hero-collage{width:100%;height:100%;inset:0}
+ .cms-hero-collage figure:first-child img{object-position:center 25%}
+ .cms-hero-collage figcaption{left:18px;right:18px;bottom:60px;width:auto;font-size:9px}
+ .cms-hero-shade{left:0;right:0;background:linear-gradient(180deg,rgba(5,35,38,.12),rgba(5,35,38,.48) 48%,rgba(5,35,38,.92) 82%,rgba(5,35,38,.97))}
+ .cms-hero-copy{
+   left:0;right:0;top:0;bottom:0;padding:86px 24px 160px;
+   justify-content:flex-end;color:#fff
+ }
+ .cms-hero-logo{width:120px;height:62px;margin-bottom:auto;filter:brightness(0) invert(1) drop-shadow(0 4px 12px rgba(0,0,0,.25));mix-blend-mode:normal}
+ .cms-hero-copy>span{color:#f0c568;font-size:9px}
+ .cms-hero h1{font-size:40px;line-height:1.05;color:#fff;margin:12px 0 14px;letter-spacing:-.035em}
+ .cms-hero p{color:#edf3f0;font-size:14px;line-height:1.6}
+ .cms-btn{font-size:10px;padding:13px 15px;margin-top:8px}
+ .cms-dots{left:24px;right:24px;bottom:17px;justify-content:flex-start}
+ .cms-section{padding:65px 22px}
+ .cms-heading h2{font-size:35px}
+ .obj-grid,.news-grid{grid-template-columns:1fr}
+ .obj-grid article{min-height:245px}
+ .gallery-strip{grid-template-columns:1fr 1fr}
+ .gallery-strip a,.gallery-strip a:first-child{height:165px}
+ .cms-footer{grid-template-columns:1fr;padding:52px 24px}
+}
+@media(max-width:420px){
+ .cms-hero{height:840px;min-height:840px}
+ .cms-hero-copy{padding-left:18px;padding-right:18px;padding-bottom:165px}
+ .cms-hero h1{font-size:35px}
+ .cms-hero p{font-size:13px}
+ .cms-btn{width:100%;justify-content:center}
+ .cms-dots{left:18px;right:18px}
+}
