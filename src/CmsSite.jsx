@@ -77,23 +77,33 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
 }
 function Home({pages,news,media,sections,navigation,config,lang,setLang}){
  const text=siteText(config,lang)
- const [slide,setSlide]=useState(0)
  const home=pages.find(x=>x.slug==='/')
  const posts=news.slice(0,3)
  const hero=sections.find(x=>x.section_key==='hero')
  const objectivesSection=sections.find(x=>x.section_key==='objectives')
  const gallerySection=sections.find(x=>x.section_key==='gallery')
- const heroMedia=(hero?.data?.media_ids||[]).map(id=>media.find(m=>m.id===id)).filter(Boolean); const slides=heroMedia.length?heroMedia:media.slice(0,5).length?media.slice(0,5):galleryImages; useEffect(()=>{setSlide(0);const t=setInterval(()=>setSlide(x=>(x+1)%slides.length),5000);return()=>clearInterval(t)},[hero?.data?.media_ids?.join(','),media.length]);
  const title=hero?.[lang==='fr'?'title_fr':'title_en']||'Ensemble, construisons un avenir plus inclusif et durable.'
  const body=hero?.[lang==='fr'?'intro_fr':'intro_en']||'EVES accompagne les enfants, les jeunes et leurs familles les plus vulnérables à travers les Objectifs de développement durable et la solidarité internationale.'
+ const words=lang==='fr'?['Éduquer','Protéger','Agir']:['Educate','Protect','Act']
  return <Shell {...{lang,setLang,config,navigation,sections}}>
-  <section className="cms-hero"><div className="cms-hero-collage">{slides.map((image,i)=><figure key={image.id||image.src||i} className={i===slide?'active':''}><img src={image.public_url||image.src} alt={image[lang==='fr'?'alt_fr':'alt_en']||image.alt_fr||image.alt||''}/><figcaption>{image[lang==='fr'?'caption_fr':'caption_en']||image.caption_fr||image.caption||''}</figcaption></figure>)}</div><div className="cms-hero-shade"/><div className="cms-hero-copy"><img className="cms-hero-logo" src={config?.logo_url||logo} alt="Logo officiel EVES"/><span><i className="fa-solid fa-earth-africa"/> {hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'ODD · OBJECTIFS DE DÉVELOPPEMENT DURABLE & SOLIDARITÉ INTERNATIONALE'}</span><h1>{home?.metadata?.[lang==='fr'?'hero_title_fr':'hero_title_en']||title}</h1><p>{home?.[`body_${lang}`]||body}</p><a href={hero?.data?.cta1_href||"/about"} className="cms-btn">{hero?.data?.[lang==="fr"?"cta1_fr":"cta1_en"]||text.hero_cta1} <i className="fa-solid fa-arrow-right"/></a><a href={hero?.data?.cta2_href||"/donate"} className="cms-btn outline">{hero?.data?.[lang==="fr"?"cta2_fr":"cta2_en"]||text.hero_cta2}</a></div><div className="cms-dots">{slides.map((_,i)=><button key={i} className={i===slide?'active':''} onClick={()=>setSlide(i)} aria-label={`Image ${i+1}`}/>)}</div></section>
+  <section className="cms-hero cms-hero-editorial">
+   <div className="cms-hero-watermark"><img src={config?.logo_url||logo} alt="" aria-hidden="true"/></div>
+   <div className="cms-hero-wordstack" aria-hidden="true">{words.map((word,i)=><span key={i}>{word}</span>)}</div>
+   <div className="cms-hero-panel">
+    <span className="cms-hero-kicker">{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'ODD · OBJECTIFS DE DÉVELOPPEMENT DURABLE & SOLIDARITÉ INTERNATIONALE'}</span>
+    <h1>{home?.metadata?.[lang==='fr'?'hero_title_fr':'hero_title_en']||title}</h1>
+    <p>{home?.[`body_${lang}`]||body}</p>
+    <div className="cms-hero-actions">
+      <a href={hero?.data?.cta1_href||"/about"} className="cms-btn">{hero?.data?.[lang==="fr"?"cta1_fr":"cta1_en"]||text.hero_cta1} <i className="fa-solid fa-arrow-right"/></a>
+      <a href={hero?.data?.cta2_href||"/donate"} className="cms-btn outline">{hero?.data?.[lang==="fr"?"cta2_fr":"cta2_en"]||text.hero_cta2}</a>
+    </div>
+   </div>
+  </section>
   {objectivesSection?.visible!==false&&<section className="cms-section"><div className="cms-heading"><span>{text.objectives_label}</span><h2>{objectivesSection?.[lang==="fr"?"title_fr":"title_en"]||text.objectives_fallback}</h2><p>{objectivesSection?.[lang==="fr"?"intro_fr":"intro_en"]}</p></div><div className="obj-grid">{(objectivesSection?.data?.items||objectives).map((o,i)=>{const code=o.code||"OS"+(i+1),title=o[lang==="fr"?"title_fr":"title_en"],desc=o[lang==="fr"?"desc_fr":"desc_en"],icon=o.icon||"fa-circle";return <article key={code}><i className={`fa-solid ${icon}`}/><small>{code}</small><h3>{title}</h3><p>{desc}</p><a href="/causes" aria-label={`${text.hero_cta1} ${code}`}><i className="fa-solid fa-arrow-right"/></a></article>})}</div></section>}
   {(sections.find(x=>x.section_key==='newsroom')?.visible!==false)&&<section className="cms-section"><div className="cms-heading"><span>{text.news_label}</span><h2>{text.news_title}</h2></div><div className="news-grid">{posts.map(p=><a href={`/news/${p.slug}`} className="news-card" key={p.id}><small>{p.category}</small><h3>{p[`title_${lang}`]||p.title_fr}</h3><p>{p[`excerpt_${lang}`]||p.excerpt_fr}</p><span>{p.published_at?new Date(p.published_at).toLocaleDateString(lang==='fr'?'fr-FR':'en-GB'):''} · <Txt lang={lang} fr={text.read_more} en={text.read_more}/></span></a>)}</div></section>}
   {gallerySection?.visible!==false&&<section className="cms-section cms-home-gallery"><div className="cms-heading"><span>{text.gallery_label}</span><h2>{gallerySection?.[lang==="fr"?"title_fr":"title_en"]||text.gallery_title}</h2><p>{gallerySection?.[lang==="fr"?"intro_fr":"intro_en"]}</p></div><div className="gallery-strip">{(gallerySection?.data?.media_ids?.length?gallerySection.data.media_ids.map(id=>media.find(m=>m.id===id)).filter(Boolean):media.slice(0,5)).map(image=><a href="/gallery" key={image.id||image.public_url}><img src={image.public_url||image.src} alt={image[lang==="fr"?"alt_fr":"alt_en"]||image.alt||""}/></a>)}</div><a className="cms-text-link" href="/gallery"><Txt lang={lang} fr={text.gallery_link} en={text.gallery_link}/> <i className="fa-solid fa-arrow-right"/></a></section>}
  </Shell>
 }
-
 function Gallery({media,navigation,sections,config,lang,setLang}){
  const text=siteText(config,lang)
  return <Shell {...{config,lang,setLang,navigation,sections}}><main className="cms-page"><div className="cms-page-hero"><span>{text.gallery_page_label}</span><h1>{text.gallery_page_title}</h1><p>{text.gallery_page_intro}</p></div><section className="cms-section"><div className="gallery-grid">{(media.length?media:galleryImages.map((x,i)=>({id:i,public_url:x.src,alt_fr:x.alt,caption_fr:x.caption}))).map((image,i)=><figure key={image.id}><img src={image.public_url} alt={image[lang==='fr'?'alt_fr':'alt_en']||image.alt_fr}/><figcaption><strong>0{i+1}</strong><span>{image[lang==='fr'?'caption_fr':'caption_en']||image.caption_fr}</span></figcaption></figure>)}</div></section></main></Shell>
