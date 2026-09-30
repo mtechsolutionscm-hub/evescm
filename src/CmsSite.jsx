@@ -1,5 +1,4 @@
 import {useEffect,useState} from 'react'
-import {BookOpen,Sprout,ShieldHeart,Handshake,Lightbulb,MailOpen,ArrowRight,MapPin,Mail,Phone,House,ChevronDown,Heart,Menu,X,Circle,WandSparkles,MessageCircle,Send} from 'lucide-react'
 import {fetchPublicContent,subscribeToCms,subscribeNewsletter} from './cms'
 import './cms-site.css'
 
@@ -19,14 +18,28 @@ const navGroups=[
 ]
 const objectives=[['OS1','Scolarisation','Accès, maintien et réinsertion scolaire.','fa-book-open'],['OS2','Résilience climatique','Adaptation, prévention et pratiques durables.','fa-seedling'],['OS3','Protection & VBG','Prévention, protection et autonomisation.','fa-shield-heart'],['OS4','Économie sociale et solidaire','OESS, AGR et développement durable.','fa-handshake-angle'],['OS5','Innovation & plaidoyer','Recherche, innovation et mobilisation.','fa-lightbulb']]
 function Txt({lang,fr,en}){return lang==='fr'?fr:en}
-const iconMap={
- 'fa-book-open':BookOpen,'fa-seedling':Sprout,'fa-shield-heart':ShieldHeart,'fa-handshake-angle':Handshake,
- 'fa-lightbulb':Lightbulb,'fa-envelope-open-text':MailOpen,'fa-arrow-right':ArrowRight,'fa-location-dot':MapPin,
- 'fa-envelope':Mail,'fa-phone':Phone,'fa-house':House,'fa-chevron-down':ChevronDown,'fa-heart':Heart,
- 'fa-bars':Menu,'fa-xmark':X,'fa-circle':Circle,'fa-wand-magic-sparkles':WandSparkles,'fa-comments':MessageCircle,
- 'fa-paper-plane':Send
+const iconPaths={
+ 'fa-book-open':'M3 5.5A2.5 2.5 0 0 1 5.5 3H11v17H5.5A2.5 2.5 0 0 1 3 17.5z M21 5.5A2.5 2.5 0 0 0 18.5 3H13v17h5.5a2.5 2.5 0 0 0 2.5-2.5z',
+ 'fa-seedling':'M12 21v-7 M12 14C7 14 4 11 4 6c5 0 8 3 8 8z M12 11c0-4 3-7 8-7 0 5-3 8-8 8',
+ 'fa-shield-heart':'M12 21s8-4 8-10V5l-8-3-8 3v6c0 6 8 10 8 10z M9 9.5c1-2 4-2 6 0 0 2-3 4-3 4s-3-2-3-4z',
+ 'fa-handshake-angle':'M4 12l4-4 4 3 4-4 4 4-4 4-4-3-4 3z M8 8l2-2 4 3 M12 11l2-2',
+ 'fa-lightbulb':'M9 18h6 M10 21h4 M8 14a6 6 0 1 1 8 0c-1 1-2 2-2 4h-4c0-2-1-3-2-4z',
+ 'fa-envelope-open-text':'M3 7l9 6 9-6 M4 5h16v14H4z M8 10h8',
+ 'fa-arrow-right':'M5 12h14 M13 6l6 6-6 6',
+ 'fa-location-dot':'M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z M12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+ 'fa-envelope':'M3 5h18v14H3z M3 6l9 7 9-7',
+ 'fa-phone':'M6 3l4 2-2 4 4 4 4-2 2 4-2 3c-6 0-12-6-12-12z',
+ 'fa-house':'M3 11l9-8 9 8 M5 10v10h14V10 M9 20v-6h6v6',
+ 'fa-chevron-down':'M6 9l6 6 6-6',
+ 'fa-heart':'M20 8.5c0 5-8 10-8 10S4 13.5 4 8.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 8 2.5z',
+ 'fa-bars':'M4 7h16 M4 12h16 M4 17h16',
+ 'fa-xmark':'M6 6l12 12 M18 6L6 18',
+ 'fa-circle':'M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z',
+ 'fa-wand-magic-sparkles':'M4 20L20 4 M8 4v4 M4 8h4 M17 15v5 M14.5 17.5h5 M17 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1z',
+ 'fa-comments':'M4 5h16v11H8l-4 4z M8 9h8 M8 12h5',
+ 'fa-paper-plane':'M3 11l18-8-8 18-2-7z M11 14l10-11'
 }
-function I({n}){const Icon=iconMap[n]||Circle;return <i className={`fa-solid ${n} cms-icon`} aria-hidden="true"><Icon size="1em" strokeWidth={1.8}/></i>}
+function I({n}){const d=iconPaths[n]||iconPaths['fa-circle'];return <i className={`fa-solid ${n} cms-icon`} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={d}/></svg></i>}
 const defaultSiteText={fr:{home:'Accueil',organisation:'Organisation',action:'Action',resources:'Ressources',support:'Soutenir',mobile_home:'Accueil',topline:'Action ouverte à toutes et tous',objectives_label:'ODD · 5 OBJECTIFS SPÉCIFIQUES',objectives_fallback:'Une stratégie au service de l’inclusion, de la résilience et de la solidarité.',news_label:'NEWSROOM',news_title:'Actualités & perspectives',gallery_label:'GALERIE',gallery_title:'Le terrain en images',gallery_link:'Voir toute la galerie',hero_cta1:'Découvrir EVES',hero_cta2:'Soutenir notre action',newsletter_label:'NEWSLETTER EVES',newsletter_title:'Recevez les nouvelles d’EVES',newsletter_intro:'Actualités, programmes, ressources, opportunités et temps forts directement dans votre boîte mail.',newsletter_placeholder:'Votre adresse email',newsletter_button:'S’inscrire',newsletter_success:'Merci. Votre inscription est confirmée.',newsletter_exists:'Cette adresse est déjà inscrite.',newsletter_error:'Inscription impossible pour le moment. Réessayez.',gallery_page_label:'EVES · GALERIE',gallery_page_title:'Le terrain, les équipes et les communautés.',gallery_page_intro:'Des images authentiques pour raconter l’engagement d’EVES et les personnes au cœur de nos programmes.',news_page_label:'EVES NEWSROOM',news_page_title:'Actualités, analyses et terrain.',news_page_intro:'Avancées institutionnelles, programmes, partenariats et résultats.',read_more:'Lire',footer_contact:'Contact professionnel',footer_support:'Soutenir EVES',credit:'EVES · MTECHsolutions',not_found_title:'Page introuvable',not_found_body:'La page demandée n’est pas disponible.',article_not_found_title:'Article introuvable',article_not_found_body:'Cette publication n’existe pas ou n’est plus publiée.'},en:{home:'Home',organisation:'Organisation',action:'Action',resources:'Resources',support:'Support',mobile_home:'Home',topline:'Open action for all',objectives_label:'SDGs · 5 SPECIFIC OBJECTIVES',objectives_fallback:'A strategy serving inclusion, resilience and solidarity.',news_label:'NEWSROOM',news_title:'News & perspectives',gallery_label:'GALLERY',gallery_title:'Field work in images',gallery_link:'View the full gallery',hero_cta1:'Discover EVES',hero_cta2:'Support our action',newsletter_label:'EVES NEWSLETTER',newsletter_title:'Stay connected with EVES',newsletter_intro:'News, programmes, resources, opportunities and highlights delivered to your inbox.',newsletter_placeholder:'Your email address',newsletter_button:'Subscribe',newsletter_success:'Thank you. Your subscription is confirmed.',newsletter_exists:'This email is already subscribed.',newsletter_error:'Subscription failed. Please try again.',gallery_page_label:'EVES · GALLERY',gallery_page_title:'Field work, teams and communities.',gallery_page_intro:'Authentic images telling the EVES story and highlighting the people at the heart of our programmes.',news_page_label:'EVES NEWSROOM',news_page_title:'News, analysis and field stories.',news_page_intro:'Institutional progress, programmes, partnerships and results.',read_more:'Read',footer_contact:'Professional contact',footer_support:'Support EVES',credit:'EVES · MTECHsolutions',not_found_title:'Page not found',not_found_body:'The requested page is not available.',article_not_found_title:'Article not found',article_not_found_body:'This publication does not exist or is no longer published.'}}
 const siteText=(config,lang)=>({...defaultSiteText[lang],...(config?.metadata?.site_text?.[lang]||{})})
 
