@@ -806,3 +806,124 @@ img{max-width:100%}
   .cms-footer{grid-template-columns:1fr;padding:52px 24px;gap:28px}
   .cms-newsletter{padding:54px 22px}
 }
+
+
+/* Final EVES editorial system — one typography and visual language across every public page */
+:root{
+  --eves-font:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --eves-ink:#111b1b;
+  --eves-muted:#526365;
+  --eves-orange:#B8551E;
+  --eves-gold:#E5B340;
+  --eves-paper:#F7F6F1;
+  --eves-line:#DDE3E0;
+}
+.cms-shell,
+.cms-shell *{
+  font-family:var(--eves-font);
+}
+.cms-shell{
+  font-family:var(--eves-font);
+  color:var(--eves-ink);
+  background:#fff;
+}
+.cms-shell h1,.cms-shell h2,.cms-shell h3,.cms-shell h4,
+.cms-shell p,.cms-shell a,.cms-shell button,.cms-shell input,
+.cms-shell textarea,.cms-shell select{
+  font-family:var(--eves-font);
+}
+.cms-icon{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  width:1em;
+  height:1em;
+  line-height:1;
+  vertical-align:-.14em;
+  flex:0 0 auto;
+  font-style:normal!important;
+}
+.cms-icon svg{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none;
+  overflow:visible;
+}
+.cms-top .cms-icon,
+.cms-header .cms-icon,
+.cms-footer .cms-icon,
+.cms-btn .cms-icon,
+.cms-text-link .cms-icon{
+  width:1em;
+  height:1em;
+}
+.obj-grid article>.cms-icon{
+  width:28px;
+  height:28px;
+  margin-bottom:24px;
+}
+.cms-menu>.cms-icon{width:28px;height:28px}
+.cms-drawer-head button>.cms-icon{width:24px;height:24px}
+.eves-ai-fab>.cms-icon{width:18px;height:18px}
+.eves-ai-head .cms-icon{width:18px;height:18px}
+.eves-ai-welcome .cms-icon{width:30px;height:30px}
+.eves-ai-compose button>.cms-icon{width:17px;height:17px}
+
+.cms-header nav>a,
+.cms-nav-dropdown>button,
+.cms-support,
+.cms-lang{
+  font-family:var(--eves-font)!important;
+}
+.cms-hero,
+.cms-page-hero{
+  border-radius:0;
+}
+.cms-page-hero{
+  background:#fff;
+  padding:88px 7% 72px;
+  border-bottom:1px solid var(--eves-line);
+}
+.cms-page-hero h1{
+  font-family:var(--eves-font)!important;
+  font-weight:800;
+  letter-spacing:-.06em;
+}
+.cms-page article{
+  font-family:var(--eves-font);
+}
+.cms-page article p,
+.richtext-block p,
+.cta-block p,
+.quote-block cite,
+.cards-block p,
+.stats-block span{
+  font-family:var(--eves-font);
+}
+.obj-grid article,
+.news-card,
+.gallery-grid figure{
+  border-radius:0;
+  box-shadow:none;
+}
+.obj-grid article:hover,
+.news-card:hover{
+  background:#fafaf7;
+  transform:none;
+  box-shadow:none;
+}
+.cms-footer{
+  border-radius:0;
+}
+@media(max-width:760px){
+  .cms-page-hero{
+    padding:58px 24px 50px;
+  }
+  .cms-page-hero h1{
+    font-size:clamp(42px,12vw,58px);
+  }
+  .obj-grid article>.cms-icon{
+    width:26px;height:26px;
+  }
+}
