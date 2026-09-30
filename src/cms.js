@@ -5,23 +5,16 @@ export const supabase=createClient(CMS_URL,CMS_KEY,{auth:{persistSession:false,a
 const now=()=>new Date().toISOString()
 export function mapRow(row){return{...row,tags:row.tags||[],seo_keywords:row.seo_keywords||[],metadata:row.metadata||{},data:row.data||{}}}
 export async function fetchPublicContent(){
- const [config,pages,news,media,sections,navigation]=await Promise.all([
-  supabase.from('eves_cms_config').select('*').eq('id',true).maybeSingle(),
-  supabase.from('eves_cms_pages').select('*').in('status',['published','scheduled']).order('sort_order',{ascending:true}).order('updated_at',{ascending:false}),
-  supabase.from('eves_cms_news').select('*').in('status',['published','scheduled']).order('published_at',{ascending:false,nullsFirst:false}).order('updated_at',{ascending:false}),
-  supabase.from('eves_cms_media').select('*').eq('status','published').order('sort_order',{ascending:true}).order('created_at',{ascending:false}),
-  supabase.from('eves_cms_sections').select('*').eq('visible',true).order('sort_order',{ascending:true}),
-  supabase.from('eves_cms_navigation').select('*').eq('visible',true).order('sort_order',{ascending:true})
- ])
- const error=[config,pages,news,media,sections,navigation].find(x=>x.error)?.error
- if(error)throw error
+ const response=await fetch('/api/cms?public=1',{cache:'no-store',headers:{Accept:'application/json'}})
+ const payload=await response.json()
+ if(!response.ok||payload?.error)throw new Error(payload?.error||'Unable to load EVES public content')
  return {
-  config:config.data||null,
-  pages:(pages.data||[]).filter(x=>x.status==='published'||(x.status==='scheduled'&&x.published_at&&new Date(x.published_at)<=new Date())).map(mapRow),
-  news:(news.data||[]).filter(x=>x.status==='published'||(x.status==='scheduled'&&x.published_at&&new Date(x.published_at)<=new Date())).map(mapRow),
-  media:(media.data||[]).map(mapRow),
-  sections:(sections.data||[]).map(mapRow),
-  navigation:(navigation.data||[]).map(mapRow)
+  config:payload.config||null,
+  pages:(payload.pages||[]).map(mapRow),
+  news:(payload.news||[]).map(mapRow),
+  media:(payload.media||[]).map(mapRow),
+  sections:(payload.sections||[]).map(mapRow),
+  navigation:(payload.navigation||[]).map(mapRow)
  }
 }
 export function subscribeToCms(onChange){
