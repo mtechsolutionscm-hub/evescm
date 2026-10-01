@@ -2013,3 +2013,105 @@ img{max-width:100%}
 .cms-hero-editorial + .cms-theory{position:relative;z-index:1;clear:both}
 @media(max-width:1100px){.cms-hero-editorial{min-height:720px!important}.cms-hero-editorial .cms-hero-panel{padding-top:70px!important;padding-bottom:80px!important}}
 @media(max-width:760px){.cms-hero-editorial{display:block!important;min-height:0!important;height:auto!important;overflow:visible!important}.cms-hero-editorial .cms-hero-panel{min-height:820px;box-sizing:border-box;padding:300px 22px 74px!important;display:flex!important;flex-direction:column;justify-content:flex-end!important}.cms-hero-editorial .cms-hero-actions{margin-top:22px!important;padding-bottom:0}}
+
+
+/* HARD LAYOUT FIX — editorial homepage hero must size to its content.
+   The previous viewport-based height could clip the CTA row on desktop. */
+.cms-hero-editorial{
+  display:grid!important;
+  grid-template-columns:minmax(0,43%) minmax(0,57%)!important;
+  height:auto!important;
+  min-height:780px!important;
+  max-height:none!important;
+  overflow:visible!important;
+  box-sizing:border-box!important;
+  align-items:stretch!important;
+}
+.cms-hero-editorial .cms-hero-wordstack,
+.cms-hero-editorial .cms-hero-panel{
+  min-height:780px!important;
+  height:auto!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+.cms-hero-editorial .cms-hero-panel{
+  padding:82px 7.5% 90px!important;
+  justify-content:center!important;
+  overflow:visible!important;
+}
+.cms-hero-editorial .cms-hero-panel h1{
+  margin:18px 0 24px!important;
+  line-height:1.06!important;
+  overflow:visible!important;
+}
+.cms-hero-editorial .cms-hero-panel p{
+  margin:0!important;
+  line-height:1.75!important;
+}
+.cms-hero-editorial .cms-hero-actions{
+  margin-top:28px!important;
+  padding-bottom:4px!important;
+  position:relative!important;
+  z-index:5!important;
+}
+.cms-hero-editorial .cms-hero-actions .cms-btn{
+  min-height:48px!important;
+  height:auto!important;
+  box-sizing:border-box!important;
+}
+.cms-hero-editorial + .cms-theory{
+  margin-top:0!important;
+  position:relative!important;
+  z-index:1!important;
+  clear:both!important;
+}
+
+@media(max-width:1000px){
+  .cms-hero-editorial{
+    min-height:740px!important;
+    grid-template-columns:minmax(0,45%) minmax(0,55%)!important;
+  }
+  .cms-hero-editorial .cms-hero-wordstack,
+  .cms-hero-editorial .cms-hero-panel{
+    min-height:740px!important;
+  }
+}
+@media(max-width:760px){
+  .cms-hero-editorial{
+    display:block!important;
+    min-height:0!important;
+    height:auto!important;
+  }
+  .cms-hero-editorial .cms-hero-wordstack{
+    min-height:330px!important;
+    height:330px!important;
+    box-sizing:border-box!important;
+  }
+  .cms-hero-editorial .cms-hero-panel{
+    min-height:0!important;
+    height:auto!important;
+    padding:42px 22px 70px!important;
+    display:block!important;
+    box-sizing:border-box!important;
+  }
+  .cms-hero-editorial .cms-hero-panel h1{
+    font-size:40px!important;
+    line-height:1.04!important;
+  }
+  .cms-hero-editorial .cms-hero-actions{
+    margin-top:24px!important;
+  }
+}
+@media(max-width:420px){
+  .cms-hero-editorial .cms-hero-wordstack{
+    min-height:300px!important;
+    height:300px!important;
+  }
+  .cms-hero-editorial .cms-hero-panel{
+    padding-left:18px!important;
+    padding-right:18px!important;
+  }
+  .cms-hero-editorial .cms-hero-panel h1{
+    font-size:36px!important;
+  }
+}
