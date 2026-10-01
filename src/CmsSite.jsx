@@ -77,7 +77,7 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
    <nav className="cms-desktop-nav" aria-label={text.home}>
     <a href="/">{text.home}</a>
     {grouped.map(group=><div className="cms-nav-dropdown" key={group.label}><button type="button">{group.label} <span className="cms-chevron" aria-hidden="true"></span></button><div className="cms-nav-menu">{group.items.map(item=><a href={item.href} key={item.id}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div></div>)}
-    <a className="cms-support" href="/donate"><Txt lang={lang} fr={text.support} en={text.support}/></a>
+    <div className="cms-nav-dropdown cms-support-group"><button type="button" className="cms-support"><Txt lang={lang} fr={text.support} en={text.support}/> <span className="cms-chevron" aria-hidden="true"></span></button><div className="cms-nav-menu">{navItems.filter(x=>x.parent_key==='soutenir'&&x.visible!==false).map(item=><a href={item.href} key={item.id}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div></div>
     <button className="cms-lang" onClick={()=>setLang(lang==='fr'?'en':'fr')} aria-label="Changer de langue">{lang.toUpperCase()}</button>
    </nav>
    <button className="cms-menu" onClick={()=>setOpen(true)} aria-label="Ouvrir le menu"><span className="cms-menu-lines" aria-hidden="true"><b></b><b></b><b></b></span></button>
@@ -89,7 +89,7 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
     <button type="button" className={expanded===group.label?'open':''} onClick={()=>toggleGroup(group.label)}>{group.label}<span className="cms-chevron" aria-hidden="true"></span></button>
     {expanded===group.label&&<div className="cms-mobile-submenu">{group.items.map(item=><a href={item.href} key={item.id} onClick={()=>setOpen(false)}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div>}
    </div>)}
-   <a href="/donate" onClick={()=>setOpen(false)} className="mobile-support"><Txt lang={lang} fr={text.footer_support} en={text.footer_support}/></a>
+   <div className="cms-mobile-group mobile-support-group"><button type="button" className={expanded==='soutenir'?'open':''} onClick={()=>toggleGroup('soutenir')}><Txt lang={lang} fr={text.support} en={text.support}/><span className="cms-chevron" aria-hidden="true"></span></button>{expanded==='soutenir'&&<div className="cms-mobile-submenu">{navItems.filter(x=>x.parent_key==='soutenir'&&x.visible!==false).map(item=><a href={item.href} key={item.id} onClick={()=>setOpen(false)}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div>}</div>
    <button className="cms-mobile-lang" onClick={()=>{setLang(lang==='fr'?'en':'fr');setOpen(false)}}>{lang==='fr'?'English':'Français'}</button>
   </aside></>}
   {children}
