@@ -2,7 +2,10 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/evesqies/public_html/
-    - export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
-    - npm install
-    - npm run build
+    - /bin/echo "cPanel deployment started $(date)" >> /home/evesqies/evescm-deploy.log
+    - /opt/cpanel/ea-nodejs22/bin/node --version >> /home/evesqies/evescm-deploy.log 2>&1
+    - /opt/cpanel/ea-nodejs22/bin/npm --version >> /home/evesqies/evescm-deploy.log 2>&1
+    - /opt/cpanel/ea-nodejs22/bin/npm install >> /home/evesqies/evescm-deploy.log 2>&1
+    - /opt/cpanel/ea-nodejs22/bin/npm run build >> /home/evesqies/evescm-deploy.log 2>&1
     - /bin/cp -R dist/. $DEPLOYPATH
+    - /bin/echo "cPanel deployment finished $(date)" >> /home/evesqies/evescm-deploy.log
