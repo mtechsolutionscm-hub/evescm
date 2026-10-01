@@ -1985,3 +1985,20 @@ img{max-width:100%}
  .cms-hero-panel{padding-left:18px;padding-right:18px;padding-top:285px}
  .cms-hero-panel h1{font-size:34px}
 }
+
+
+/* Typography safety: keep diacritics fully inside the line box */
+.cms-shell h1,.cms-shell h2,.cms-shell h3,.cms-shell h4{
+ overflow:visible;
+ text-rendering:geometricPrecision;
+}
+.cms-hero-panel h1,.cms-page-hero h1,.cms-heading h2,.cms-theory-copy h2,.news-card h2,.news-card h3{
+ line-height:1.02;
+ padding-top:.035em;
+}
+.cms-page-hero h1{line-height:.96;padding-top:.06em}
+.cms-heading h2{line-height:1.02}
+@media(max-width:760px){
+ .cms-page-hero h1{line-height:.98;padding-top:.05em}
+ .cms-heading h2{line-height:1.03}
+}
