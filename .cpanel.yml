@@ -1,4 +1,5 @@
 ---
+# Static Vite deployment: GitHub Actions builds dist; cPanel only publishes it.
 deployment:
   tasks:
     - export DEPLOYPATH=/home/evesqies/public_html/
