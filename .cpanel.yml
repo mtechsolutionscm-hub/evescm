@@ -2,16 +2,6 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/evesqies/public_html/
-    - export LOG=/home/evesqies/evescm-deploy.log
-    - /bin/echo "=== DEPLOY START $(date) ===" > $LOG
-    - /bin/echo "PATH=$PATH" >> $LOG
-    - /bin/echo "HOME=$HOME" >> $LOG
-    - /bin/which node >> $LOG 2>&1
-    - /bin/which npm >> $LOG 2>&1
-    - /bin/ls -la /opt/alt/ >> $LOG 2>&1
-    - /bin/ls -la /opt/alt/alt-nodejs22/root/usr/bin/ >> $LOG 2>&1
-    - /bin/find /home/evesqies -type f -name node -perm -u+x 2>/dev/null | /usr/bin/head -50 >> $LOG
-    - /bin/find /home/evesqies -type f -name npm -perm -u+x 2>/dev/null | /usr/bin/head -50 >> $LOG
-    - /bin/find /opt/alt -type f -name node -perm -u+x 2>/dev/null | /usr/bin/head -50 >> $LOG
-    - /bin/find /opt/alt -type f -name npm -perm -u+x 2>/dev/null | /usr/bin/head -50 >> $LOG
-    - /bin/echo "=== DEPLOY END $(date) ===" >> $LOG
+    - /bin/test -f dist/index.html
+    - /bin/cp -R dist/. $DEPLOYPATH
+    - /bin/rm -f $DEPLOYPATH/parking-page.shtml
