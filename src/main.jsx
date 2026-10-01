@@ -9,6 +9,7 @@ import './official-logo.css'
 import './eves-editorial.css'
 
 import './social.css'
+import './okwelians-inspired.css'
 
 const path=window.location.pathname.toLowerCase()
 const isMsc=path==='/msc'||path.startsWith('/msc/')
