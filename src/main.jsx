@@ -6,6 +6,7 @@ import SocialShare from './SocialShare'
 import './index.css'
 import './logo-fix.css'
 import './official-logo.css'
+import './eves-editorial.css'
 
 import './social.css'
 
