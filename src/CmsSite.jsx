@@ -11,11 +11,11 @@ const galleryImages=[
  {src:'/gallery/eves-04.jpg',alt:'Activité éducative communautaire',caption:'Des espaces d’apprentissage adaptés aux enfants et aux jeunes.'},
  {src:'/gallery/eves-05.jpg',alt:'Enfants et jeunes en communauté',caption:'Une action construite avec les enfants, les jeunes et leurs familles.'}
 ]
-const links=[['/about','À propos'],['/causes','Objectifs'],['/projects','Programmes'],['/governance','Gouvernance'],['/advisory','Comité consultatif'],['/partners','Partenaires'],['/resources','Ressources'],['/events','Événements'],['/gallery','Galerie'],['/news','Actualités & Blog']]
+const links=[['/about','À propos'],['/causes','Objectifs'],['/projects','Programmes'],['/governance','Gouvernance'],['/advisory','Comité consultatif'],['/focal-points','Points focaux'],['/partners','Partenaires'],['/lab','Le Lab'],['/safehome','Safe Home'],['/resources','Ressources'],['/events','Événements'],['/gallery','Galerie'],['/news','Actualités & Blog'],['/volunteer','Devenir bénévole'],['/join','Nous rejoindre']]
 const navGroups=[
- {label:'Organisation',items:[links[0],links[3],links[4],links[5]]},
- {label:'Action',items:[links[1],links[2]]},
- {label:'Ressources',items:[links[6],links[7],links[8],links[9]]}
+ {label:'Organisation',items:[links[0],links[3],links[4],links[5],links[6]]},
+ {label:'Action',items:[links[1],links[2],links[7],links[8]]},
+ {label:'Ressources',items:[links[9],links[10],links[11],links[12]]}
 ]
 const objectives=[['OS1','Scolarisation','Accès, maintien et réinsertion scolaire.','fa-book-open'],['OS2','Résilience climatique','Adaptation, prévention et pratiques durables.','fa-seedling'],['OS3','Protection & VBG','Prévention, protection et autonomisation.','fa-shield-heart'],['OS4','Économie sociale et solidaire','OESS, AGR et développement durable.','fa-handshake-angle'],['OS5','Innovation & plaidoyer','Recherche, innovation et mobilisation.','fa-lightbulb']]
 function Txt({lang,fr,en}){return lang==='fr'?fr:en}
@@ -64,8 +64,9 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
  const [expanded,setExpanded]=useState(null)
  const text=siteText(config,lang)
  const address=EVES_CONTACT.address
- const navItems=navigation.length?navigation:links.map(([href,label],i)=>({id:String(i),href,label_fr:label,label_en:label,parent_key:i<4?'organisation':i<6?'action':'ressources',visible:true}))
- const grouped=[[text.organisation,'organisation'],[text.action,'action'],[text.resources,'ressources']].map(([label,key])=>({label,items:navItems.filter(x=>x.parent_key===key)}))
+ const fallbackNav=[{id:'home',href:'/',label_fr:'Accueil',label_en:'Home',parent_key:'',sort_order:10,visible:true},...links.map(([href,label],i)=>({id:String(i),href,label_fr:label,label_en:label,parent_key:i<=4?'organisation':i<=8?'action':i>=13?'soutenir':'ressources',sort_order:20+i*10,visible:true})),{id:'support',href:'/donate',label_fr:'Soutenir',label_en:'Support',parent_key:'soutenir',sort_order:200,visible:true}]
+ const navItems=navigation.length?navigation:fallbackNav
+ const grouped=[[text.organisation,'organisation'],[text.action,'action'],[text.resources,'ressources']].map(([label,key])=>({label,items:navItems.filter(x=>x.parent_key===key&&x.visible!==false)}))
  const menuLinks=links.concat([['/donate','Soutenir']])
  const toggleGroup=(label)=>setExpanded(x=>x===label?null:label)
  const newsletterSection=sections.find(x=>x.section_key==='newsletter')
@@ -122,6 +123,7 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
     </div>
    </div>
   </section>
+  <section className="cms-theory"><div className="cms-theory-brand"><img src={config?.logo_url||logo} alt="Logo officiel EVES"/></div><div className="cms-theory-copy"><span>THÉORIE DU CHANGEMENT · EVES</span><h2>{lang==="fr"?"De la vulnérabilité à la capacité d’agir.":"From vulnerability to agency."}</h2><p>{lang==="fr"?"Éduquer, protéger et accompagner les communautés pour renforcer durablement leurs capacités, leur résilience et leur autonomie.":"Educate, protect and support communities to strengthen their capabilities, resilience and agency over time."}</p></div><div className="cms-theory-flow"><div><strong>01</strong><b>{lang==="fr"?"Éduquer":"Educate"}</b><span>{lang==="fr"?"Accès aux savoirs et opportunités":"Access to knowledge and opportunity"}</span></div><i>→</i><div><strong>02</strong><b>{lang==="fr"?"Protéger":"Protect"}</b><span>{lang==="fr"?"Prévention et dignité":"Prevention and dignity"}</span></div><i>→</i><div><strong>03</strong><b>{lang==="fr"?"Autonomiser":"Enable"}</b><span>{lang==="fr"?"Capacités et économie solidaire":"Capabilities and solidarity economy"}</span></div><i>→</i><div><strong>04</strong><b>{lang==="fr"?"Transformer":"Transform"}</b><span>{lang==="fr"?"Résilience et impact durable":"Resilience and lasting impact"}</span></div></div></section>
   {objectivesSection?.visible!==false&&<section className="cms-section"><div className="cms-heading"><span>{text.objectives_label}</span><h2>{objectivesSection?.[lang==="fr"?"title_fr":"title_en"]||text.objectives_fallback}</h2><p>{objectivesSection?.[lang==="fr"?"intro_fr":"intro_en"]}</p></div><div className="obj-grid">{(objectivesSection?.data?.items||objectives).map((o,i)=>{const code=o.code||"OS"+(i+1),title=o[lang==="fr"?"title_fr":"title_en"],desc=o[lang==="fr"?"desc_fr":"desc_en"],icon=o.icon||"fa-circle";return <article key={code}><I n={icon}/><small>{code}</small><h3>{title}</h3><p>{desc}</p><a href="/causes" aria-label={`${text.hero_cta1} ${code}`}><I n="fa-arrow-right"/></a></article>})}</div></section>}
   {(sections.find(x=>x.section_key==='newsroom')?.visible!==false)&&<section className="cms-section"><div className="cms-heading"><span>{text.news_label}</span><h2>{text.news_title}</h2></div><div className="news-grid">{posts.map(p=><a href={`/news/${p.slug}`} className="news-card" key={p.id}><small>{p.category}</small><h3>{p[`title_${lang}`]||p.title_fr}</h3><p>{p[`excerpt_${lang}`]||p.excerpt_fr}</p><span>{p.published_at?new Date(p.published_at).toLocaleDateString(lang==='fr'?'fr-FR':'en-GB'):''} · <Txt lang={lang} fr={text.read_more} en={text.read_more}/></span></a>)}</div></section>}
   {gallerySection?.visible!==false&&<section className="cms-section cms-home-gallery"><div className="cms-heading"><span>{text.gallery_label}</span><h2>{gallerySection?.[lang==="fr"?"title_fr":"title_en"]||text.gallery_title}</h2><p>{gallerySection?.[lang==="fr"?"intro_fr":"intro_en"]}</p></div><div className="gallery-strip">{(gallerySection?.data?.media_ids?.length?gallerySection.data.media_ids.map(id=>media.find(m=>m.id===id)).filter(Boolean):media.slice(0,5)).map(image=><a href="/gallery" key={image.id||image.public_url}><img src={image.public_url||image.src} alt={image[lang==="fr"?"alt_fr":"alt_en"]||image.alt||""}/></a>)}</div><a className="cms-text-link" href="/gallery"><Txt lang={lang} fr={text.gallery_link} en={text.gallery_link}/> <I n="fa-arrow-right"/></a></section>}
