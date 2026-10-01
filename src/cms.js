@@ -5,17 +5,23 @@ export const supabase=createClient(CMS_URL,CMS_KEY,{auth:{persistSession:false,a
 const now=()=>new Date().toISOString()
 export function mapRow(row){return{...row,tags:row.tags||[],seo_keywords:row.seo_keywords||[],metadata:row.metadata||{},data:row.data||{}}}
 export async function fetchPublicContent(){
- const response=await fetch('/api/cms?public=1',{cache:'no-store',headers:{Accept:'application/json'}})
- let payload=null
- try{payload=await response.json()}catch(e){throw new Error('Unable to parse EVES public content')}
- if(!response.ok||payload?.error)throw new Error(payload?.error||'Unable to load EVES public content')
+ const [configRes,pagesRes,newsRes,mediaRes,sectionsRes,navigationRes]=await Promise.all([
+  supabase.from('eves_cms_config').select('*').eq('id',true).maybeSingle(),
+  supabase.from('eves_cms_pages').select('*').order('sort_order',{ascending:true}).order('updated_at',{ascending:false}),
+  supabase.from('eves_cms_news').select('*').order('published_at',{ascending:false,nullsFirst:false}).order('updated_at',{ascending:false}),
+  supabase.from('eves_cms_media').select('*').order('sort_order',{ascending:true}).order('created_at',{ascending:false}),
+  supabase.from('eves_cms_sections').select('*').order('sort_order',{ascending:true}),
+  supabase.from('eves_cms_navigation').select('*').order('sort_order',{ascending:true})
+ ])
+ const firstError=[configRes,pagesRes,newsRes,mediaRes,sectionsRes,navigationRes].find(x=>x.error)?.error
+ if(firstError) throw new Error(firstError.message||'Unable to load EVES public content')
  return {
-  config:payload.config||null,
-  pages:(payload.pages||[]).map(mapRow),
-  news:(payload.news||[]).map(mapRow),
-  media:(payload.media||[]).map(mapRow),
-  sections:(payload.sections||[]).map(mapRow),
-  navigation:(payload.navigation||[]).map(mapRow)
+  config:configRes.data||null,
+  pages:(pagesRes.data||[]).map(mapRow),
+  news:(newsRes.data||[]).map(mapRow),
+  media:(mediaRes.data||[]).map(mapRow),
+  sections:(sectionsRes.data||[]).map(mapRow),
+  navigation:(navigationRes.data||[]).map(mapRow)
  }
 }
 export function subscribeToCms(onChange){
