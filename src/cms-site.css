@@ -1484,3 +1484,10 @@ img{max-width:100%}
   .cms-newsletter{padding:55px 22px!important}
   .cms-footer{grid-template-columns:1fr!important;padding:55px 22px!important}
 }
+
+/* Typography lock — match the Okwelians-style editorial feel with Manrope + Merriweather */
+:root{--eves-font:"Manrope","Helvetica Neue",Arial,sans-serif;--eves-serif:"Merriweather",Georgia,serif}
+.cms-shell,.cms-shell *{font-family:var(--eves-font)!important}
+.cms-hero-wordstack span,.cms-hero-panel h1,.cms-heading h2,.cms-page-hero h1,.news-card h2,.news-card h3,.cms-newsletter h2,.institutional-bridge h2,.obj-grid h3,.cms-footer h4{font-family:var(--eves-font)!important}
+.quote-block p,.eves-ai-welcome b{font-family:var(--eves-font)!important}
+.cms-hero-wordstack span{font-weight:800!important}
