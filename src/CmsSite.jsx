@@ -70,7 +70,7 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
  const toggleGroup=(label)=>setExpanded(x=>x===label?null:label)
  const newsletterSection=sections.find(x=>x.section_key==='newsletter')
  return <div className="cms-shell">
-  <div className="cms-top"><span>{address} · {text.topline}</span><span><a href={`mailto:${EVES_CONTACT.email}`}>{config?.contact_email||'contact@eves.cm'}</a><a href={`tel:${EVES_CONTACT.phone}`}>{config?.phone||'+237 656 987 759'}</a></span></div>
+  <div className="cms-top"><span>{address} · {text.topline}</span><span><a href={`mailto:${EVES_CONTACT.email}`}>{config?.contact_email||'contact@eves.cm'}</a><a href={`tel:${EVES_CONTACT.phone}`}>{EVES_CONTACT.phone}</a></span></div>
   <header className="cms-header">
    <a href="/" className="cms-logo"><img src={config?.logo_url||logo} alt="Logo officiel EVES"/></a>
    <nav className="cms-desktop-nav" aria-label={text.home}>
@@ -93,7 +93,7 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
   </aside></>}
   {children}
   {showNewsletter&&newsletterSection?.visible!==false&&<Newsletter lang={lang} compact section={newsletterSection} config={config}/>} 
-  <EvesAI lang={lang}/>\n  <footer className="cms-footer"><div><img src={config?.logo_url||logo} alt="Logo officiel EVES"/><p>{config?.[lang==='fr'?'footer_description_fr':'footer_description_en']||<Txt lang={lang} fr="Objectifs de développement durable & solidarité internationale. EVES agit pour des communautés plus inclusives, résilientes et solidaires." en="Sustainable Development Goals & international solidarity. EVES works for more inclusive, resilient and caring communities."/>}</p></div><div><h4>EVES</h4>{navItems.slice(0,7).map(item=><a href={item.href} key={item.id}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div><div><h4><Txt lang={lang} fr={text.footer_contact} en={text.footer_contact}/></h4><a href={`mailto:${config?.contact_email||'contact@eves.cm'}`}>{config?.contact_email||'contact@eves.cm'}</a><a href={`tel:${config?.phone||'+237 656 987 759'}`}>{config?.phone||'+237 656 987 759'}</a><p>{address}</p><a href={`https://wa.me/${EVES_CONTACT.whatsapp}`} target="_blank" rel="noreferrer">WhatsApp</a><a className="cms-footer-donate" href="/donate"><Txt lang={lang} fr={text.footer_support} en={text.footer_support}/></a></div></footer>
+  <EvesAI lang={lang}/><footer className="cms-footer"><div><img src={config?.logo_url||logo} alt="Logo officiel EVES"/><p>{config?.[lang==='fr'?'footer_description_fr':'footer_description_en']||<Txt lang={lang} fr="Objectifs de développement durable & solidarité internationale. EVES agit pour des communautés plus inclusives, résilientes et solidaires." en="Sustainable Development Goals & international solidarity. EVES works for more inclusive, resilient and caring communities."/>}</p></div><div><h4>EVES</h4>{navItems.slice(0,7).map(item=><a href={item.href} key={item.id}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div><div><h4><Txt lang={lang} fr={text.footer_contact} en={text.footer_contact}/></h4><a href={`mailto:${EVES_CONTACT.email}`}>{EVES_CONTACT.email}</a><a href={`tel:${EVES_CONTACT.phone}`}>{EVES_CONTACT.phone}</a><p>{address}</p><a href={`https://wa.me/${EVES_CONTACT.whatsapp}`} target="_blank" rel="noreferrer">WhatsApp</a><a className="cms-footer-donate" href="/donate"><Txt lang={lang} fr={text.footer_support} en={text.footer_support}/></a></div></footer>
   <div className="cms-credit">{text.credit}</div>
  </div>
 }
