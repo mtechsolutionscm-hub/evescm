@@ -45,7 +45,7 @@ const defaultSiteText={fr:{home:'Accueil',organisation:'Organisation',action:'Ac
 const siteText=(config,lang)=>({...defaultSiteText[lang],...(config?.metadata?.site_text?.[lang]||{})})
 
 
-function Newsletter({lang,compact=false,section,config}){
+function Newsletter({lang,compact=false,section,config,id}){
  const text=siteText(config,lang); const [email,setEmail]=useState('')
  const [state,setState]=useState('idle')
  async function submit(e){
@@ -56,7 +56,7 @@ function Newsletter({lang,compact=false,section,config}){
   if(error){setState('error');return}
   setEmail('');setState('success')
  }
- return <section className={compact?'cms-newsletter cms-newsletter-compact':'cms-newsletter'}><div><span><I n="fa-envelope-open-text"/> {text.newsletter_label}</span><h2>{section?.[lang==="fr"?"title_fr":"title_en"]||<Txt lang={lang} fr={text.newsletter_title} en={text.newsletter_title}/>}</h2><p>{section?.[lang==="fr"?"intro_fr":"intro_en"]||<Txt lang={lang} fr={text.newsletter_intro} en={text.newsletter_intro}/>}</p></div><form onSubmit={submit}><label className="sr-only" htmlFor="newsletter-email">Email</label><input id="newsletter-email" type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder={text.newsletter_placeholder}/><button disabled={state==='loading'}>{state==='loading'?'...':<><Txt lang={lang} fr={text.newsletter_button} en={text.newsletter_button}/> <I n="fa-arrow-right"/></>}</button>{state==='success'&&<small className="form-ok"><Txt lang={lang} fr={text.newsletter_success} en={text.newsletter_success}/></small>}{state==='exists'&&<small className="form-ok"><Txt lang={lang} fr={text.newsletter_exists} en={text.newsletter_exists}/></small>}{state==='error'&&<small className="form-error"><Txt lang={lang} fr={text.newsletter_error} en={text.newsletter_error}/></small>}</form></section>
+ return <section id={id} className={compact?'cms-newsletter cms-newsletter-compact':'cms-newsletter'}><div><span><I n="fa-envelope-open-text"/> {text.newsletter_label}</span><h2>{section?.[lang==="fr"?"title_fr":"title_en"]||<Txt lang={lang} fr={text.newsletter_title} en={text.newsletter_title}/>}</h2><p>{section?.[lang==="fr"?"intro_fr":"intro_en"]||<Txt lang={lang} fr={text.newsletter_intro} en={text.newsletter_intro}/>}</p></div><form onSubmit={submit}><label className="sr-only" htmlFor="newsletter-email">Email</label><input id="newsletter-email" type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder={text.newsletter_placeholder}/><button disabled={state==='loading'}>{state==='loading'?'...':<><Txt lang={lang} fr={text.newsletter_button} en={text.newsletter_button}/> <I n="fa-arrow-right"/></>}</button>{state==='success'&&<small className="form-ok"><Txt lang={lang} fr={text.newsletter_success} en={text.newsletter_success}/></small>}{state==='exists'&&<small className="form-ok"><Txt lang={lang} fr={text.newsletter_exists} en={text.newsletter_exists}/></small>}{state==='error'&&<small className="form-error"><Txt lang={lang} fr={text.newsletter_error} en={text.newsletter_error}/></small>}</form></section>
 }
 
 function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsletter=true}){
