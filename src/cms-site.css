@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
 :root{
   --ink:#050505;
   --muted:#566062;
@@ -67,11 +65,11 @@ img{max-width:100%}
   min-height:700px;background:var(--paper);overflow:hidden;isolation:isolate
 }
 .cms-hero-watermark{
-  position:absolute;z-index:0;left:0;top:0;bottom:0;width:39%;display:flex;align-items:center;justify-content:center;
-  pointer-events:none
+  position:absolute;z-index:0;left:0;top:0;bottom:0;width:39%;display:flex;align-items:center;justify-content:flex-start;
+  pointer-events:none;overflow:hidden
 }
 .cms-hero-watermark img{
-  width:min(560px,88%);height:auto;max-height:86%;object-fit:contain;opacity:.075;filter:none
+  width:min(590px,105%);height:auto;max-height:92%;object-fit:contain;object-position:left center;opacity:.075;filter:none;transform:translateX(-4%)
 }
 .cms-hero-wordstack{
   position:relative;z-index:2;min-width:0;min-height:700px;padding:88px 0 62px 5.2%;
