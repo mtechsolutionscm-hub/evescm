@@ -6,7 +6,8 @@ const now=()=>new Date().toISOString()
 export function mapRow(row){return{...row,tags:row.tags||[],seo_keywords:row.seo_keywords||[],metadata:row.metadata||{},data:row.data||{}}}
 export async function fetchPublicContent(){
  const response=await fetch('/api/cms?public=1',{cache:'no-store',headers:{Accept:'application/json'}})
- const payload=await response.json()
+ let payload=null
+ try{payload=await response.json()}catch(e){throw new Error('Unable to parse EVES public content')}
  if(!response.ok||payload?.error)throw new Error(payload?.error||'Unable to load EVES public content')
  return {
   config:payload.config||null,
@@ -18,7 +19,8 @@ export async function fetchPublicContent(){
  }
 }
 export function subscribeToCms(onChange){
- const channel=supabase.channel('eves-cms-live')
+ let channel=null
+ try{channel=supabase.channel('eves-cms-live')
   .on('postgres_changes',{event:'*',schema:'public',table:'eves_cms_config'},onChange)
   .on('postgres_changes',{event:'*',schema:'public',table:'eves_cms_pages'},onChange)
   .on('postgres_changes',{event:'*',schema:'public',table:'eves_cms_news'},onChange)
@@ -26,7 +28,8 @@ export function subscribeToCms(onChange){
   .on('postgres_changes',{event:'*',schema:'public',table:'eves_cms_sections'},onChange)
   .on('postgres_changes',{event:'*',schema:'public',table:'eves_cms_navigation'},onChange)
   .subscribe()
- return()=>supabase.removeChannel(channel)
+ }catch(e){return()=>{}}
+ return()=>channel&&supabase.removeChannel(channel)
 }
 export async function subscribeNewsletter(email,language){
  const r=await fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,language})})
