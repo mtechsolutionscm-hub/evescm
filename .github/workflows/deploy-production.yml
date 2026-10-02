@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+env:
+  VERCEL_PROJECT_ID: prj_pwbbob8Tp3FgRfnSCAx0iIhDDCsM
+  VERCEL_ORG_ID: team_bN50nXRjcFRDYboc1sUnzxYB
+
 jobs:
   verify-and-deploy:
     runs-on: ubuntu-latest
@@ -36,20 +40,19 @@ jobs:
           find dist/assets -maxdepth 1 -type f | head -20
 
       - name: Deploy to Vercel production
-        if: ${{ secrets.VERCEL_TOKEN != '' }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          npx vercel@latest pull --yes --environment=production --token="${{ secrets.VERCEL_TOKEN }}" --scope="${{ secrets.VERCEL_ORG_ID }}"
-          npx vercel@latest build --prod --token="${{ secrets.VERCEL_TOKEN }}" --scope="${{ secrets.VERCEL_ORG_ID }}"
-          npx vercel@latest deploy --prebuilt --prod --token="${{ secrets.VERCEL_TOKEN }}" --scope="${{ secrets.VERCEL_ORG_ID }}"
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN is not configured; Vercel Git integration remains the production deploy path."
+            exit 0
+          fi
+          npx vercel@latest link --yes --project="$VERCEL_PROJECT_ID" --scope="$VERCEL_ORG_ID" --token="$VERCEL_TOKEN"
+          npx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN" --scope="$VERCEL_ORG_ID"
+          npx vercel@latest build --prod --token="$VERCEL_TOKEN" --scope="$VERCEL_ORG_ID"
+          npx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" --scope="$VERCEL_ORG_ID"
 
-      - name: Verify Vercel deployment configuration
-        if: ${{ secrets.VERCEL_TOKEN == '' }}
+      - name: Namecheap routing check
         run: |
-          echo "VERCEL_TOKEN is not configured."
-          echo "Vercel Git integration can still deploy main automatically."
-          echo "Add VERCEL_TOKEN, VERCEL_ORG_ID and VERCEL_PROJECT_ID to let GitHub Actions own the production deployment."
-
-      - name: Namecheap routing note
-        run: |
-          echo "Namecheap remains the domain/DNS layer."
-          echo "Point the production domain to Vercel; do not FTP dist because EVES uses Vercel serverless APIs for CMS, AI, auth and newsletter."
+          echo "Namecheap is the domain/DNS layer."
+          echo "The production domain should resolve to Vercel so CMS, AI, auth and newsletter serverless APIs remain available."
