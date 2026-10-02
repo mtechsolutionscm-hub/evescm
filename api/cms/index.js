@@ -22,7 +22,9 @@ export default async function handler(req,res){
    if(input.action==='sections-reorder'){for(let i=0;i<(input.ids||[]).length;i++)await sb(`eves_cms_sections?id=eq.${encodeURIComponent(input.ids[i])}`,{method:'PATCH',admin:true,body:{sort_order:(i+1)*10,updated_at:new Date().toISOString()},headers:{Prefer:'return=minimal'}});await audit(s,'reorder','sections','/',{});return json(res,200,{ok:true})}
    if(input.action==='navigation'){const x={...input.item};delete x.id;delete x.created_at;delete x.updated_at;const d=await sb('eves_cms_navigation',{method:'POST',admin:true,body:{...x,updated_at:new Date().toISOString()},headers:{Prefer:'resolution=merge-duplicates,return=representation'}});return json(res,200,{ok:true,item:d?.[0]||d})}
    if(input.action==='newsletter'){const d=await sb('eves_cms_newsletter_subscribers?select=id,email,language,status,source,subscribed_at&order=subscribed_at.desc',{admin:true});return json(res,200,{ok:true,subscribers:d||[]})}
-   const type=input.type||input.content?.kind, c={...(input.content||{})};delete c.id;delete c.created_at;delete c.updated_at
+   const type=input.type||input.content?.kind
+   const c={...(input.content||{})}
+   delete c.id;delete c.created_at;delete c.updated_at;delete c.kind
    const table=type==='page'?'eves_cms_pages':type==='news'?'eves_cms_news':type==='media'?'eves_cms_media':null
    if(!table)return json(res,400,{error:'Unsupported CMS content type'})
    if((c.status==='published'||type==='news')&&!c.published_at&&c.status==='published')c.published_at=new Date().toISOString()
