@@ -1,6 +1,10 @@
 import {createClient} from '@supabase/supabase-js'
-export const CMS_URL=import.meta.env.VITE_SUPABASE_URL||'https://mozwkfyiaqxwaoxwpkry.supabase.co'
-export const CMS_KEY=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF'
+export const CMS_URL=import.meta.env.VITE_SUPABASE_URL
+export const CMS_KEY=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+
+if(!CMS_URL||!CMS_KEY){
+  console.warn('[EVES] Supabase public configuration is missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in the build environment.')
+}
 export const supabase=createClient(CMS_URL,CMS_KEY,{auth:{persistSession:false,autoRefreshToken:false}})
 const now=()=>new Date().toISOString()
 export function mapRow(row){return{...row,tags:row.tags||[],seo_keywords:row.seo_keywords||[],metadata:row.metadata||{},data:row.data||{}}}
