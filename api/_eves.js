@@ -1,6 +1,6 @@
 import crypto from 'node:crypto'
-export const SUPABASE_URL=process.env.SUPABASE_URL||'https://mozwkfyiaqxwaoxwpkry.supabase.co'
-export const PUBLIC_KEY=process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY||process.env.SUPABASE_ANON_KEY||process.env.VITE_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF'
+export const SUPABASE_URL=process.env.SUPABASE_URL||''
+export const PUBLIC_KEY=process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY||process.env.SUPABASE_ANON_KEY||process.env.VITE_SUPABASE_PUBLISHABLE_KEY||''
 export const SERVER_KEY=process.env.SUPABASE_SERVICE_ROLE_KEY||process.env.SUPABASE_SECRET_KEY||process.env.SUPABASE_SERVICE_ROLE||process.env.SUPABASE_SERVER_KEY||process.env.SUPABASE_ADMIN_KEY||process.env.SUPABASE_SECRET||''
 export function parseCookies(req){return Object.fromEntries((req.headers.cookie||'').split(';').filter(Boolean).map(x=>{const i=x.indexOf('=');return[x.slice(0,i).trim(),decodeURIComponent(x.slice(i+1))]}))}
 export function verifySession(req){const token=parseCookies(req).eves_admin_session;const[body,sig]=(token||'').split('.');if(!body||!sig||!process.env.EVES_ADMIN_SESSION_SECRET)return null;try{const expected=crypto.createHmac('sha256',process.env.EVES_ADMIN_SESSION_SECRET).update(body).digest('base64url');if(sig.length!==expected.length||!crypto.timingSafeEqual(Buffer.from(sig),Buffer.from(expected)))return null;const p=JSON.parse(Buffer.from(body,'base64url').toString());return p?.exp>Date.now()?p:null}catch{return null}}
