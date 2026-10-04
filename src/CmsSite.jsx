@@ -181,11 +181,37 @@ function News({news,navigation,sections,config,lang,setLang}){const text=siteTex
 export default function CmsSite(){
  const [state,setState]=useState({pages:[],news:[],media:[],sections:[],navigation:[],config:null})
  const [lang,setLang]=useState(()=>navigator.language?.toLowerCase().startsWith('fr')?'fr':'en')
- const path=((window.location.pathname||'/').replace(/\/+$/,'')||'/')
- useEffect(()=>{let alive=true;const load=()=>fetchPublicContent().then(x=>alive&&setState(x)).catch(console.error);load();const stop=subscribeToCms(load);return()=>{alive=false;stop()}},[])
+ const [loading,setLoading]=useState(true)
+ const [loadError,setLoadError]=useState('')
+ const path=((window.location.pathname||'/').replace(/\\/+$/,'')||'/')
+ useEffect(()=>{
+   let alive=true
+   const load=async()=>{
+     try{
+       setLoadError('')
+       const x=await fetchPublicContent()
+       if(alive){setState(x);setLoading(false)}
+     }catch(e){
+       console.error('EVES public CMS load failed',e)
+       if(alive){setLoadError(e?.message||'Unable to load EVES content');setLoading(false)}
+     }
+   }
+   load()
+   const stop=subscribeToCms(load)
+   return()=>{alive=false;stop()}
+ },[])
+ if(loading)return <div className="cms-loading-screen"><div className="cms-loading-card"><img src={state.config?.logo_url||logo} alt="EVES"/><div className="cms-loading-spinner"></div><h1>EVES</h1><p>{lang==='fr'?'Chargement du site…':'Loading the website…'}</p></div></div>
+ if(loadError)return <div className="cms-loading-screen"><div className="cms-loading-card"><img src={state.config?.logo_url||logo} alt="EVES"/><h1>{lang==='fr'?'EVES est temporairement indisponible':'EVES is temporarily unavailable'}</h1><p>{lang==='fr'?'Le contenu du site n’a pas pu être chargé.':'The website content could not be loaded.'}</p><button className="cms-retry" onClick={()=>window.location.reload()}>{lang==='fr'?'Réessayer':'Retry'}</button></div></div>
  if(path==='/gallery')return <Gallery media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
  if(path==='/news')return <News news={state.news} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
+ if(path.startsWith('/news/')){
+   const n=state.news.find(x=>x.slug===path.slice(6))
+   const text=siteText(state.config,lang)
+   return n?<Page item={n} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:text.article_not_found_title,title_en:text.article_not_found_title,body_fr:text.article_not_found_body,body_en:text.article_not_found_body}} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
+ }
  const item=state.pages.find(x=>x.slug===path)
- if(path.startsWith('/news/')){const n=state.news.find(x=>x.slug===path.slice(6));const text=siteText(state.config,lang);return n?<Page item={n} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:text.article_not_found_title,title_en:text.article_not_found_title,body_fr:text.article_not_found_body,body_en:text.article_not_found_body}} config={state.config} lang={lang} setLang={setLang}/>}
- const text=siteText(state.config,lang);return path==='/'||path==='/index.html'?<Home pages={state.pages} news={state.news} media={state.media} sections={state.sections} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>:item?<Page item={item} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:text.not_found_title,title_en:text.not_found_title,body_fr:text.not_found_body,body_en:text.not_found_body}} config={state.config} lang={lang} setLang={setLang}/>
+ const text=siteText(state.config,lang)
+ if(path==='/'||path==='/index.html')return <Home pages={state.pages} news={state.news} media={state.media} sections={state.sections} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>
+ if(item)return <Page item={item} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
+ return <Page item={{title_fr:text.not_found_title,title_en:text.not_found_title,body_fr:text.not_found_body,body_en:text.not_found_body}} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
 }
