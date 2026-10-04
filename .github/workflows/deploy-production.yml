@@ -1,4 +1,4 @@
-name: EVES production build & Namecheap deploy
+name: EVES production build & Namecheap FTPS deploy
 
 on:
   push:
@@ -14,8 +14,6 @@ jobs:
     env:
       VITE_SUPABASE_URL: https://mozwkfyiaqxwaoxwpkry.supabase.co
       VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF
-      NAMECHEAP_DEPLOY_PATH: /home/evesqies/public_html
-      NAMECHEAP_SSH_PORT: 21098
 
     steps:
       - name: Checkout
@@ -33,10 +31,7 @@ jobs:
         run: |
           set -e
           for table in eves_cms_config eves_cms_pages eves_cms_news eves_cms_media eves_cms_sections eves_cms_navigation; do
-            curl -fsS \
-              "$VITE_SUPABASE_URL/rest/v1/$table?select=*&limit=1" \
-              -H "apikey: $VITE_SUPABASE_PUBLISHABLE_KEY" \
-              -H "Authorization: Bearer $VITE_SUPABASE_PUBLISHABLE_KEY" >/dev/null
+            curl -fsS "$VITE_SUPABASE_URL/rest/v1/$table?select=*&limit=1"               -H "apikey: $VITE_SUPABASE_PUBLISHABLE_KEY"               -H "Authorization: Bearer $VITE_SUPABASE_PUBLISHABLE_KEY" >/dev/null
             echo "OK: $table"
           done
 
@@ -68,52 +63,24 @@ jobs:
           echo "EVES production bundle ready"
           du -sh dist
 
-      - name: Package deployment
-        run: tar -czf eves-production.tar.gz -C dist .
-
-      - name: Prepare Namecheap release directory
-        uses: appleboy/ssh-action@v1
+      - name: Deploy directly to Namecheap via explicit FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
-          host: ${{ secrets.NAMECHEAP_HOST }}
-          username: ${{ secrets.NAMECHEAP_USERNAME }}
-          password: ${{ secrets.NAMECHEAP_PASSWORD }}
-          port: ${{ env.NAMECHEAP_SSH_PORT }}
-          script: |
-            set -e
-            rm -rf /home/evesqies/eves-release
-            mkdir -p /home/evesqies/eves-release
-            rm -f /home/evesqies/eves-production.tar.gz
-
-      - name: Upload production bundle to Namecheap
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.NAMECHEAP_HOST }}
-          username: ${{ secrets.NAMECHEAP_USERNAME }}
-          password: ${{ secrets.NAMECHEAP_PASSWORD }}
-          port: ${{ env.NAMECHEAP_SSH_PORT }}
-          source: eves-production.tar.gz
-          target: /home/evesqies/
-
-      - name: Activate production release on Namecheap
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.NAMECHEAP_HOST }}
-          username: ${{ secrets.NAMECHEAP_USERNAME }}
-          password: ${{ secrets.NAMECHEAP_PASSWORD }}
-          port: ${{ env.NAMECHEAP_SSH_PORT }}
-          script: |
-            set -e
-            tar -xzf /home/evesqies/eves-production.tar.gz -C /home/evesqies/eves-release
-            test -s /home/evesqies/eves-release/index.html
-            find ${{ env.NAMECHEAP_DEPLOY_PATH }} -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
-            mv /home/evesqies/eves-release/. ${{ env.NAMECHEAP_DEPLOY_PATH }}/
-            rmdir /home/evesqies/eves-release
-            rm -f /home/evesqies/eves-production.tar.gz
-            test -s ${{ env.NAMECHEAP_DEPLOY_PATH }}/index.html
-            test -f ${{ env.NAMECHEAP_DEPLOY_PATH }}/media/gallery/image-1.jpeg
-            test -f ${{ env.NAMECHEAP_DEPLOY_PATH }}/media/gallery/image-2.jpeg
-            test -f ${{ env.NAMECHEAP_DEPLOY_PATH }}/media/gallery/image-3.jpeg
-            echo "EVES deployed directly to Namecheap."
+          server: ftp.evescm.org
+          username: ${{ secrets.NAMECHEAP_FTP_USERNAME }}
+          password: ${{ secrets.NAMECHEAP_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./dist/
+          server-dir: ./
+          dangerous-clean-slate: true
+          security: loose
+          timeout: 120000
+          log-level: standard
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
 
       - name: Publish generated dist to repository
         run: |
@@ -126,3 +93,10 @@ jobs:
           fi
           git commit -m "build: publish EVES production bundle [skip ci]"
           git push
+
+      - name: Deployment summary
+        run: |
+          echo "EVES deployed directly to Namecheap over explicit FTPS."
+          echo "FTP host: ftp.evescm.org"
+          echo "FTP port: 21"
+          echo "Remote root: public_html"
