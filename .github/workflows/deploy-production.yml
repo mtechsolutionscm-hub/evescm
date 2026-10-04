@@ -11,6 +11,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_SUPABASE_URL: https://mozwkfyiaqxwaoxwpkry.supabase.co
+      VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +25,17 @@ jobs:
 
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+
+      - name: Verify EVES Supabase database
+        run: |
+          set -e
+          for table in eves_cms_config eves_cms_pages eves_cms_news eves_cms_media eves_cms_sections eves_cms_navigation; do
+            curl -fsS \
+              "$VITE_SUPABASE_URL/rest/v1/$table?select=*&limit=1" \
+              -H "apikey: $VITE_SUPABASE_PUBLISHABLE_KEY" \
+              -H "Authorization: Bearer $VITE_SUPABASE_PUBLISHABLE_KEY" >/dev/null
+            echo "OK: $table"
+          done
 
       - name: Build Vite production bundle
         run: npm run build
