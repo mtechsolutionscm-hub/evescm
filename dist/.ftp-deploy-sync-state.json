@@ -1,0 +1,91 @@
+{
+    "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
+    "version": "1.0.0",
+    "generatedTime": 1791119435750,
+    "data": [
+        {
+            "type": "file",
+            "name": ".htaccess",
+            "size": 332,
+            "hash": "f2ee8aabf4c3bcb1417e3adbd2ad2bf7a8e34886dcb901032584b2f7049dd08c"
+        },
+        {
+            "type": "folder",
+            "name": "assets"
+        },
+        {
+            "type": "file",
+            "name": "index.html",
+            "size": 4961,
+            "hash": "a614f53a630283208493e3a59a7334061b8ef9c9521b39e9bacfc65c1746afae"
+        },
+        {
+            "type": "file",
+            "name": "logo.svg",
+            "size": 17712,
+            "hash": "09817f0a21801421250aadc2542df73551acd625b2ce1d11b03401a5f6fa4c28"
+        },
+        {
+            "type": "folder",
+            "name": "media"
+        },
+        {
+            "type": "file",
+            "name": "newsletter.css",
+            "size": 889,
+            "hash": "04e9e5201fae40320d680f790e1721681216ac4b817edfca00700d0d2dc8fb94"
+        },
+        {
+            "type": "file",
+            "name": "okwelians-theme.css",
+            "size": 4345,
+            "hash": "b5c0629b10b09221429ea329ae54ede3b200e54c55da1dd50e6c761c0d66ce72"
+        },
+        {
+            "type": "file",
+            "name": "robots.txt",
+            "size": 71,
+            "hash": "96512de86f69f2c5daa8472086dbb51a9b3b589e5abe7a00e0512a8bc7e6ad5f"
+        },
+        {
+            "type": "file",
+            "name": "sitemap.xml",
+            "size": 1476,
+            "hash": "9ae7c7bbbf257075e3174f2250a80f7e46bc8f8fc98a2a78e4f8fac8cdbd85a5"
+        },
+        {
+            "type": "file",
+            "name": "assets/index-5azUgJ0C.css",
+            "size": 95226,
+            "hash": "55ebc4ef9459ac8d1bd379e503e8fa9c7f79e7b2a746e78b2bd4fd7d0d3c3030"
+        },
+        {
+            "type": "file",
+            "name": "assets/index-BKY76_j5.js",
+            "size": 516774,
+            "hash": "f1ac30911984c96c78900ac28a2f1bd74ade26b34deba4ff06f26765d18c8746"
+        },
+        {
+            "type": "folder",
+            "name": "media/gallery"
+        },
+        {
+            "type": "file",
+            "name": "media/gallery/image-1.jpeg",
+            "size": 105244,
+            "hash": "f5673302938c952929222a4900444ca404f455e5fdf6c83cbaeecb52fcf98015"
+        },
+        {
+            "type": "file",
+            "name": "media/gallery/image-2.jpeg",
+            "size": 63995,
+            "hash": "a04dd548e2391f11b4b7ed944da9ce7e860a63680b7fe24994a7f44cce197610"
+        },
+        {
+            "type": "file",
+            "name": "media/gallery/image-3.jpeg",
+            "size": 65186,
+            "hash": "1e7a5785ae3734260d1a9babb7a86ecccb5044d178f3e54676853afa59f3e9fe"
+        }
+    ]
+}
