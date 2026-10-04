@@ -1,13 +1,28 @@
 import {createClient} from '@supabase/supabase-js'
-export const CMS_URL=import.meta.env.VITE_SUPABASE_URL
-export const CMS_KEY=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 
-if(!CMS_URL||!CMS_KEY){
-  console.warn('[EVES] Supabase public configuration is missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in the build environment.')
-}
+/*
+ * EVES CMS is hosted in the shared SafeHome Supabase project.
+ * The publishable key is intentionally browser-safe; RLS on the eves_* tables
+ * is the security boundary. Server/admin operations must never use this key.
+ */
+export const CMS_URL=import.meta.env.VITE_SUPABASE_URL||'https://mozwkfyiaqxwaoxwpkry.supabase.co'
+export const CMS_KEY=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF'
+
 export const supabase=createClient(CMS_URL,CMS_KEY,{auth:{persistSession:false,autoRefreshToken:false}})
-const now=()=>new Date().toISOString()
+export const EVES_TABLES=[
+ 'eves_cms_config',
+ 'eves_cms_pages',
+ 'eves_cms_news',
+ 'eves_cms_media',
+ 'eves_cms_sections',
+ 'eves_cms_navigation',
+ 'eves_cms_newsletter_subscribers',
+ 'eves_cms_admins',
+ 'eves_cms_audit_log'
+]
+
 export function mapRow(row){return{...row,tags:row.tags||[],seo_keywords:row.seo_keywords||[],metadata:row.metadata||{},data:row.data||{}}}
+
 export async function fetchPublicContent(){
  const [configRes,pagesRes,newsRes,mediaRes,sectionsRes,navigationRes]=await Promise.all([
   supabase.from('eves_cms_config').select('*').eq('id',true).maybeSingle(),
@@ -28,6 +43,7 @@ export async function fetchPublicContent(){
   navigation:(navigationRes.data||[]).map(mapRow)
  }
 }
+
 export function subscribeToCms(onChange){
  let channel=null
  try{channel=supabase.channel('eves-cms-live')
@@ -41,9 +57,23 @@ export function subscribeToCms(onChange){
  }catch(e){return()=>{}}
  return()=>channel&&supabase.removeChannel(channel)
 }
+
+/*
+ * Public newsletter signup works on static Namecheap hosting without requiring
+ * a Node/Vercel API route. RLS allows anonymous inserts and the unique email
+ * constraint prevents duplicate subscriptions.
+ */
 export async function subscribeNewsletter(email,language){
- const r=await fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,language})})
- const j=await r.json()
- if(!r.ok)throw new Error(j.error||'Subscription failed')
- return j
+ const value=String(email||'').trim().toLowerCase()
+ if(!/^\\S+@\\S+\\.\\S+$/.test(value)||value.length>254)throw new Error('Invalid email')
+ const {error}=await supabase.from('eves_cms_newsletter_subscribers').insert({
+  email:value,
+  language:language==='en'?'en':'fr',
+  source:'website'
+ })
+ if(error){
+  if(error.code==='23505')return {ok:true,exists:true}
+  throw new Error(error.message||'Subscription failed')
+ }
+ return {ok:true}
 }
