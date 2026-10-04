@@ -1,4 +1,4 @@
-name: EVES production build
+name: EVES production build & Namecheap deploy
 
 on:
   push:
@@ -9,11 +9,14 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     env:
       VITE_SUPABASE_URL: https://mozwkfyiaqxwaoxwpkry.supabase.co
       VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF
+      NAMECHEAP_DEPLOY_PATH: /home/evesqies/public_html
+      NAMECHEAP_SSH_PORT: 21098
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,18 +40,80 @@ jobs:
             echo "OK: $table"
           done
 
+      - name: Prepare gallery assets outside the /gallery route
+        run: |
+          set -e
+          mkdir -p public/media/gallery
+          for f in public/gallery/image-*.jpeg; do
+            [ -f "$f" ] && mv "$f" public/media/gallery/
+          done
+          rm -f public/gallery/index.html
+          rmdir public/gallery 2>/dev/null || true
+          test -f public/media/gallery/image-1.jpeg
+          test -f public/media/gallery/image-2.jpeg
+          test -f public/media/gallery/image-3.jpeg
+
       - name: Build Vite production bundle
         run: npm run build
 
-      - name: Verify bundle
+      - name: Verify production bundle
         run: |
+          set -e
           test -s dist/index.html
           test -d dist/assets
-          test -f dist/gallery/image-1.jpeg
-          test -f dist/gallery/image-2.jpeg
-          test -f dist/gallery/image-3.jpeg
+          test -f dist/media/gallery/image-1.jpeg
+          test -f dist/media/gallery/image-2.jpeg
+          test -f dist/media/gallery/image-3.jpeg
+          test -f dist/.htaccess
           echo "EVES production bundle ready"
           du -sh dist
+
+      - name: Package deployment
+        run: tar -czf eves-production.tar.gz -C dist .
+
+      - name: Prepare Namecheap release directory
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.NAMECHEAP_HOST }}
+          username: ${{ secrets.NAMECHEAP_USERNAME }}
+          password: ${{ secrets.NAMECHEAP_PASSWORD }}
+          port: ${{ env.NAMECHEAP_SSH_PORT }}
+          script: |
+            set -e
+            rm -rf /home/evesqies/eves-release
+            mkdir -p /home/evesqies/eves-release
+            rm -f /home/evesqies/eves-production.tar.gz
+
+      - name: Upload production bundle to Namecheap
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.NAMECHEAP_HOST }}
+          username: ${{ secrets.NAMECHEAP_USERNAME }}
+          password: ${{ secrets.NAMECHEAP_PASSWORD }}
+          port: ${{ env.NAMECHEAP_SSH_PORT }}
+          source: eves-production.tar.gz
+          target: /home/evesqies/
+
+      - name: Activate production release on Namecheap
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.NAMECHEAP_HOST }}
+          username: ${{ secrets.NAMECHEAP_USERNAME }}
+          password: ${{ secrets.NAMECHEAP_PASSWORD }}
+          port: ${{ env.NAMECHEAP_SSH_PORT }}
+          script: |
+            set -e
+            tar -xzf /home/evesqies/eves-production.tar.gz -C /home/evesqies/eves-release
+            test -s /home/evesqies/eves-release/index.html
+            find ${{ env.NAMECHEAP_DEPLOY_PATH }} -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
+            mv /home/evesqies/eves-release/. ${{ env.NAMECHEAP_DEPLOY_PATH }}/
+            rmdir /home/evesqies/eves-release
+            rm -f /home/evesqies/eves-production.tar.gz
+            test -s ${{ env.NAMECHEAP_DEPLOY_PATH }}/index.html
+            test -f ${{ env.NAMECHEAP_DEPLOY_PATH }}/media/gallery/image-1.jpeg
+            test -f ${{ env.NAMECHEAP_DEPLOY_PATH }}/media/gallery/image-2.jpeg
+            test -f ${{ env.NAMECHEAP_DEPLOY_PATH }}/media/gallery/image-3.jpeg
+            echo "EVES deployed directly to Namecheap."
 
       - name: Publish generated dist to repository
         run: |
