@@ -4,10 +4,8 @@ Options -Indexes
 RewriteEngine On
 RewriteBase /
 
-# Never expose the physical gallery directory; send visitors to the app gallery section.
-RewriteRule ^gallery/?$ /#gallery [R=302,L]
-
-# SPA fallback for client-side routes.
+# SPA fallback. The /gallery route is a React route; gallery assets live outside
+# the /gallery URL directory so Apache never exposes a directory index.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [L]
