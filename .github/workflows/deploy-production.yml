@@ -1,4 +1,4 @@
-name: EVES production pipeline
+name: EVES production build
 
 on:
   push:
@@ -8,89 +8,42 @@ on:
 permissions:
   contents: write
 
-env:
-  VERCEL_PROJECT_ID: prj_pwbbob8Tp3FgRfnSCAx0iIhDDCsM
-  VERCEL_ORG_ID: team_bN50nXRjcFRDYboc1sUnzxYB
-
 jobs:
-  build-and-publish-static:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
-      - name: Build production site
-
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      - name: Build Vite production bundle
         run: npm run build
 
-      - name: Verify production bundle
+      - name: Verify bundle
         run: |
           test -s dist/index.html
           test -d dist/assets
-          echo "Production bundle:"
+          test -f dist/gallery/image-1.jpeg
+          test -f dist/gallery/image-2.jpeg
+          test -f dist/gallery/image-3.jpeg
+          echo "EVES production bundle ready"
           du -sh dist
-          find dist/assets -maxdepth 1 -type f | head -20
 
-      - name: Commit generated dist for cPanel
+      - name: Publish generated dist to repository
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f dist
           if git diff --cached --quiet; then
-            echo "dist is already up to date."
+            echo "No dist changes."
             exit 0
           fi
-          git commit -m "build: publish production dist [skip ci]"
+          git commit -m "build: publish EVES production bundle [skip ci]"
           git push
-
-      - name: Deploy to Vercel production (optional)
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "VERCEL_TOKEN not configured; skipping optional Vercel deployment."
-            exit 0
-          fi
-          npx vercel@latest link --yes --project="$VERCEL_PROJECT_ID" --scope="$VERCEL_ORG_ID" --token="$VERCEL_TOKEN"
-          npx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN" --scope="$VERCEL_ORG_ID"
-          npx vercel@latest build --prod --token="$VERCEL_TOKEN" --scope="$VERCEL_ORG_ID"
-          npx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN" --scope="$VERCEL_ORG_ID"
-
-  deploy-supabase:
-    if: ${{ hashFiles('supabase/**') != '' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
-      - name: Deploy database migrations
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
-        run: |
-          test -n "$SUPABASE_ACCESS_TOKEN"
-          test -n "$SUPABASE_PROJECT_ID"
-          supabase db push --project-ref "$SUPABASE_PROJECT_ID"
-
-      - name: Deploy Edge Functions
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
-        run: |
-          supabase functions deploy --project-ref "$SUPABASE_PROJECT_ID"
