@@ -61,3 +61,23 @@
 .link-box{margin-top:28px;padding:18px;background:#f4f8f6;border-radius:10px}
 .link-box button{border:0;background:#155f57;color:#fff;border-radius:8px;padding:10px 14px;font-weight:800;cursor:pointer}
 @media(max-width:900px){.studio-layout{grid-template-columns:1fr}.studio-library{position:static;max-height:none}.studio-topbar{display:block}.studio-status{margin-top:12px;display:inline-flex}.studio-form-grid{grid-template-columns:1fr}}
+
+/* EVES CMS professional global editor + stable Content Studio */
+.studio-status{gap:10px;flex-wrap:wrap}
+.studio-save-now{border:1px solid #d7e3df;background:#fff;color:#155f57;border-radius:8px;padding:8px 11px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.studio-save-now:hover{background:#f0f7f4;border-color:#9fc0b7}
+.global-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.global-card{padding:22px}
+.global-card h2{margin:0 0 16px;color:#173f3b;font-size:19px}
+.global-card label{display:grid;gap:6px;margin:11px 0;font-size:11px;font-weight:800;color:#536567}
+.global-card label input{width:100%;box-sizing:border-box;border:1px solid #dbe4e1;border-radius:9px;padding:11px 12px;background:#fbfdfc;color:#173f3b;font:inherit;font-weight:500}
+.global-card label input:focus{outline:0;border-color:#76a79d;box-shadow:0 0 0 3px #eaf4f0}
+.global-preview{margin-top:16px;padding:14px;border-radius:10px;background:#f1f7f4;border:1px dashed #bfd3cc;display:grid;gap:5px}
+.global-preview span{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:#b07b16;font-weight:900}
+.global-preview b{color:#155f57}
+.global-preview small{color:#6d817c}
+.word-editor a{color:#155f57;text-decoration:underline}
+.word-editor h2,.word-editor h3{font-family:Georgia,serif;color:#173f3b;margin:22px 0 10px}
+.word-editor ul,.word-editor ol{padding-left:28px}
+@media(max-width:900px){.global-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.studio-status{width:100%;justify-content:space-between}.studio-save-now{flex:0 0 auto}}
