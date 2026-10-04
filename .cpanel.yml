@@ -4,5 +4,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/evesqies/public_html/
     - /bin/test -f dist/index.html
+    # Remove stale files from previous deployments so deleted gallery assets cannot remain public.
+    - /usr/bin/find $DEPLOYPATH -mindepth 1 -maxdepth 1 -exec /bin/rm -rf -- {} +
     - /bin/cp -R dist/. $DEPLOYPATH
-    - /bin/rm -f $DEPLOYPATH/parking-page.shtml
+    - /bin/test -f $DEPLOYPATH/index.html
