@@ -4,6 +4,8 @@ import './msc-login.css'
 
 const LOGO = '/logo.svg'
 const CMS_API=import.meta.env.VITE_EVES_CMS_API||'https://mozwkfyiaqxwaoxwpkry.supabase.co/functions/v1/eves-cms-admin'
+const CMS_KEY=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF'
+const cmsHeaders=(token)=>({'apikey':CMS_KEY,...(token?{Authorization:`Bearer ${token}`}:{})})
 
 export default function MscLogin(){
   const [status,setStatus]=useState('checking')
@@ -13,13 +15,13 @@ export default function MscLogin(){
   const [busy,setBusy]=useState(false)
 
   useEffect(()=>{
-    fetch(`${CMS_API}?action=session`,{headers:localStorage.getItem('eves_msc_token')?{Authorization:`Bearer ${localStorage.getItem('eves_msc_token')}`}:{}}).then(r=>r.ok?setStatus('authenticated'):setStatus('login')).catch(()=>setStatus('login'))
+    fetch(`${CMS_API}?action=session`,{headers:cmsHeaders(localStorage.getItem('eves_msc_token'))}).then(r=>r.ok?setStatus('authenticated'):setStatus('login')).catch(()=>setStatus('login'))
   },[])
 
   async function login(e){
     e.preventDefault(); setBusy(true); setError('')
     try{
-      const r=await fetch(`${CMS_API}?action=login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})})
+      const r=await fetch(`${CMS_API}?action=login`,{method:'POST',headers:{'Content-Type':'application/json','apikey':CMS_KEY},body:JSON.stringify({email,password})})
       const j=await r.json()
       if(!r.ok) throw new Error(j.error||'Authentication failed')
       localStorage.setItem('eves_msc_token',j.token); setStatus('authenticated'); setPassword('')
