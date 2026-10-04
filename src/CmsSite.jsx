@@ -154,7 +154,7 @@ function News({news,navigation,sections,config,lang,setLang}){const text=siteTex
 export default function CmsSite(){
  const [state,setState]=useState({pages:[],news:[],media:[],sections:[],navigation:[],config:null})
  const [lang,setLang]=useState(()=>navigator.language?.toLowerCase().startsWith('fr')?'fr':'en')
- const path=window.location.pathname
+ const path=((window.location.pathname||'/').replace(/\/+$/,'')||'/')
  useEffect(()=>{let alive=true;const load=()=>fetchPublicContent().then(x=>alive&&setState(x)).catch(console.error);load();const stop=subscribeToCms(load);return()=>{alive=false;stop()}},[])
  if(path==='/gallery')return <Gallery media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
  if(path==='/news')return <News news={state.news} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
