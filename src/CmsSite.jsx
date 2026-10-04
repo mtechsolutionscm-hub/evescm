@@ -5,9 +5,9 @@ import './cms-site.css'
 const logo='/logo.svg'
 const EVES_CONTACT={phone:'+237 694 641 402',whatsapp:'237694641402',email:'contact@eves.cm',address:'Yaoundé, Cameroun'}
 const galleryImages=[
- {src:'/gallery/image-1.jpeg',alt:'EVES — communautés et jeunesse',caption:'Les communautés, les jeunes et les familles au cœur de l’action EVES.'},
- {src:'/gallery/image-2.jpeg',alt:'EVES — action de terrain',caption:'Une action de terrain construite avec les communautés.'},
- {src:'/gallery/image-3.jpeg',alt:'EVES — éducation et solidarité',caption:'Éducation, protection et solidarité pour renforcer la résilience.'}
+ {src:'/media/gallery/image-1.jpeg',alt:'EVES — communautés et jeunesse',caption:'Les communautés, les jeunes et les familles au cœur de l’action EVES.'},
+ {src:'/media/gallery/image-2.jpeg',alt:'EVES — action de terrain',caption:'Une action de terrain construite avec les communautés.'},
+ {src:'/media/gallery/image-3.jpeg',alt:'EVES — éducation et solidarité',caption:'Éducation, protection et solidarité pour renforcer la résilience.'}
 ]
 const localGalleryMedia=galleryImages.map((x,i)=>({id:`local-${i+1}`,public_url:x.src,alt_fr:x.alt,alt_en:x.alt,caption_fr:x.caption,caption_en:x.caption}))
 const allowedGalleryNames=['image-1.jpeg','image-2.jpeg','image-3.jpeg']
