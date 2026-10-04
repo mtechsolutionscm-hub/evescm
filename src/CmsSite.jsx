@@ -183,7 +183,7 @@ export default function CmsSite(){
  const [lang,setLang]=useState(()=>navigator.language?.toLowerCase().startsWith('fr')?'fr':'en')
  const [loading,setLoading]=useState(true)
  const [loadError,setLoadError]=useState('')
- const path=((window.location.pathname||'/').replace(/\\/+$/,'')||'/')
+ const path=((window.location.pathname||'/').replace(/\/+$/,'')||'/')
  useEffect(()=>{
    let alive=true
    const load=async()=>{
