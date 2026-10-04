@@ -5,7 +5,7 @@ import './msc-login.css'
 const LOGO = '/logo.svg'
 const CMS_API=import.meta.env.VITE_EVES_CMS_API||'https://mozwkfyiaqxwaoxwpkry.supabase.co/functions/v1/eves-cms-admin'
 const CMS_KEY=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF'
-const cmsHeaders=(token)=>token?{Authorization:`Bearer ${token}`}:{})
+const cmsHeaders=(token)=>token?{Authorization:`Bearer ${token}`} : {}
 
 export default function MscLogin(){
   const [status,setStatus]=useState('checking')
