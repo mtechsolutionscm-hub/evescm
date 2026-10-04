@@ -65,7 +65,7 @@ export function subscribeToCms(onChange){
  */
 export async function subscribeNewsletter(email,language){
  const value=String(email||'').trim().toLowerCase()
- if(!/^\\S+@\\S+\\.\\S+$/.test(value)||value.length>254)throw new Error('Invalid email')
+ if(!/^\S+@\S+\.\S+$/.test(value)||value.length>254)throw new Error('Invalid email')
  const {error}=await supabase.from('eves_cms_newsletter_subscribers').insert({
   email:value,
   language:language==='en'?'en':'fr',
