@@ -10,8 +10,9 @@ const textLabels=Object.fromEntries(Object.keys(defaultSiteTextFr).map(k=>[k,{fr
 const T=({lang,fr,en})=>lang==='fr'?fr:en
 const I=({n})=><i className={'fa-solid '+n} aria-hidden="true"/>
 const CMS_API=import.meta.env.VITE_EVES_CMS_API||'https://mozwkfyiaqxwaoxwpkry.supabase.co/functions/v1/eves-cms-admin'
+const CMS_KEY=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_UhbESgvWxdswVun3Vo5uvw_xk0SvpPF'
 const api=(path='')=>`${CMS_API}${path}`
-const authHeaders=()=>{const t=localStorage.getItem('eves_msc_token');return t?{Authorization:`Bearer ${t}`}:{}} 
+const authHeaders=()=>{const t=localStorage.getItem('eves_msc_token');return {apikey:CMS_KEY,...(t?{Authorization:`Bearer ${t}`}:{})}} 
 const cp=x=>JSON.parse(JSON.stringify(x||{}))
 function useToast(){const[t,setT]=useState('');return[t,setT]}
 export default function Admin(){
