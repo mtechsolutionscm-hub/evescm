@@ -317,3 +317,11 @@ img{max-width:100%}
   .cms-hero-panel{padding-left:18px;padding-right:18px}.cms-hero-panel h1{font-size:35px}
   .cms-heading h2{font-size:36px}.cms-page-hero h1{font-size:42px}
 }
+
+/* EVES footer developer credit */
+.cms-credit{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding:18px 20px;font-size:12px}
+.cms-credit a{color:inherit;text-decoration:none;font-weight:800;border-bottom:1px solid transparent}
+.cms-credit a:hover{color:#155f57;border-bottom-color:#155f57}
+.cms-credit a strong{font-weight:900}
+.cms-rich-body{font-size:1.05rem;line-height:1.8;color:inherit}
+.cms-rich-body strong{font-weight:800}.cms-rich-body em{font-style:italic}.cms-rich-body h2,.cms-rich-body h3{font-family:Georgia,serif;color:#173f3b;margin:1.8em 0 .6em}.cms-rich-body ul,.cms-rich-body ol{padding-left:1.6em}.cms-rich-body a{color:#155f57;text-decoration:underline}
