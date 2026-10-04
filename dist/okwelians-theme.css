@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --okw-black:#050505;
+  --okw-white:#ffffff;
+  --okw-paper:#fbfaf6;
+  --okw-grey:#ededeb;
+  --okw-text:#4f5a5d;
+  --okw-yellow:#f3c316;
+  --okw-line:#deded9;
+  --eves-teal:#2e666b;
+}
+
+html,body,#root,
+.cms-shell,
+.cms-shell button,
+.cms-shell input,
+.cms-shell textarea,
+.cms-shell select{
+  font-family:'Poppins',Arial,'Helvetica Neue',sans-serif!important;
+}
+
+body{
+  background:var(--okw-white);
+  color:var(--okw-black);
+}
+
+.cms-shell h1,.cms-shell h2,.cms-shell h3,.cms-shell h4,
+.cms-shell p,.cms-shell a,.cms-shell button{
+  font-family:'Poppins',Arial,'Helvetica Neue',sans-serif!important;
+}
+
+.cms-shell h1,.cms-shell h2,.cms-shell h3,.cms-shell h4{
+  font-weight:700;
+  letter-spacing:-.055em;
+}
+
+.cms-top{
+  min-height:42px;
+  padding:0 5.5%;
+  background:#f6f6f5;
+  border-bottom:1px solid #e6e6e3;
+  font-size:10px;
+  letter-spacing:.01em;
+}
+
+.cms-header{
+  min-height:106px;
+  padding:7px 5.5%;
+  background:#fff;
+  border-bottom:1px solid #ededeb;
+}
+
+.cms-logo img{width:160px;height:86px}
+.cms-header nav{gap:28px}
+.cms-header nav>a,.cms-nav-dropdown>button{
+  font-size:15px;
+  font-weight:500;
+  letter-spacing:-.025em;
+}
+.cms-nav-menu{
+  border:0;
+  box-shadow:0 18px 42px rgba(0,0,0,.11);
+}
+
+.cms-hero-editorial{
+  background:var(--okw-paper);
+  grid-template-columns:minmax(0,39%) minmax(0,61%)!important;
+  min-height:700px;
+}
+.cms-hero-wordstack span{
+  font-family:'Poppins',Arial,sans-serif!important;
+  font-weight:800;
+  letter-spacing:-.09em;
+}
+.cms-hero-panel h1{
+  font-family:'Poppins',Arial,sans-serif!important;
+  font-weight:500;
+  letter-spacing:-.065em;
+}
+.cms-hero-panel p{
+  font-size:16px;
+  color:#596366;
+}
+.cms-btn{
+  min-height:52px;
+  border-radius:0;
+  background:#050505;
+  border-color:#050505;
+  font-size:11px;
+  letter-spacing:.01em;
+}
+.cms-btn:hover{
+  background:var(--okw-yellow);
+  border-color:var(--okw-yellow);
+}
+.cms-btn.outline{
+  background:#fff;
+}
+
+.cms-theory{
+  background:#e9e9e9;
+  border-bottom:0;
+}
+.cms-theory-flow div,
+.obj-grid article,
+.news-card,
+.cta-block,
+.stats-block>div,
+.cards-block article{
+  border-radius:0;
+}
+.cms-theory-flow div{
+  background:#fff;
+}
+
+.cms-section{
+  max-width:1500px;
+  padding-top:88px;
+  padding-bottom:88px;
+}
+.cms-heading h2{
+  font-weight:700;
+  letter-spacing:-.065em;
+}
+.obj-grid article{
+  background:#f2f2f0;
+  border-top:2px solid #111;
+}
+.obj-grid article:hover{
+  background:#fff;
+  box-shadow:none;
+  transform:translateY(-2px);
+}
+.obj-grid article>i{
+  border:0;
+  background:#fff;
+}
+.news-card{
+  background:#f3f3f1;
+  border-top:2px solid #111;
+}
+.news-card:hover{
+  box-shadow:none;
+}
+.news-card-featured h2,.news-card-featured h3{
+  font-weight:700;
+}
+.gallery-strip a,
+.gallery-grid figure{
+  border-radius:0;
+}
+.cms-home-gallery{
+  background:#f0f0ee;
+}
+.cms-newsletter{
+  background:#e9e9e7;
+}
+.cms-newsletter button{
+  background:#050505;
+}
+.cms-newsletter button:hover{
+  background:var(--okw-yellow);
+}
+.cms-footer{
+  background:#050505;
+}
+.cms-footer a:hover{
+  color:var(--okw-yellow);
+}
+
+.cms-page-hero{
+  background:var(--okw-paper);
+  border-bottom:1px solid var(--okw-line);
+}
+.cms-page-hero::after{
+  background:rgba(243,195,22,.14);
+}
+.cms-page-hero h1{
+  font-weight:700;
+  letter-spacing:-.075em;
+}
+.cms-page article{
+  max-width:1100px;
+}
+
+.content-blocks,
+.cms-content-blocks{
+  font-family:'Poppins',Arial,sans-serif;
+}
+.richtext-block h2,.cta-block h2,.cards-block h3{
+  font-weight:700;
+  letter-spacing:-.05em;
+}
+.cta-block{
+  background:#f3f3f1;
+  border-top:2px solid #111;
+}
+.cta-block a{
+  background:#050505;
+}
+.quote-block{
+  border-left:4px solid var(--okw-yellow);
+}
+.stats-block strong{
+  font-weight:700;
+}
+.cards-block article{
+  border-top:2px solid #111;
+}
+
+.eves-ai-fab{
+  border-radius:0;
+  background:#050505;
+  font-family:'Poppins',Arial,sans-serif!important;
+}
+.eves-ai-fab:hover{
+  background:var(--okw-yellow);
+}
+.eves-ai-panel{
+  border-radius:0;
+}
+.eves-ai-head{
+  background:#050505;
+}
+.eves-ai-msg.user p{
+  background:var(--okw-yellow);
+}
+
+@media(max-width:760px){
+  .cms-header{min-height:88px}
+  .cms-logo img{width:124px;height:70px}
+  .cms-hero-panel h1{font-size:39px}
+  .cms-page-hero h1{font-size:47px}
+  .cms-section{padding-top:64px;padding-bottom:64px}
+}
