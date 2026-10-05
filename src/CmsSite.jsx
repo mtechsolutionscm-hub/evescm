@@ -77,7 +77,12 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
  const global=siteGlobal(config,lang)
  const address=global.address
  const fallbackNav=[{id:'home',href:'/',label_fr:'Accueil',label_en:'Home',parent_key:'',sort_order:10,visible:true},...links.map(([href,label],i)=>({id:String(i),href,label_fr:label,label_en:label,parent_key:i<=4?'organisation':i<=8?'action':i>=13?'soutenir':'ressources',sort_order:20+i*10,visible:true})),{id:'support',href:'/donate',label_fr:'Soutenir',label_en:'Support',parent_key:'soutenir',sort_order:200,visible:true}]
- const navItems=navigation.length?navigation:fallbackNav
+ const requiredNav=[
+  {id:'impact',href:'/impact',label_fr:'Impact & résultats',label_en:'Impact & results',parent_key:'ressources',sort_order:85,visible:true},
+  {id:'contact',href:'/contact',label_fr:'Contact',label_en:'Contact',parent_key:'',sort_order:210,visible:true}
+]
+ const sourceNav=navigation.length?navigation:fallbackNav
+ const navItems=[...sourceNav,...requiredNav.filter(req=>!sourceNav.some(item=>item.href===req.href))]
  const grouped=[[text.organisation,'organisation'],[text.action,'action'],[text.resources,'ressources']].map(([label,key])=>({label,items:navItems.filter(x=>x.parent_key===key&&x.visible!==false)}))
  const menuLinks=links.concat([['/donate','Soutenir']])
  const toggleGroup=(label)=>setExpanded(x=>x===label?null:label)
