@@ -90,7 +90,10 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
     <a href="/">{text.home}</a>
     {grouped.map(group=><div className="cms-nav-dropdown" key={group.label}><button type="button">{group.label} <span className="cms-chevron" aria-hidden="true"></span></button><div className="cms-nav-menu">{group.items.map(item=><a href={item.href} key={item.id}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div></div>)}
     <div className="cms-nav-dropdown cms-support-group"><button type="button" className="cms-support"><Txt lang={lang} fr={text.support} en={text.support}/> <span className="cms-chevron" aria-hidden="true"></span></button><div className="cms-nav-menu">{navItems.filter(x=>x.parent_key==='soutenir'&&x.visible!==false).map(item=><a href={item.href} key={item.id}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div></div>
-    <button className="cms-lang" onClick={()=>setLang(lang==='fr'?'en':'fr')} aria-label="Changer de langue">{lang.toUpperCase()}</button>
+    <div className="cms-language-switcher" role="group" aria-label="Language selector">
+     <button type="button" className={lang==='fr'?'active':''} onClick={()=>setLang('fr')} aria-label="Français" title="Français">🇫🇷</button>
+     <button type="button" className={lang==='en'?'active':''} onClick={()=>setLang('en')} aria-label="English" title="English">🇬🇧</button>
+    </div>
    </nav>
    <button className="cms-menu" onClick={()=>setOpen(true)} aria-label="Ouvrir le menu"><span className="cms-menu-lines" aria-hidden="true"><b></b><b></b><b></b></span></button>
   </header>
@@ -102,7 +105,10 @@ function Shell({children,lang,setLang,config,navigation=[],sections=[],showNewsl
     {expanded===group.label&&<div className="cms-mobile-submenu">{group.items.map(item=><a href={item.href} key={item.id} onClick={()=>setOpen(false)}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div>}
    </div>)}
    <div className="cms-mobile-group mobile-support-group"><button type="button" className={expanded==='soutenir'?'open':''} onClick={()=>toggleGroup('soutenir')}><Txt lang={lang} fr={text.support} en={text.support}/><span className="cms-chevron" aria-hidden="true"></span></button>{expanded==='soutenir'&&<div className="cms-mobile-submenu">{navItems.filter(x=>x.parent_key==='soutenir'&&x.visible!==false).map(item=><a href={item.href} key={item.id} onClick={()=>setOpen(false)}>{lang==='fr'?item.label_fr:item.label_en}</a>)}</div>}</div>
-   <button className="cms-mobile-lang" onClick={()=>{setLang(lang==='fr'?'en':'fr');setOpen(false)}}>{lang==='fr'?'English':'Français'}</button>
+   <div className="cms-mobile-language-switcher" role="group" aria-label="Language selector">
+    <button type="button" className={lang==='fr'?'active':''} onClick={()=>{setLang('fr');setOpen(false)}}>🇫🇷 <span>Français</span></button>
+    <button type="button" className={lang==='en'?'active':''} onClick={()=>{setLang('en');setOpen(false)}}>🇬🇧 <span>English</span></button>
+   </div>
   </aside></>}
   {children}
   {showNewsletter&&newsletterSection?.visible!==false&&<Newsletter lang={lang} compact section={newsletterSection} config={config}/>} 
@@ -174,13 +180,25 @@ function BlockRenderer({blocks,media,lang}){
  return null
  })}</div>
 }
-function Page({item,media,navigation,sections,config,lang,setLang}){const blocks=item.metadata?.blocks||[];const bridge=sections.find(x=>x.page_slug===item.slug&&x.section_key==='institutional_bridge');const body=item[`body_${lang}`]||item.body_fr||'';return <Shell {...{config,lang,setLang,navigation,sections}}><main className="cms-page"><div className="cms-page-hero"><span>{item.category||'EVES'}</span><h1>{item[`title_${lang}`]||item.title_fr}</h1><p>{item[`excerpt_${lang}`]||item.excerpt_fr}</p></div><InstitutionalBridge section={bridge} lang={lang}/><article>{blocks.length?<BlockRenderer blocks={blocks} media={media} lang={lang}/>:<div className="cms-rich-body" dangerouslySetInnerHTML={{__html:safeHtml(body.replace(/\n/g,'<br/>'))}}/>}</article></main></Shell>}
+const fallbackPages={
+ '/impact':{category:'EVES',title_fr:'Impact & résultats',title_en:'Impact & results',excerpt_fr:'Mesurer les changements, renforcer la redevabilité et apprendre de l’action.',excerpt_en:'Measure change, strengthen accountability and learn from action.',body_fr:'EVES suit ses résultats autour de cinq objectifs stratégiques : éducation, résilience climatique, protection et VBG, économie sociale et solidaire, innovation et plaidoyer. Les indicateurs, résultats et enseignements sont progressivement documentés avec les communautés et les partenaires.',body_en:'EVES tracks results across five strategic objectives: education, climate resilience, protection and GBV, the Social and Solidarity Economy, innovation and advocacy. Indicators, results and learning are progressively documented with communities and partners.'},
+ '/advisory':{category:'EVES',title_fr:'Comité consultatif',title_en:'Advisory Committee',excerpt_fr:'Des expertises complémentaires pour éclairer l’action d’EVES.',excerpt_en:'Complementary expertise to guide EVES action.',body_fr:'Le Comité consultatif apporte des regards complémentaires sur les programmes, les partenariats, la recherche, l’économie sociale et solidaire, la protection et la stratégie de développement d’EVES.',body_en:'The Advisory Committee provides complementary perspectives on programmes, partnerships, research, the Social and Solidarity Economy, protection and EVES development strategy.'},
+ '/partners':{category:'EVES',title_fr:'Partenaires & réseau',title_en:'Partners & network',excerpt_fr:'Des alliances fondées sur des objectifs partagés et des résultats documentés.',excerpt_en:'Alliances built around shared goals and documented results.',body_fr:'EVES travaille avec les institutions publiques, organisations internationales, OESS, associations relais, fondations, universités, entreprises et acteurs communautaires pour construire des réponses durables.',body_en:'EVES works with public institutions, international organisations, SSE organisations, partner associations, foundations, universities, businesses and community actors to build sustainable solutions.'},
+ '/contact':{category:'EVES',title_fr:'Contact',title_en:'Contact',excerpt_fr:'Construisons la suite ensemble.',excerpt_en:'Let us build what comes next together.',body_fr:'Pour un partenariat, une proposition de projet, une demande de bénévolat ou une question institutionnelle, écrivez à contact@eves.cm ou appelez le +237 694 641 402.',body_en:'For partnerships, project proposals, volunteering or institutional enquiries, email contact@eves.cm or call +237 694 641 402.'}
+}
+\nfunction Page({item,media,navigation,sections,config,lang,setLang}){const blocks=item.metadata?.blocks||[];const bridge=sections.find(x=>x.page_slug===item.slug&&x.section_key==='institutional_bridge');const body=item[`body_${lang}`]||item.body_fr||'';return <Shell {...{config,lang,setLang,navigation,sections}}><main className="cms-page"><div className="cms-page-hero"><span>{item.category||'EVES'}</span><h1>{item[`title_${lang}`]||item.title_fr}</h1><p>{item[`excerpt_${lang}`]||item.excerpt_fr}</p></div><InstitutionalBridge section={bridge} lang={lang}/><article>{blocks.length?<BlockRenderer blocks={blocks} media={media} lang={lang}/>:<div className="cms-rich-body" dangerouslySetInnerHTML={{__html:safeHtml(body.replace(/\n/g,'<br/>'))}}/>}</article></main></Shell>}
 
 function News({news,navigation,sections,config,lang,setLang}){const text=siteText(config,lang);const posts=news;const newsletterSection=sections.find(x=>x.section_key==='newsletter');return <Shell {...{config,lang,setLang,navigation,sections,showNewsletter:false}}><main className="cms-page"><div className="cms-page-hero"><span>{text.news_page_label}</span><h1>{text.news_page_title}</h1><p>{text.news_page_intro}</p></div><div className="news-editorial-grid news-editorial-page">{posts.length>0?posts.map((p,i)=><a href={`/news/${p.slug}`} className={`news-card ${i===0?'news-card-featured':''}`} key={p.id}>{p.featured_image&&<div className="news-card-image"><img src={p.featured_image} alt=""/></div>}<div className="news-card-body"><div className="news-meta"><small>{p.category||'EVES'}</small><span>{p.published_at?new Date(p.published_at).toLocaleDateString(lang==='fr'?'fr-FR':'en-GB'):''}</span></div><h2>{p[`title_${lang}`]||p.title_fr}</h2><p>{p[`excerpt_${lang}`]||p.excerpt_fr}</p><span className="news-read">{text.read_more} <I n="fa-arrow-right"/></span></div></a>):<div className="news-empty news-empty-page news-empty-editorial"><div className="news-empty-index">01</div><div className="news-empty-copy"><small>{text.news_page_label}</small><h2>{lang==='fr'?'Aucune actualité publiée pour le moment.':'No stories have been published yet.'}</h2><p>{lang==='fr'?'La newsroom sera mise à jour avec les prochaines avancées, publications et histoires de terrain d’EVES.':'The newsroom will be updated with EVES programme updates, publications and field stories.'}</p></div></div>}</div><Newsletter id="newsletter" lang={lang} section={newsletterSection} config={config}/></main></Shell>}
 
 export default function CmsSite(){
  const [state,setState]=useState({pages:[],news:[],media:[],sections:[],navigation:[],config:null})
- const [lang,setLang]=useState(()=>navigator.language?.toLowerCase().startsWith('fr')?'fr':'en')
+ const [lang,setLangState]=useState(()=>{
+  const saved=localStorage.getItem('eves_language')
+  if(saved==='fr'||saved==='en') return saved
+  const langs=[...(navigator.languages||[]),navigator.language||''].map(x=>x.toLowerCase())
+  return langs.some(x=>x.startsWith('fr'))?'fr':'en'
+})
+const setLang=(next)=>{setLangState(next);localStorage.setItem('eves_language',next)}
  const [loading,setLoading]=useState(true)
  const [loadError,setLoadError]=useState('')
  const path=((window.location.pathname||'/').replace(/\/+$/,'')||'/')
@@ -209,7 +227,7 @@ export default function CmsSite(){
    const text=siteText(state.config,lang)
    return n?<Page item={n} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>:<Page item={{title_fr:text.article_not_found_title,title_en:text.article_not_found_title,body_fr:text.article_not_found_body,body_en:text.article_not_found_body}} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
  }
- const item=state.pages.find(x=>x.slug===path)
+ const item=state.pages.find(x=>x.slug===path)||fallbackPages[path]
  const text=siteText(state.config,lang)
  if(path==='/'||path==='/index.html')return <Home pages={state.pages} news={state.news} media={state.media} sections={state.sections} navigation={state.navigation} config={state.config} lang={lang} setLang={setLang}/>
  if(item)return <Page item={item} media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
