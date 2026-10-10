@@ -53,7 +53,25 @@ export default function MscLogin(){
 
   useEffect(()=>{
     if(resetToken){setStatus('reset');return}
-    fetch(`${CMS_API}?action=session`,{headers:cmsHeaders(localStorage.getItem('eves_msc_token')),cache:'no-store',mode:'cors'}).then(r=>r.ok?setStatus('authenticated'):setStatus('login')).catch(()=>setStatus('login'))
+    let cancelled=false
+    async function checkSession(){
+      const token=localStorage.getItem('eves_msc_token')
+      if(!token){if(!cancelled)setStatus('login');return}
+      try{
+        const r=await fetch(`${CMS_API}?action=session`,{headers:cmsHeaders(token),cache:'no-store',mode:'cors'})
+        const j=await r.json().catch(()=>({}))
+        if(!r.ok||j.authenticated!==true){
+          localStorage.removeItem('eves_msc_token')
+          if(!cancelled)setStatus('login')
+          return
+        }
+        if(!cancelled)setStatus('authenticated')
+      }catch{
+        if(!cancelled)setStatus('login')
+      }
+    }
+    checkSession()
+    return()=>{cancelled=true}
   },[resetToken])
 
   async function login(e){
