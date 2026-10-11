@@ -33,14 +33,17 @@ export async function fetchPublicContent(){
   supabase.from('eves_cms_navigation').select('*').order('sort_order',{ascending:true})
  ])
  const firstError=[configRes,pagesRes,newsRes,mediaRes,sectionsRes,navigationRes].find(x=>x.error)?.error
- if(firstError) throw new Error(firstError.message||'Unable to load EVES public content')
+ // The public website must remain available even if CMS credentials, network, or RLS
+ // are temporarily misconfigured. Render the official local page shell and defaults;
+ // keep the error visible in the console for diagnosis instead of blanking the homepage.
+ if(firstError) console.warn('EVES CMS content unavailable; using public page defaults:',firstError.message)
  return {
-  config:configRes.data||null,
-  pages:(pagesRes.data||[]).map(mapRow),
-  news:(newsRes.data||[]).map(mapRow),
-  media:(mediaRes.data||[]).map(mapRow),
-  sections:(sectionsRes.data||[]).map(mapRow),
-  navigation:(navigationRes.data||[]).map(mapRow)
+  config:configRes.error?null:(configRes.data||null),
+  pages:(pagesRes.error?[]:(pagesRes.data||[])).map(mapRow),
+  news:(newsRes.error?[]:(newsRes.data||[])).map(mapRow),
+  media:(mediaRes.error?[]:(mediaRes.data||[])).map(mapRow),
+  sections:(sectionsRes.error?[]:(sectionsRes.data||[])).map(mapRow),
+  navigation:(navigationRes.error?[]:(navigationRes.data||[])).map(mapRow)
  }
 }
 
