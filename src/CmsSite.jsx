@@ -131,9 +131,9 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
  const gallerySection=sections.find(x=>x.section_key==='gallery')
  const theorySection=sections.find(x=>x.section_key==='theory')
  const institutionalSection=sections.find(x=>x.section_key==='institutional_bridge')
- const rawTitle=home?.[`title_${lang}`]||hero?.[lang==='fr'?'title_fr':'title_en']||(lang==='fr'?'Documenter, mobiliser, outiller : accompagner les familles vers leur propre résilience.':'Document, mobilise and equip: support families towards their own resilience.')
+ const rawTitle=home?.[`title_${lang}`]||hero?.[lang==='fr'?'title_fr':'title_en']||(lang==='fr'?'Documenter, mobiliser, outiller.':'Document, mobilise, equip.')
  const title=/ancr[ée]e? dans le noun|connect[ée]e? au monde/i.test(rawTitle)?(lang==='fr'?'Documenter, mobiliser, outiller : accompagner les familles vers leur propre résilience.':'Document, mobilise and equip: support families towards their own resilience.'):rawTitle
- const body=home?.[`body_${lang}`]||hero?.[lang==='fr'?'intro_fr':'intro_en']||'EVES accompagne les enfants, les jeunes et leurs familles les plus vulnérables à travers les Objectifs de développement durable et la solidarité internationale.'
+ const body=home?.[`body_${lang}`]||hero?.[lang==='fr'?'intro_fr':'intro_en']||(lang==='fr'?'Rendre visibles les vulnérabilités, fédérer les relais institutionnels et accompagner les familles vers leur propre résilience.':'Make vulnerabilities visible, bring institutional partners together and support families on their path to resilience.')
  const homeBlocks=Array.isArray(home?.metadata?.blocks)?home.metadata.blocks:[]
  const words=lang==='fr'?['Éduquer','Protéger','Agir']:['Educate','Protect','Act']
  return <Shell {...{lang,setLang,config,navigation,sections}}>
@@ -141,7 +141,7 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
    <div className="cms-hero-watermark"><img src={config?.logo_url||logo} alt="" aria-hidden="true"/></div>
    <div className="cms-hero-wordstack" aria-hidden="true">{words.map((word,i)=><span key={i}>{word}</span>)}</div>
    <div className="cms-hero-panel">
-    <span className="cms-hero-kicker">{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'ODD · OBJECTIFS DE DÉVELOPPEMENT DURABLE & SOLIDARITÉ INTERNATIONALE'}</span>
+    <span className="cms-hero-kicker">{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'EVES · ODD ET SOLIDARITÉ INTERNATIONALE'}</span>
     <h1>{(()=>{const configured=home?.metadata?.[lang==='fr'?'hero_title_fr':'hero_title_en']||title;return /ancr[ée]e? dans le noun|connect[ée]e? au monde/i.test(configured)?(lang==='fr'?'Éduquer, protéger et agir pour les enfants, les jeunes et les familles vulnérables.':'Educate, protect and act for vulnerable children, young people and families.'):configured})()}</h1>
     <p>{home?.[`body_${lang}`]||body}</p>
     <div className="cms-hero-actions">
@@ -225,7 +225,7 @@ const setLang=(next)=>{setLangState(next);localStorage.setItem('eves_language',n
    return()=>{alive=false;stop()}
  },[])
  if(loading)return <div className="cms-loading-screen"><div className="cms-loading-card"><img src={state.config?.logo_url||logo} alt="EVES"/><div className="cms-loading-spinner"></div><h1>EVES</h1><p>{lang==='fr'?'Chargement du site…':'Loading the website…'}</p></div></div>
- if(loadError)return <div className="cms-loading-screen"><div className="cms-loading-card"><img src={state.config?.logo_url||logo} alt="EVES"/><h1>{lang==='fr'?'EVES est temporairement indisponible':'EVES is temporarily unavailable'}</h1><p>{lang==='fr'?'Le contenu du site n’a pas pu être chargé.':'The website content could not be loaded.'}</p><button className="cms-retry" onClick={()=>window.location.reload()}>{lang==='fr'?'Réessayer':'Retry'}</button></div></div>
+ // If the CMS is temporarily unavailable, render the local approved fallback instead of blocking the entire website.
  if(path==='/gallery')return <Gallery media={state.media} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
  if(path==='/news')return <News news={state.news} navigation={state.navigation} sections={state.sections} config={state.config} lang={lang} setLang={setLang}/>
  if(path.startsWith('/news/')){
