@@ -22,11 +22,11 @@ const navGroups=[
  {label:'Ressources',items:[links[9],links[10],links[11],links[12]]}
 ]
 const objectives=[
- {code:'SO1',title_fr:'Scolarisation et réinsertion',title_en:'School enrolment and re-entry',desc_fr:'Accès, maintien et réinsertion scolaire.',desc_en:'Supporting school access, retention and re-entry.',icon:'fa-book-open'},
- {code:'SO2',title_fr:'Résilience climatique et adaptation',title_en:'Climate resilience and adaptation',desc_fr:'Prévention, adaptation et pratiques durables face aux chocs climatiques.',desc_en:'Prevention, adaptation and sustainable practices in response to climate shocks.',icon:'fa-seedling'},
- {code:'SO3',title_fr:'Protection communautaire et VBG',title_en:'Community-based protection and GBV',desc_fr:'Prévention des violences basées sur le genre, protection et autonomisation.',desc_en:'Community-based protection, GBV prevention and empowerment.',icon:'fa-shield-heart'},
- {code:'SO4',title_fr:'Autonomisation socio-économique par l’ESS',title_en:'Socio-economic empowerment through the SSE',desc_fr:'Autonomisation économique, activités génératrices de revenus et économie sociale et solidaire.',desc_en:'Economic empowerment, income-generating activities and the Social and Solidarity Economy.',icon:'fa-handshake-angle'},
- {code:'SO5',title_fr:'Innovation, recherche et plaidoyer',title_en:'Innovation, research and advocacy',desc_fr:'Recherche, innovation, production de connaissances et plaidoyer fondé sur les preuves.',desc_en:'Research, innovation, knowledge production and evidence-based advocacy.',icon:'fa-lightbulb'}
+ {code:'OS1',title_fr:'Protection communautaire et prévention des VBG',title_en:'Community protection and GBV prevention',desc_fr:'Prévenir les violences, protéger les enfants et renforcer l’orientation vers les services sociaux, sanitaires et juridiques.',desc_en:'Prevent violence, protect children and strengthen referrals to social, health and legal services.',icon:'fa-shield-heart'},
+ {code:'OS2',title_fr:'Autonomisation socio-économique par l’ESS',title_en:'Socio-economic empowerment through the SSE',desc_fr:'Renforcer les ménages et associations par l’économie sociale et solidaire, l’épargne communautaire et les activités génératrices de revenus.',desc_en:'Strengthen households and associations through the Social and Solidarity Economy, community savings and income-generating activities.',icon:'fa-handshake-angle'},
+ {code:'OS3',title_fr:'Résilience climatique et adaptation',title_en:'Climate resilience and adaptation',desc_fr:'Développer les compétences d’adaptation et soutenir les initiatives communautaires face aux changements climatiques.',desc_en:'Build adaptation skills and support community initiatives in response to climate change.',icon:'fa-seedling'},
+ {code:'OS4',title_fr:'Scolarisation, formation et réinsertion',title_en:'Schooling, training and reintegration',desc_fr:'Faciliter l’accès, le maintien et la réinsertion scolaires des enfants et des jeunes vulnérables.',desc_en:'Improve school access, retention and re-entry for vulnerable children and young people.',icon:'fa-book-open'},
+ {code:'OS5',title_fr:'Innovation, recherche et plaidoyer',title_en:'Innovation, research and advocacy',desc_fr:'Documenter les vulnérabilités, expérimenter des réponses innovantes et partager les enseignements pour éclairer l’action publique.',desc_en:'Document vulnerabilities, test innovative responses and share learning to inform public action.',icon:'fa-lightbulb'}
 ]
 function Txt({lang,fr,en}){return lang==='fr'?fr:en}
 const iconPaths={
@@ -131,8 +131,8 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
  const gallerySection=sections.find(x=>x.section_key==='gallery')
  const theorySection=sections.find(x=>x.section_key==='theory')
  const institutionalSection=sections.find(x=>x.section_key==='institutional_bridge')
- const rawTitle=home?.[`title_${lang}`]||hero?.[lang==='fr'?'title_fr':'title_en']||(lang==='fr'?'Éduquer, protéger et agir pour les enfants, les jeunes et les familles vulnérables.':'Educate, protect and act for vulnerable children, young people and families.')
- const title=/ancr[ée]e? dans le noun|connect[ée]e? au monde/i.test(rawTitle)?(lang==='fr'?'Éduquer, protéger et agir pour les enfants, les jeunes et les familles vulnérables.':'Educate, protect and act for vulnerable children, young people and families.'):rawTitle
+ const rawTitle=home?.[`title_${lang}`]||hero?.[lang==='fr'?'title_fr':'title_en']||(lang==='fr'?'Documenter, mobiliser, outiller : accompagner les familles vers leur propre résilience.':'Document, mobilise and equip: support families towards their own resilience.')
+ const title=/ancr[ée]e? dans le noun|connect[ée]e? au monde/i.test(rawTitle)?(lang==='fr'?'Documenter, mobiliser, outiller : accompagner les familles vers leur propre résilience.':'Document, mobilise and equip: support families towards their own resilience.'):rawTitle
  const body=home?.[`body_${lang}`]||hero?.[lang==='fr'?'intro_fr':'intro_en']||'EVES accompagne les enfants, les jeunes et leurs familles les plus vulnérables à travers les Objectifs de développement durable et la solidarité internationale.'
  const homeBlocks=Array.isArray(home?.metadata?.blocks)?home.metadata.blocks:[]
  const words=lang==='fr'?['Éduquer','Protéger','Agir']:['Educate','Protect','Act']
