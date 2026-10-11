@@ -131,19 +131,18 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
  const gallerySection=sections.find(x=>x.section_key==='gallery')
  const theorySection=sections.find(x=>x.section_key==='theory')
  const institutionalSection=sections.find(x=>x.section_key==='institutional_bridge')
- const rawTitle=home?.[`title_${lang}`]||hero?.[lang==='fr'?'title_fr':'title_en']||(lang==='fr'?'Documenter, mobiliser, outiller.':'Document, mobilise, equip.')
- const title=/ancr[ée]e? dans le noun|connect[ée]e? au monde/i.test(rawTitle)?(lang==='fr'?'Documenter, mobiliser, outiller : accompagner les familles vers leur propre résilience.':'Document, mobilise and equip: support families towards their own resilience.'):rawTitle
- const body=home?.[`body_${lang}`]||hero?.[lang==='fr'?'intro_fr':'intro_en']||(lang==='fr'?'Rendre visibles les vulnérabilités, fédérer les relais institutionnels et accompagner les familles vers leur propre résilience.':'Make vulnerabilities visible, bring institutional partners together and support families on their path to resilience.')
+ const title=lang==='fr'?'Transformer les vulnérabilités en capacités d’agir.':'Turning vulnerabilities into the capacity to act.'
+ const body=lang==='fr'?'Rendre visibles les vulnérabilités, fédérer les relais institutionnels et accompagner les familles vers leur propre résilience.':'Make vulnerabilities visible, bring institutional partners together and support families towards their own resilience.'
  const homeBlocks=Array.isArray(home?.metadata?.blocks)?home.metadata.blocks:[]
- const words=lang==='fr'?['Éduquer','Protéger','Agir']:['Educate','Protect','Act']
+ const words=lang==='fr'?['Documenter','Mobiliser','Outiller']:['Document','Mobilise','Equip']
  return <Shell {...{lang,setLang,config,navigation,sections}}>
   <section className="cms-hero cms-hero-editorial">
    <div className="cms-hero-watermark"><img src={config?.logo_url||logo} alt="" aria-hidden="true"/></div>
    <div className="cms-hero-wordstack" aria-hidden="true">{words.map((word,i)=><span key={i}>{word}</span>)}</div>
    <div className="cms-hero-panel">
     <span className="cms-hero-kicker">{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'EVES · ODD ET SOLIDARITÉ INTERNATIONALE'}</span>
-    <h1>{(()=>{const configured=home?.metadata?.[lang==='fr'?'hero_title_fr':'hero_title_en']||title;return /ancr[ée]e? dans le noun|connect[ée]e? au monde/i.test(configured)?(lang==='fr'?'Éduquer, protéger et agir pour les enfants, les jeunes et les familles vulnérables.':'Educate, protect and act for vulnerable children, young people and families.'):configured})()}</h1>
-    <p>{home?.[`body_${lang}`]||body}</p>
+    <h1>{title}</h1>
+    <p>{body}</p>
     <div className="cms-hero-actions">
       <a href={hero?.data?.cta1_href||"/about"} className="cms-btn">{hero?.data?.[lang==="fr"?"cta1_fr":"cta1_en"]||text.hero_cta1} <I n="fa-arrow-right"/></a>
       <a href={hero?.data?.cta2_href||"/donate"} className="cms-btn outline">{hero?.data?.[lang==="fr"?"cta2_fr":"cta2_en"]||text.hero_cta2}</a>
@@ -199,12 +198,11 @@ function News({news,navigation,sections,config,lang,setLang}){const text=siteTex
 export default function CmsSite(){
  const [state,setState]=useState({pages:[],news:[],media:[],sections:[],navigation:[],config:null})
  const [lang,setLangState]=useState(()=>{
-  const saved=localStorage.getItem('eves_language')
-  if(saved==='fr'||saved==='en') return saved
+  try{const saved=window.localStorage.getItem('eves_language');if(saved==='fr'||saved==='en')return saved}catch{}
   const langs=[...(navigator.languages||[]),navigator.language||''].map(x=>x.toLowerCase())
   return langs.some(x=>x.startsWith('fr'))?'fr':'en'
 })
-const setLang=(next)=>{setLangState(next);localStorage.setItem('eves_language',next)}
+const setLang=(next)=>{setLangState(next);try{window.localStorage.setItem('eves_language',next)}catch{}}
  const [loading,setLoading]=useState(true)
  const [loadError,setLoadError]=useState('')
  const path=((window.location.pathname||'/').replace(/\/+$/,'')||'/')
