@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 :root{
   --ink:#050505;
   --muted:#566062;
@@ -340,3 +341,31 @@ img{max-width:100%}
 .cms-mobile-language-switcher button.active{border-color:#1e6b63;background:#edf6f0}
 .cms-mobile-language-switcher span{margin-left:7px}
 @media(max-width:900px){.cms-language-switcher{display:none}.cms-menu{display:block}}
+
+
+/* Shared Okwelians-inspired editorial system across every public page */
+.cms-shell,.cms-page,.cms-footer,.cms-drawer,.eves-ai-panel{font-family:Manrope,Arial,sans-serif}
+.cms-page-hero{background:#f8f7f2;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.72fr);align-items:end;gap:36px;padding:84px 5.5% 76px;border-bottom:1px solid #e6e4dc}
+.cms-page-hero>span{grid-column:1/-1;color:#5d6e69;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.cms-page-hero h1{max-width:920px;margin:0;font-family:Manrope,Arial,sans-serif;font-size:clamp(42px,6vw,78px);line-height:.98;letter-spacing:-.075em;font-weight:800;color:#080808}
+.cms-page-hero p{max-width:620px;margin:0;color:#5b6262;font-size:clamp(16px,1.4vw,20px);line-height:1.65}
+.cms-page>article{max-width:1100px;margin:0 auto;padding:76px 5.5%;font-family:Manrope,Arial,sans-serif;font-size:17px;line-height:1.8;color:#333}
+.cms-rich-body{font-family:Manrope,Arial,sans-serif;font-size:17px;line-height:1.85;color:#343938}
+.cms-rich-body h2,.cms-rich-body h3,.cms-page article h2,.cms-page article h3{font-family:Manrope,Arial,sans-serif;color:#111;letter-spacing:-.055em;font-weight:800;line-height:1.1}
+.cms-rich-body h2{font-size:clamp(30px,4vw,44px);margin:1.6em 0 .65em}
+.cms-rich-body h3{font-size:clamp(23px,3vw,32px);margin:1.4em 0 .6em}
+.cms-rich-body a{color:#2e666b;text-decoration:underline;text-underline-offset:3px}
+.cms-section{font-family:Manrope,Arial,sans-serif}
+.cms-section .cms-heading>span,.cms-page-hero>span{letter-spacing:.14em}
+.cms-btn,.cms-text-link,.cms-newsletter button,.cms-support,.cms-footer-donate{font-family:Manrope,Arial,sans-serif}
+.cms-newsletter{background:#f1f0ec;border-top:1px solid #e4e2dc}
+.cms-footer{background:#101111}
+.cms-credit{background:#050505}
+@media(max-width:760px){
+ .cms-page-hero{grid-template-columns:1fr;gap:18px;padding:58px 22px 52px}
+ .cms-page-hero>span{grid-column:auto}
+ .cms-page-hero h1{font-size:clamp(40px,12vw,54px)}
+ .cms-page-hero p{font-size:16px}
+ .cms-page>article{padding:48px 22px;font-size:16px}
+ .cms-rich-body{font-size:16px}
+}
