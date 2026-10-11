@@ -211,13 +211,25 @@ const setLang=(next)=>{setLangState(next);localStorage.setItem('eves_language',n
  useEffect(()=>{
    let alive=true
    const load=async()=>{
+     let fallbackTimer
      try{
        setLoadError('')
-       const x=await fetchPublicContent()
+       const pending=fetchPublicContent()
+       // Never leave the public website stuck on the loading screen when the CMS network stalls.
+       fallbackTimer=setTimeout(()=>{
+         if(alive){
+           console.warn('EVES CMS is taking too long; displaying the local public site while content continues loading.')
+           setState({pages:[],news:[],media:[],sections:[],navigation:[],config:null})
+           setLoading(false)
+         }
+       },6500)
+       const x=await pending
+       clearTimeout(fallbackTimer)
        if(alive){setState(x);setLoading(false)}
      }catch(e){
+       clearTimeout(fallbackTimer)
        console.error('EVES public CMS load failed',e)
-       if(alive){setLoadError(e?.message||'Unable to load EVES content');setLoading(false)}
+       if(alive){setLoadError(e?.message||'Unable to load EVES content');setState({pages:[],news:[],media:[],sections:[],navigation:[],config:null});setLoading(false)}
      }
    }
    load()
