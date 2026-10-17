@@ -163,7 +163,7 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
     {heroSlides.map((slide,index)=><img key={slide.src} className={index===heroIndex?'active':''} src={slide.src} alt="" fetchPriority={index===0?'high':'auto'}/>)}
    </div>
    <div className="cms-hero-overlay"></div>
-   <button className="cms-hero-arrow cms-hero-prev" type="button" onClick={()=>changeHero(-1)} aria-label={lang==='fr'?'Photo précédente':'Previous photo'}><I n="fa-chevron-left"/></button>
+   <button className="cms-hero-arrow cms-hero-prev" type="button" onClick={()=>changeHero(-1)} aria-label={lang==='fr'?'Photo précédente':'Previous photo'}><I n="fa-arrow-right"/></button>
    <div className="cms-hero-content">
     <span className="cms-hero-kicker"><i></i>{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'ODD · SOLIDARITÉ INTERNATIONALE'}</span>
     <h1>EVES</h1>
