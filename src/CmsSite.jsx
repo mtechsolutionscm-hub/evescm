@@ -151,24 +151,33 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
  const gallerySection=sections.find(x=>x.section_key==='gallery')
  const theorySection=sections.find(x=>x.section_key==='theory')
  const institutionalSection=sections.find(x=>x.section_key==='institutional_bridge')
+ const [heroIndex,setHeroIndex]=useState(0)
  const title=lang==='fr'?'Transformer les vulnérabilités en capacités d’agir.':'Turning vulnerabilities into the capacity to act.'
  const body=lang==='fr'?'Rendre visibles les vulnérabilités, fédérer les relais institutionnels et accompagner les familles vers leur propre résilience.':'Make vulnerabilities visible, bring institutional partners together and support families towards their own resilience.'
  const homeBlocks=Array.isArray(home?.metadata?.blocks)?home.metadata.blocks:[]
+ const heroSlides=galleryImages
+ const changeHero=(step)=>setHeroIndex(index=>(index+step+heroSlides.length)%heroSlides.length)
  return <Shell {...{lang,setLang,config,navigation,sections}}>
-  <section className="cms-hero cms-hero-editorial">
-   <div className="cms-hero-photo">
-    <img src={galleryImages[0].src} alt={galleryImages[0].alt} fetchPriority="high"/>
-    <div className="cms-hero-photo-label"><strong>EVES</strong><span>Solidarité · Inclusion · Résilience</span></div>
+  <section className="cms-hero cms-hero-usfur" aria-label={lang==='fr'?'Présentation EVES':'Introducing EVES'}>
+   <div className="cms-hero-slides" aria-hidden="true">
+    {heroSlides.map((slide,index)=><img key={slide.src} className={index===heroIndex?'active':''} src={slide.src} alt="" fetchPriority={index===0?'high':'auto'}/>)}
    </div>
-   <div className="cms-hero-panel">
-    <span className="cms-hero-kicker">{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'EVES · ODD ET SOLIDARITÉ INTERNATIONALE'}</span>
-    <h1>{title}</h1>
+   <div className="cms-hero-overlay"></div>
+   <button className="cms-hero-arrow cms-hero-prev" type="button" onClick={()=>changeHero(-1)} aria-label={lang==='fr'?'Photo précédente':'Previous photo'}><I n="fa-chevron-left"/></button>
+   <div className="cms-hero-content">
+    <span className="cms-hero-kicker"><i></i>{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'ODD · SOLIDARITÉ INTERNATIONALE'}</span>
+    <h1>EVES</h1>
+    <h2>{lang==='fr'?'ODD et solidarité internationale':'SDGs & International Solidarity'}</h2>
     <p>{body}</p>
     <div className="cms-hero-actions">
-      <a href={hero?.data?.cta1_href||"/about"} className="cms-btn">{hero?.data?.[lang==="fr"?"cta1_fr":"cta1_en"]||text.hero_cta1} <I n="fa-arrow-right"/></a>
+      <a href={hero?.data?.cta1_href||"/about"} className="cms-btn"><I n="fa-comments"/>{hero?.data?.[lang==="fr"?"cta1_fr":"cta1_en"]||text.hero_cta1} <I n="fa-arrow-right"/></a>
       <a href={hero?.data?.cta2_href||"/donate"} className="cms-btn outline">{hero?.data?.[lang==="fr"?"cta2_fr":"cta2_en"]||text.hero_cta2}</a>
     </div>
+    <div className="cms-hero-dots" role="group" aria-label={lang==='fr'?'Choisir une photo':'Choose a photo'}>
+     {heroSlides.map((slide,index)=><button key={slide.src} type="button" className={index===heroIndex?'active':''} onClick={()=>setHeroIndex(index)} aria-label={(lang==='fr'?'Photo ':'Photo ')+(index+1)} aria-pressed={index===heroIndex}/>)}
+    </div>
    </div>
+   <button className="cms-hero-arrow cms-hero-next" type="button" onClick={()=>changeHero(1)} aria-label={lang==='fr'?'Photo suivante':'Next photo'}><I n="fa-arrow-right"/></button>
   </section>
  {homeBlocks.length>0&&<section className="cms-section cms-home-visual-blocks"><BlockRenderer blocks={homeBlocks} media={media} lang={lang}/></section>}
  {theorySection?.visible!==false&&<section className="cms-theory"><div className="cms-theory-brand"><img src={config?.logo_url||logo} alt="Logo officiel EVES"/></div><div className="cms-theory-copy"><span>{theorySection?.[lang==="fr"?"title_fr":"title_en"]||''}</span><h2>{theorySection?.data?.[lang==="fr"?"headline_fr":"headline_en"]||''}</h2><p>{theorySection?.[lang==="fr"?"intro_fr":"intro_en"]||''}</p></div><div className="cms-theory-flow">{(theorySection?.data?.steps||[]).map((x,i)=><Fragment key={i}><div><strong>{String(i+1).padStart(2,'0')}</strong><b>{x[lang==="fr"?"title_fr":"title_en"]||''}</b><span>{x[lang==="fr"?"desc_fr":"desc_en"]||''}</span></div>{i<(theorySection.data.steps.length-1)&&<i>→</i>}</Fragment>)}</div></section>}
