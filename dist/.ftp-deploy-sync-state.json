@@ -1,7 +1,7 @@
 {
     "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
     "version": "1.0.0",
-    "generatedTime": 1792199077611,
+    "generatedTime": 1792199367376,
     "data": [
         {
             "type": "file",
@@ -43,10 +43,6 @@
         },
         {
             "type": "folder",
-            "name": "gallery"
-        },
-        {
-            "type": "folder",
             "name": "governance"
         },
         {
@@ -54,10 +50,8 @@
             "name": "impact"
         },
         {
-            "type": "file",
-            "name": "index.html",
-            "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "type": "folder",
+            "name": "gallery"
         },
         {
             "type": "folder",
@@ -66,6 +60,12 @@
         {
             "type": "folder",
             "name": "lab"
+        },
+        {
+            "type": "file",
+            "name": "index.html",
+            "size": 4720,
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
@@ -129,85 +129,97 @@
             "type": "file",
             "name": "about/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "advisory/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
-            "name": "assets/index-DIvZQ19v.js",
-            "size": 550264,
-            "hash": "6efd241e6cd22537fe6df8186bf83629e959101b63c516613111062803d08c43"
+            "name": "assets/bootstrap-icons-BeopsB42.woff",
+            "size": 180288,
+            "hash": "f55513b7b591cb84a3b87ff0e34ea24d4831d6fedc22e54b911ca64b5b544a15"
         },
         {
             "type": "file",
-            "name": "assets/index-DngWC_Jd.css",
-            "size": 121717,
-            "hash": "ecbf1eefdf35fc292478c25257b87cf39e067455ab7652f3f91bbd1382ec2090"
+            "name": "assets/bootstrap-icons-mSm7cUeB.woff2",
+            "size": 134044,
+            "hash": "6c75710364a1ca5604267716f6d28997b26319fdb078cf11e0b42ab66ff2ea61"
+        },
+        {
+            "type": "file",
+            "name": "assets/index-B3BzmVGB.js",
+            "size": 550223,
+            "hash": "86a91d5940c55bd8d95c0f0b9c311b8fd5e4b30882050b4a6fd019dcf19e042d"
+        },
+        {
+            "type": "file",
+            "name": "assets/index-BcsYp7MI.css",
+            "size": 432287,
+            "hash": "212f3c837782fc331bbb0dd2c01e2e65eb4848490758b944f3767dd98e30b25f"
         },
         {
             "type": "file",
             "name": "causes/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
-        },
-        {
-            "type": "file",
-            "name": "contact/index.html",
-            "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "donate/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
+        },
+        {
+            "type": "file",
+            "name": "contact/index.html",
+            "size": 4720,
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "events/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "focal-points/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
-        },
-        {
-            "type": "file",
-            "name": "gallery/index.html",
-            "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "governance/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "impact/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
-            "name": "lab/index.html",
+            "name": "gallery/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "join/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
+        },
+        {
+            "type": "file",
+            "name": "lab/index.html",
+            "size": 4720,
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "folder",
@@ -217,37 +229,37 @@
             "type": "file",
             "name": "news/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "partners/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "projects/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "resources/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "safehome/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
             "name": "volunteer/index.html",
             "size": 4720,
-            "hash": "1cf2297c6dbf85d6eb693cc9b1340412cc794757828c3cc9512b53cee21a6b36"
+            "hash": "1a3a9416209a468574d2ab772855af53e92a3250aed646a2a894d54e1a1580be"
         },
         {
             "type": "file",
