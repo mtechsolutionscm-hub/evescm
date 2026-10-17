@@ -154,11 +154,12 @@ function Home({pages,news,media,sections,navigation,config,lang,setLang}){
  const title=lang==='fr'?'Transformer les vulnérabilités en capacités d’agir.':'Turning vulnerabilities into the capacity to act.'
  const body=lang==='fr'?'Rendre visibles les vulnérabilités, fédérer les relais institutionnels et accompagner les familles vers leur propre résilience.':'Make vulnerabilities visible, bring institutional partners together and support families towards their own resilience.'
  const homeBlocks=Array.isArray(home?.metadata?.blocks)?home.metadata.blocks:[]
- const words=lang==='fr'?['Documenter','Mobiliser','Outiller']:['Document','Mobilise','Equip']
  return <Shell {...{lang,setLang,config,navigation,sections}}>
   <section className="cms-hero cms-hero-editorial">
-   <div className="cms-hero-watermark"><img src={config?.logo_url||logo} alt="" aria-hidden="true"/></div>
-   <div className="cms-hero-wordstack" aria-hidden="true">{words.map((word,i)=><span key={i}>{word}</span>)}</div>
+   <div className="cms-hero-photo">
+    <img src={galleryImages[0].src} alt={galleryImages[0].alt} fetchPriority="high"/>
+    <div className="cms-hero-photo-label"><strong>EVES</strong><span>Solidarité · Inclusion · Résilience</span></div>
+   </div>
    <div className="cms-hero-panel">
     <span className="cms-hero-kicker">{hero?.data?.[lang==='fr'?'eyebrow_fr':'eyebrow_en']||'EVES · ODD ET SOLIDARITÉ INTERNATIONALE'}</span>
     <h1>{title}</h1>
