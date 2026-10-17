@@ -439,3 +439,81 @@ body{background:#fff;color:var(--eves-editorial-ink)}
  .gallery-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
  .gallery-strip a{height:240px}
 }
+
+
+/* USFUR-inspired full-width photographic landing hero, adapted to EVES identity */
+.cms-hero-usfur{
+  position:relative!important;isolation:isolate;display:flex!important;align-items:center;justify-content:center;
+  min-height:clamp(570px,calc(100svh - 124px),760px)!important;height:auto!important;max-height:none!important;
+  padding:76px clamp(56px,9vw,150px) 86px!important;overflow:hidden!important;background:#f5f2ec!important;text-align:center
+}
+.cms-hero-slides{position:absolute;inset:0;z-index:-2;overflow:hidden;background:#e8e6de}
+.cms-hero-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;opacity:0;transform:scale(1.025);transition:opacity .65s ease,transform 5s ease;filter:saturate(.78)}
+.cms-hero-slides img.active{opacity:1;transform:scale(1)}
+.cms-hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,rgba(255,255,255,.69),rgba(255,255,255,.60) 48%,rgba(255,255,255,.72))}
+.cms-hero-content{position:relative;z-index:2;width:min(100%,900px);margin:auto;display:flex;align-items:center;flex-direction:column}
+.cms-hero-usfur .cms-hero-kicker{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:9px 17px!important;margin:0 0 24px!important;
+  border:1px solid rgba(201,138,46,.16);border-radius:999px;background:rgba(255,250,240,.94);color:#8a611b!important;
+  font-size:13px!important;font-weight:500!important;letter-spacing:.005em!important;line-height:1.2!important
+}
+.cms-hero-usfur .cms-hero-kicker i{width:8px;height:8px;border-radius:50%;background:var(--eves-ochre);display:inline-block}
+.cms-hero-usfur .cms-hero-content h1{
+  margin:0!important;color:#1d2822!important;font-size:clamp(64px,7.2vw,98px)!important;font-weight:800!important;
+  line-height:.99!important;letter-spacing:-.065em!important;text-transform:none
+}
+.cms-hero-usfur .cms-hero-content h1::first-letter{color:var(--eves-forest)}
+.cms-hero-usfur .cms-hero-content h2{
+  margin:19px 0 22px!important;color:#1e2a23!important;font-size:clamp(25px,3vw,40px)!important;font-weight:600!important;
+  line-height:1.18!important;letter-spacing:-.035em!important
+}
+.cms-hero-usfur .cms-hero-content h2::first-letter{color:var(--eves-forest)}
+.cms-hero-usfur .cms-hero-content p{max-width:640px;margin:0!important;color:#39463e!important;font-size:clamp(15px,1.25vw,18px)!important;line-height:1.75!important}
+.cms-hero-usfur .cms-hero-actions{justify-content:center;align-items:center;gap:12px;margin-top:40px!important}
+.cms-hero-usfur .cms-hero-actions .cms-btn{
+  min-height:49px;padding:0 23px!important;gap:10px;border-radius:10px!important;font-size:14px!important;font-weight:600!important;
+  box-shadow:0 4px 12px rgba(25,65,43,.06)
+}
+.cms-hero-usfur .cms-hero-actions .cms-btn:first-child{background:var(--eves-forest);border-color:var(--eves-forest)}
+.cms-hero-usfur .cms-hero-actions .cms-btn:first-child:hover{background:var(--eves-forest-dark);border-color:var(--eves-forest-dark)}
+.cms-hero-usfur .cms-hero-actions .cms-btn.outline{background:rgba(255,255,255,.94);color:#202c25;border-color:#e0e2dc}
+.cms-hero-usfur .cms-hero-actions .cms-btn.outline:hover{background:#fff;border-color:var(--eves-forest);color:var(--eves-forest)}
+.cms-hero-arrow{
+  position:absolute;top:50%;z-index:4;display:flex;align-items:center;justify-content:center;
+  width:52px;height:52px;padding:0;border:1px solid rgba(255,255,255,.85);border-radius:50%;
+  background:rgba(255,255,255,.78);color:#26342b;transform:translateY(-50%);transition:background .18s,color .18s
+}
+.cms-hero-arrow:hover{background:var(--eves-forest);color:#fff}
+.cms-hero-arrow .cms-icon{width:21px;height:21px}
+.cms-hero-prev{left:clamp(16px,2.3vw,34px)}
+.cms-hero-next{right:clamp(16px,2.3vw,34px)}
+.cms-hero-dots{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:39px}
+.cms-hero-dots button{width:8px;height:8px;padding:0;border:0;border-radius:99px;background:rgba(30,90,58,.35);transition:width .2s,background .2s}
+.cms-hero-dots button.active{width:34px;background:var(--eves-forest)}
+@media(max-width:760px){
+  .cms-hero-usfur{
+    min-height:calc(100svh - 78px)!important;min-height:590px!important;height:auto!important;
+    padding:70px 28px 76px!important;align-items:center
+  }
+  .cms-hero-slides img{object-position:center center}
+  .cms-hero-overlay{background:linear-gradient(180deg,rgba(255,255,255,.65),rgba(255,255,255,.72) 50%,rgba(255,255,255,.78))}
+  .cms-hero-usfur .cms-hero-kicker{font-size:11px!important;margin-bottom:22px!important;padding:8px 13px!important;max-width:100%}
+  .cms-hero-usfur .cms-hero-content h1{font-size:clamp(52px,16vw,76px)!important;letter-spacing:-.06em!important}
+  .cms-hero-usfur .cms-hero-content h2{font-size:clamp(23px,6.4vw,30px)!important;line-height:1.2!important;margin:15px 0 17px!important}
+  .cms-hero-usfur .cms-hero-content p{font-size:14px!important;line-height:1.72!important;max-width:460px}
+  .cms-hero-usfur .cms-hero-actions{flex-direction:column;align-items:stretch;width:min(100%,330px);margin-top:27px!important;gap:10px}
+  .cms-hero-usfur .cms-hero-actions .cms-btn{width:100%;min-height:48px;font-size:13px!important}
+  .cms-hero-dots{margin-top:29px}
+  .cms-hero-arrow{width:38px;height:38px;top:auto;bottom:14px;transform:none}
+  .cms-hero-prev{left:18px}
+  .cms-hero-next{right:18px}
+}
+@media(max-width:390px){
+  .cms-hero-usfur{padding:58px 20px 68px!important;min-height:570px!important}
+  .cms-hero-usfur .cms-hero-content h1{font-size:51px!important}
+  .cms-hero-usfur .cms-hero-content h2{font-size:22px!important}
+  .cms-hero-usfur .cms-hero-kicker{font-size:10px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .cms-hero-slides img,.cms-hero-dots button,.cms-hero-arrow{transition:none}
+}
