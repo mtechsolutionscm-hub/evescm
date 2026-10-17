@@ -518,3 +518,75 @@ body{background:#fff;color:var(--eves-editorial-ink)}
 @media(prefers-reduced-motion:reduce){
   .cms-hero-slides img,.cms-hero-dots button,.cms-hero-arrow{transition:none}
 }
+
+
+/* USFUR UI reference: consistent Poppins typography, geometric paper texture and clean service-card language */
+:root{
+  --eves-pattern-line:rgba(30,90,58,.075);
+  --eves-card:#fbfaf8;
+  --eves-muted:#66756c;
+}
+html{scroll-behavior:smooth}
+.cms-shell,.cms-shell *{font-family:'Poppins',Arial,sans-serif}
+.cms-top{min-height:32px;padding-top:6px;padding-bottom:6px}
+.cms-header{min-height:78px;padding-top:5px;padding-bottom:5px}
+.cms-logo img{width:116px;height:66px}
+.cms-desktop-nav>a,.cms-nav-dropdown>button{font-size:13px;font-weight:500}
+.cms-support-group .cms-support{border-radius:10px!important;padding:12px 18px!important;background:var(--eves-forest)!important}
+.cms-language-switcher button{min-width:36px;min-height:32px;border-radius:999px!important}
+.cms-menu{border-radius:10px!important}
+.cms-mobile-group>button,.cms-mobile-home{font-family:'Poppins',Arial,sans-serif}
+.cms-page-hero{
+  position:relative;background-color:#fbfaf8!important;
+  background-image:linear-gradient(45deg,transparent 48.7%,var(--eves-pattern-line) 49.5%,var(--eves-pattern-line) 50.5%,transparent 51.3%),linear-gradient(-45deg,transparent 48.7%,var(--eves-pattern-line) 49.5%,var(--eves-pattern-line) 50.5%,transparent 51.3%)!important;
+  background-size:58px 58px!important
+}
+.cms-page-hero h1{font-size:clamp(34px,4vw,54px)!important;font-weight:700!important;letter-spacing:-.04em!important}
+.cms-page-hero p{max-width:760px;font-size:15px!important}
+.cms-content-blocks{font-size:14px;line-height:1.8}
+.cms-content-blocks h2,.cms-page article h2{font-size:clamp(28px,3.2vw,42px)!important;line-height:1.15!important;letter-spacing:-.035em!important}
+.cms-content-blocks h3,.cms-page article h3{font-size:20px!important;line-height:1.4!important}
+.cms-content-blocks p,.cms-page article p{color:#637168;line-height:1.8}
+.obj-grid article,.news-card,.gallery-grid figure,.institutional-bridge-flow>*,.cms-content-blocks .content-card{
+  border-radius:12px!important;box-shadow:0 2px 8px rgba(23,63,50,.025)
+}
+.obj-grid article{background:var(--eves-card)!important;border:1px solid #e6e8e4!important;border-top:1px solid #e6e8e4!important;padding:26px!important}
+.obj-grid article>i{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;background:#eaf4ef!important;color:var(--eves-forest)!important;border-radius:14px!important}
+.obj-grid h3{font-size:17px!important;line-height:1.55!important;color:#1f2c25!important;font-weight:600!important}
+.obj-grid p{font-size:13px!important;line-height:1.8!important;color:#68766d!important}
+.news-card{background:var(--eves-card)!important}
+.news-card-image{background:#e9eee9}
+.news-card h3{font-size:18px!important;line-height:1.45!important;font-weight:600!important}
+.cms-home-gallery{background-color:#fbfaf8!important;background-image:linear-gradient(45deg,transparent 48.7%,var(--eves-pattern-line) 49.5%,var(--eves-pattern-line) 50.5%,transparent 51.3%),linear-gradient(-45deg,transparent 48.7%,var(--eves-pattern-line) 49.5%,var(--eves-pattern-line) 50.5%,transparent 51.3%)!important;background-size:58px 58px!important}
+.gallery-strip a,.gallery-grid figure{border-radius:14px!important}
+.cms-theory{background:#edf4ef!important;border-color:#dfe9e2!important}
+.institutional-bridge-flow>div{background:#fbfaf8;border:1px solid #e3e9e3;border-radius:12px;padding:18px}
+.cms-newsletter{border-radius:0;background:#eaf3ec!important}
+.cms-newsletter input{border:1px solid #dce4dc!important;border-radius:9px!important;min-height:48px}
+.cms-newsletter button{border-radius:9px!important;min-height:48px}
+.cms-footer{background:#173f32!important}
+.cms-footer a:hover{color:#e4b24e!important}
+.cms-hero-usfur .cms-hero-content h1{font-size:clamp(62px,6.7vw,88px)!important;letter-spacing:-.055em!important}
+.cms-hero-usfur .cms-hero-content h2{font-size:clamp(24px,2.7vw,36px)!important;font-weight:600!important}
+.cms-hero-usfur .cms-hero-actions .cms-btn{border-radius:10px!important}
+@media(max-width:760px){
+  .cms-top{display:none}
+  .cms-header{min-height:72px;padding:4px 16px}
+  .cms-logo img{width:100px;height:60px}
+  .cms-page-hero{padding:44px 20px 38px!important;background-size:42px 42px!important}
+  .cms-page-hero h1{font-size:clamp(29px,8.5vw,40px)!important;line-height:1.14!important}
+  .cms-content-blocks h2,.cms-page article h2{font-size:30px!important}
+  .cms-content-blocks h3,.cms-page article h3{font-size:18px!important}
+  .obj-grid{gap:13px!important}
+  .obj-grid article{padding:22px!important}
+  .news-editorial-grid{gap:16px!important}
+  .news-card{border-radius:12px!important}
+  .cms-home-gallery{background-size:42px 42px!important}
+  .gallery-strip a{height:250px!important}
+  .cms-hero-usfur{min-height:590px!important;min-height:calc(100svh - 72px)!important;padding:62px 24px 74px!important}
+  .cms-hero-usfur .cms-hero-content h1{font-size:clamp(52px,15vw,72px)!important}
+  .cms-hero-usfur .cms-hero-content h2{font-size:clamp(22px,6vw,28px)!important}
+  .cms-hero-usfur .cms-hero-content p{max-width:420px;font-size:14px!important}
+  .cms-hero-usfur .cms-hero-actions{width:min(100%,340px)}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
