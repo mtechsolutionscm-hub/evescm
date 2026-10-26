@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+# Prevent overlapping FTPS syncs from deleting or recreating the same remote files.
+concurrency:
+  group: eves-production-deploy
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
